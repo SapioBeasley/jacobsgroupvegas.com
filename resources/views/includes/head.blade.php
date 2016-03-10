@@ -5,7 +5,7 @@
 <meta name="author" content="">
 <title>Property Expert</title>
 
-<link rel="shortcut icon" href="images/favicon.png">
+<link rel="shortcut icon" href="{{asset('favicon.ico?=' . rand())}}">
 <link href="libraries/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 <linK href="libraries/owl-carousel/owl.carousel.css" rel="stylesheet"/> <!-- Core Owl Carousel CSS File  *  v1.3.3 -->
 <linK href="libraries/owl-carousel/owl.theme.css" rel="stylesheet"/> <!-- Core Owl Carousel CSS Theme  File  *  v1.3.3 -->

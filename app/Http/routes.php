@@ -11,10 +11,44 @@
 |
 */
 
-Route::get('/', [
-	'as' => 'home',
-	'uses' => 'PagesController@showHome'
+Route::get('/agents', [
+	'as' => 'agents',
+	'uses' => 'PagesController@showAgents'
 ]);
+
+Route::get('/contact', [
+	'as' => 'contact',
+	'uses' => 'PagesController@showContact'
+]);
+
+Route::get('/properties/{listingId}', [
+	'as' => 'properties.show',
+	'uses' => 'PagesController@showSingleProperties'
+]);
+
+Route::get('/properties', [
+	'as' => 'properties',
+	'uses' => 'PagesController@showProperties'
+]);
+
+Route::get('/buying-services', [
+	'as' => 'services.buying',
+	'uses' => 'PagesController@showBuyingServices'
+]);
+
+Route::get('/listing-buying', [
+	'as' => 'services.listing',
+	'uses' => 'PagesController@showLisingServices'
+]);
+
+Route::get('/useful-links', [
+	'as' => 'useful.links',
+	'uses' => 'PagesController@showUsefulLinks'
+]);
+
+Route::get('/shortcodes', function () {
+	return view('shortcodes');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +62,11 @@ Route::get('/', [
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	Route::get('/', [
+		'as' => 'home',
+		'uses' => 'PagesController@showHome'
+	]);
+
+	Route::get('/clear-session', 'PagesController@clearSession');
+	Route::get('/get-properties', 'PagesController@getProperties');
 });

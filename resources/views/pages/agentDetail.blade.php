@@ -1,57 +1,6 @@
-<!doctype html>
-<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--><html class=""> <!--<![endif]-->
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">	
-	<title>Property Expert</title>
-		
-	<link rel="shortcut icon" href="images/favicon.png">
-    <link href="libraries/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-    <linK href="libraries/owl-carousel/owl.carousel.css" rel="stylesheet"/> <!-- Core Owl Carousel CSS File  *	v1.3.3 -->
-    <linK href="libraries/owl-carousel/owl.theme.css" rel="stylesheet"/> <!-- Core Owl Carousel CSS Theme  File  *	v1.3.3 -->
-	<link href="libraries/fonts/font-awesome.min.css" rel="stylesheet"/>
-	<link href="libraries/animate/animate.min.css" rel="stylesheet"/>
-	<link href="libraries/checkbox/minimal.css" rel="stylesheet"/>
-	<link href="libraries/drag-drop/drag-drop.css" rel="stylesheet"/>
-    <link href="css/components.css" rel="stylesheet"/>
-	<link href="style.css" rel="stylesheet"/>
-	<!--link href="submit-property.css" rel="stylesheet"/-->
-    <link href="css/media.css" rel="stylesheet"/>
+@extends('layouts.default')
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="js/html5/html5shiv.min.js"></script>
-      <script src="js/html5/respond.min.js"></script>
-    <![endif]-->
-
-	<link href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-    
-</head>
-<body data-offset="200" data-spy="scroll" data-target=".primary-navigation">
-	<!-- LOADER -->
-	<div id="site-loader" class="load-complete">
-		<div class="load-position">
-			<div class="logo logo-block"><a href="index.html"><img src="images/logo.png" alt="logo" /></a></div>
-			<h6>Please wait, loading...</h6>
-			<div class="loading">
-				<div class="loading-line"></div>
-				<div class="loading-break loading-dot-1"></div>
-				<div class="loading-break loading-dot-2"></div>
-				<div class="loading-break loading-dot-3"></div>
-			</div>
-		</div>
-	</div><!-- Loader /- -->
-	
+@section('content')
 	<a id="top"></a>
 	<!-- Header Section -->
 	<header id="header-section" class="header header1 container-fluid p_z">
@@ -82,14 +31,14 @@
 				<!-- Menu Block -->
 				<div class="col-md-10 menu-block">
 					<!-- nav -->
-					<nav class="navbar navbar-default primary-navigation">						
+					<nav class="navbar navbar-default primary-navigation">
 						<div class="navbar-header">
 							<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
-							</button>								
+							</button>
 						</div>
 						<div class="navbar-collapse collapse" id="navbar">
 							<ul class="nav navbar-nav">
@@ -120,7 +69,7 @@
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="blog.html">Blog</a></li>
 										<li><a href="blog-detail.html">Blog Detail</a></li>
-									</ul>									
+									</ul>
 								</li>
 								<!--li><a href="work.html">Gallery</a></li-->
 								<li class="dropdown">
@@ -133,7 +82,7 @@
 										<li><a href="shortcodes.html">Shortcodes</a></li>
 									</ul>
 								</li>
-								<li><a href="contact.html">Contact Us</a></li>	
+								<li><a href="contact.html">Contact Us</a></li>
 							</ul>
 						</div><!--/.nav-collapse -->
 					</nav><!-- nav /- -->
@@ -228,7 +177,7 @@
 										<span>R</span>
 										<a title="Property Image" href="#"><img src="images/rent/rent-1.jpg" alt="rent" /></a>
 										<h4>&dollar;380 / pm</h4>
-									</div>							
+									</div>
 									<div class="property-details">
 										<a title="Property Title" href="#">Southwest 39th Terrace</a>
 										<ul>
@@ -470,7 +419,7 @@
 			</div><!-- container /- -->
 		</div><!-- Agent Detail Page /- -->
 	</div><!-- Page Content -->
-	
+
 	<!-- Footer Section -->
 	<div id="footer-section" class="footer-section">
 		<!-- container -->
@@ -484,7 +433,7 @@
 				</aside>
 				<!-- About Widget /- -->
 			</div><!-- col-md-3 -->
-			
+
 			<!-- col-md-3 -->
 			<div class="col-md-3 col-sm-6">
 				<!-- Quick Link Widget -->
@@ -502,7 +451,7 @@
 				</aside>
 				<!-- Quick Link Widget /- -->
 			</div><!-- col-md-3 -->
-			
+
 			<!-- col-md-3 -->
 			<div class="col-md-3 col-sm-6">
 				<!-- Address Widget -->
@@ -514,7 +463,7 @@
 				</aside>
 				<!-- Address Widget /- -->
 			</div><!-- col-md-3 -->
-			
+
 			<!-- col-md-3 -->
 			<div class="col-md-3 col-sm-6">
 				<!-- Address Widget -->
@@ -549,9 +498,9 @@
 			</div><!-- container /- -->
 		</div><!-- Footer Bottom /- -->
 	</diV><!-- Footer Section -->
-	
+
 	<!-- jQuery Include -->
-	<script src="libraries/jquery.min.js"></script>	
+	<script src="libraries/jquery.min.js"></script>
 	<script src="libraries/jquery.easing.min.js"></script><!-- Easing Animation Effect -->
 	<script src="libraries/bootstrap/bootstrap.min.js"></script> <!-- Core Bootstrap v3.2.0 -->
 	<script src="libraries/modernizr/modernizr.custom.37829.js"></script> <!-- Modernizer -->
@@ -563,11 +512,11 @@
 	<script src="libraries/drag-drop/modernizr.custom.js"></script> <!-- Drag Drop File -->
 	<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false'></script>
 	<script src="libraries/gmap/jquery.gmap.min.js"></script> <!-- map -->
-	<script src="libraries/expanding-search/classie.js"></script> 
+	<script src="libraries/expanding-search/classie.js"></script>
 	<script src="libraries/expanding-search/uisearch.js"></script>
 	<!-- Customized Scripts -->
 	<script src="js/functions.js"></script>
-	<script id="imageTemplate" type="text/x-jquery-tmpl"> 
+	<script id="imageTemplate" type="text/x-jquery-tmpl">
 		<div class="col-md-3 col-sm-3 col-xs-6">
 			<div class="imageholder">
 				<figure>
@@ -576,5 +525,4 @@
 			</div>
 		</div>
 	</script>
-</body>
-</html>
+@endsection
