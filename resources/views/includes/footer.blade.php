@@ -1,24 +1,22 @@
 
 <div class="container">
 
-	<div class="col-md-3 col-sm-6">
+	<!-- <div class="col-md-3 col-sm-6">
 		<aside class="widget widget_about">
 			<h3 class="widget-title">About Us</h3>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
 		</aside>
-	</div><!-- col-md-3 -->
+	</div> --><!-- col-md-3 -->
 
-	<div class="col-md-3 col-sm-6">
+	<div class="col-md-9 col-sm-6">
 		<aside class="widget widget_quick_links">
-			<h3 class="widget-title">Quick Links</h3>
+			<h3 class="widget-title">Communities</h3>
 			<ul class="p_l_z">
-				<li><a title="Quick Links" href="#">Listing</a></li>
-				<li><a title="Quick Links" href="#">Property</a></li>
-				<li><a title="Quick Links" href="#">News</a></li>
-				<li><a title="Quick Links" href="#">Gallery</a></li>
-				<li><a title="Quick Links" href="#">Pages</a></li>
-				<li><a title="Quick Links" href="#">Types</a></li>
-				<li><a title="Quick Links" href="#">Contact</a></li>
+
+				@foreach ($communities as $community)
+					<li><a title="Quick Links" href="#">{{$community['community']}}</a></li>
+				@endforeach
+
 			</ul>
 		</aside>
 	</div>
@@ -26,14 +24,14 @@
 	<div class="col-md-3 col-sm-6">
 		<aside class="widget widget_address">
 			<h3 class="widget-title">Address</h3>
-			<p>108 Villa Precy Subdivision Kumintang Ilaya Batangas, Philippines</p>
-			<span>1200 666 12345</span>
+			<p>3042 S Durango Dr, Las Vegas, NV 89117</p>
+			<span>(702) 442-0055</span>
 			<a title="mailto" href="mailto:jonathan@jacobsgroupvegas.com">jonathan@jacobsgroupvegas.com</a>
 		</aside>
 	</div>
 
 	<!-- col-md-3 -->
-	<div class="col-md-3 col-sm-6">
+	<!-- <div class="col-md-3 col-sm-6">
 		<aside class="widget widget_newsletter">
 			<h3 class="widget-title">NewsLetter</h3>
 			<div class="input-group">
@@ -44,7 +42,7 @@
 			</div>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
 		</aside>
-	</div>
+	</div> -->
 
 </div>
 

@@ -105,22 +105,22 @@
 		<!-- Footer Section -->
 
 		<!-- jQuery Include -->
-		<script src="libraries/jquery.min.js"></script>
-		<script src="libraries/jquery.easing.min.js"></script><!-- Easing Animation Effect -->
-		<script src="libraries/bootstrap/bootstrap.min.js"></script> <!-- Core Bootstrap v3.2.0 -->
-		<script src="libraries/modernizr/modernizr.custom.37829.js"></script> <!-- Modernizer -->
-		<script src="libraries/jquery.appear.js"></script> <!-- It Loads jQuery when element is appears -->
-		<script src="libraries/owl-carousel/owl.carousel.min.js"></script> <!-- Core Owl Carousel CSS File  *	v1.3.3 -->
-		<script src="libraries/checkbox/icheck.min.js"></script> <!-- Check box -->
-		<script src="libraries/drag-drop/jquery.tmpl.min.js"></script> <!-- Drag Drop file -->
-		<script src="libraries/drag-drop/drag-drop.js"></script> <!-- Drag Drop File -->
-		<script src="libraries/drag-drop/modernizr.custom.js"></script> <!-- Drag Drop File -->
+		<script src="{{asset('libraries/jquery.min.js')}}"></script>
+		<script src="{{asset('libraries/jquery.easing.min.js')}}"></script><!-- Easing Animation Effect -->
+		<script src="{{asset('libraries/bootstrap/bootstrap.min.js')}}"></script> <!-- Core Bootstrap v3.2.0 -->
+		<script src="{{asset('libraries/modernizr/modernizr.custom.37829.js')}}"></script> <!-- Modernizer -->
+		<script src="{{asset('libraries/jquery.appear.js')}}"></script> <!-- It Loads jQuery when element is appears -->
+		<script src="{{asset('libraries/owl-carousel/owl.carousel.min.js')}}"></script> <!-- Core Owl Carousel CSS File  *	v1.3.3 -->
+		<script src="{{asset('libraries/checkbox/icheck.min.js')}}"></script> <!-- Check box -->
+		<script src="{{asset('libraries/drag-drop/jquery.tmpl.min.js')}}"></script> <!-- Drag Drop file -->
+		<script src="{{asset('libraries/drag-drop/drag-drop.js')}}"></script> <!-- Drag Drop File -->
+		<script src="{{asset('libraries/drag-drop/modernizr.custom.js')}}"></script> <!-- Drag Drop File -->
 		<script type="text/javascript" src='http://maps.google.com/maps/api/js'></script>
-		<script src="libraries/gmap/jquery.gmap.min.js"></script> <!-- map -->
-		<script src="libraries/expanding-search/classie.js"></script>
-		<script src="libraries/expanding-search/uisearch.js"></script>
+		<script src="{{asset('libraries/gmap/jquery.gmap.min.js')}}"></script> <!-- map -->
+		<script src="{{asset('libraries/expanding-search/classie.js')}}"></script>
+		<script src="{{asset('libraries/expanding-search/uisearch.js')}}"></script>
 		<!-- Customized Scripts -->
-		<script src="js/functions.js"></script>
+		<script src="{{asset('js/functions.js')}}"></script>
 		<script id="imageTemplate" type="text/x-jquery-tmpl">
 			<div class="col-md-3 col-sm-3 col-xs-6">
 				<div class="imageholder">

@@ -10,13 +10,13 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
+					<img src="images/slider/slide-1.jpg" alt="Slide 1">
+				</div>
+				<div class="item">
 					<img src="images/slider/slide-3.jpg" alt="Slide 1">
 				</div>
 				<div class="item">
 					<img src="images/slider/slide-2.jpg" alt="Slide 2">
-				</div>
-				<div class="item">
-					<img src="images/slider/slide-1.jpg" alt="Slide 1">
 				</div>
 				<div class="item">
 					<img src="images/slider/slide-2.jpg" alt="Slide 2">
@@ -67,10 +67,6 @@
 					<p id="las-vegas-properties">New Properties in</p>
 					<h3>Las Vegas</h3>
 				</div>
-				<div class="col-md-4 col-sm-5">
-					<h4 class="property-type-rent"><span>R</span>For Rent</h4>
-					<h4 class="property-type-sale"><span>S</span>For Sale</h4>
-				</div>
 			</div>
 
 			@if(isset($properties['lasVegas'][0]))
@@ -85,9 +81,11 @@
 				</div><!-- Col-md-12 -->
 
 			@else
+
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<h4>No Properties Currently Available</h4>
 				</div>
+
 			@endif
 
 		</div><!-- container -->
@@ -102,10 +100,6 @@
 				<div class="col-md-8 col-sm-7">
 					<p id="henderson-properties">New Properties in</p>
 					<h3>Henderson</h3>
-				</div>
-				<div class="col-md-4 col-sm-5">
-					<h4 class="property-type-rent"><span>R</span>For Rent</h4>
-					<h4 class="property-type-sale"><span>S</span>For Sale</h4>
 				</div>
 			</div>
 
@@ -139,10 +133,6 @@
 					<p id="north-las-vegas-properties">New Properties in</p>
 					<h3>North Las Vegas</h3>
 				</div>
-				<div class="col-md-4 col-sm-5">
-					<h4 class="property-type-rent"><span>R</span>For Rent</h4>
-					<h4 class="property-type-sale"><span>S</span>For Sale</h4>
-				</div>
 			</div>
 
 			@if(isset($properties['northLasVegas'][0]))
@@ -174,10 +164,6 @@
 				<div class="col-md-8 col-sm-7">
 					<p id="boulder-city-properties">New Properties in</p>
 					<h3>Boulder City</h3>
-				</div>
-				<div class="col-md-4 col-sm-5">
-					<h4 class="property-type-rent"><span>R</span>For Rent</h4>
-					<h4 class="property-type-sale"><span>S</span>For Sale</h4>
 				</div>
 			</div>
 
