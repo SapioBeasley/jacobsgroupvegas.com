@@ -30,15 +30,24 @@ class PagesController extends Controller
 	}
 
 	public function showAgents() {
-		return view('pages.listAgents');
+		return view('pages.listAgents')->with([
+			'communities' => $this->communities
+		]);
 	}
 
 	public function showContact() {
-		return view('pages.contact');
+		return view('pages.contact')->with([
+			'communities' => $this->communities
+		]);
 	}
 
 	public function showProperties() {
-		return view('pages.listProperties');
+		$properties = $this->getProperties();
+
+		return view('pages.listProperties')->with([
+			'properties' => $properties,
+			'communities' => $this->communities
+		]);
 	}
 
 	public function showSingleProperties($listingId)
@@ -56,22 +65,28 @@ class PagesController extends Controller
 	}
 
 	public function showBuyingServices() {
-		dd('showBuyingServices');
+		return view('pages.buyingServices')->with([
+			'communities' => $this->communities
+		]);
 	}
 
 	public function showLisingServices() {
-		dd('showLisingServices');
+		return view('pages.listingServices')->with([
+			'communities' => $this->communities
+		]);
 	}
 
 	public function showUsefulLinks() {
-		dd('showUsefulLinks');
+		return view('pages.usefulLinks')->with([
+			'communities' => $this->communities
+		]);
 	}
 
 	public function getProperties()
 	{
 		$propertyModel = new \App\Property;
 
-		$properties['all'] = $propertyModel->with('propertyImages')->orderBy('entryDate', 'DESC');
+		$properties['all'] = $propertyModel->with('propertyImages')->orderBy('entryDate', 'DESC')->paginate(15);
 		$properties['lasVegas'] = $propertyModel->where('city', '=', 'Las Vegas')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
 		$properties['henderson'] = $propertyModel->where('city', '=', 'Henderson')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
 		$properties['northLasVegas'] = $propertyModel->where('city', '=', 'North Las Vegas')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
