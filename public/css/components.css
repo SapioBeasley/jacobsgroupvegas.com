@@ -80,7 +80,7 @@
 }
 .load-complete .loading-break {
     position: absolute;
-    background: #79B445;
+    background: #4DC8E3;
     width: 15px;
     height: 2px;
 }
@@ -185,7 +185,7 @@
 
 .widget_quick_links ul li a:hover,
 .widget_address a:hover {
-	color: #79B445;
+	color: #4DC8E3;
 }
 
 /* Widget :: widget_address */
