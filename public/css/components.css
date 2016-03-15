@@ -173,9 +173,9 @@
 }
 
 .widget_quick_links ul li{
-	width: 49%;
-	display: inline-block;
-	margin-bottom: 23px;
+	width: 32%;
+            display: inline-block;
+            margin-bottom: 11px;
 }
 
 .widget_quick_links ul li a {
@@ -218,7 +218,7 @@
 }
 
 .widget_address a,
-.widget_address span { 
+.widget_address span {
 	font-weight: 500;
 }
 
@@ -308,13 +308,13 @@
 }
 
 .blog-sidebar .widget {
-	padding-top: 0;	
+	padding-top: 0;
 	padding-bottom: 38px;
 	margin-bottom: 38px;
 	border-bottom: 1px solid #e8e8e8;
 }
 
-.blog-sidebar .widget:last-child { 
+.blog-sidebar .widget:last-child {
 	border: none;
 	margin-bottom: 0;
 	padding-bottom: 0;
@@ -324,7 +324,7 @@
 .blog-sidebar .widget-search .widget-title {
 	font-weight: 300;
 	font-size: 14px;
-	color: #3c3c44;	
+	color: #3c3c44;
 }
 
 .blog-sidebar .widget-title span,
