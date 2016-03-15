@@ -13,6 +13,11 @@ img {
 	height: auto;
 }
 
+.property-image {
+	max-height: 182px;
+	overflow: hidden;
+}
+
 a,
 select,
 input,
