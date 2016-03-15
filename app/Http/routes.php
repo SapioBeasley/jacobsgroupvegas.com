@@ -36,7 +36,7 @@ Route::get('/buying-services', [
 	'uses' => 'PagesController@showBuyingServices'
 ]);
 
-Route::get('/listing-buying', [
+Route::get('/listing-services', [
 	'as' => 'services.listing',
 	'uses' => 'PagesController@showLisingServices'
 ]);
@@ -69,4 +69,9 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/clear-session', 'PagesController@clearSession');
 	Route::get('/get-properties', 'PagesController@getProperties');
+
+	Route::post('/post-listing', [
+		'as' => 'postListing',
+		'uses' => 'PagesController@postListing'
+	]);
 });
