@@ -112,7 +112,7 @@
 					<div class="general-amenities pull-left">
 						<h3>General amenities</h3>
 						<div class="amenities-list pull-left">
-						@include('includes.amenities')
+						@include('includes.amentities')
 						</div>
 					</div>
 					<div class="property-direction pull-left">
@@ -138,7 +138,7 @@
 						<h2 class="widget-title">Send Message to<span>View</span></h2>
 						@include('forms.propertyInquire')
 					</aside>
-					<aside class="widget widget-property-featured">
+					<!-- <aside class="widget widget-property-featured">
 						<h2 class="widget-title">Most<span>Recent</span></h2>
 						<div class="property-featured-inner">
 							<div class="col-md-4 col-sm-3 col-xs-2 p_z">
@@ -167,7 +167,7 @@
 								<h3>&dollar;350000</h3>
 							</div>
 						</div>
-					</aside>
+					</aside> -->
 				</div>
 			</div>
 		</div>

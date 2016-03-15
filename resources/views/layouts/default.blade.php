@@ -76,16 +76,10 @@
 											<li><a href="{{route('useful.links')}}">Useful Links</a></li>
 										</ul>
 									</li>
-
-
-
 									<li><a href="{{route('home')}}#las-vegas-properties">LAS VEGAS</a>
 									<li><a href="{{route('home')}}#henderson-properties">HENDERSON</a>
 									<li><a href="{{route('home')}}#north-las-vegas-properties">N. LAS VEGAS</a>
 									<li><a href="{{route('home')}}#boulder-city-properties">BOULDER CITY</a>
-
-
-
 								</ul>
 							</div><!--/.nav-collapse -->
 						</nav><!-- nav /- -->
@@ -115,7 +109,7 @@
 		<script src="{{asset('libraries/drag-drop/jquery.tmpl.min.js')}}"></script> <!-- Drag Drop file -->
 		<script src="{{asset('libraries/drag-drop/drag-drop.js')}}"></script> <!-- Drag Drop File -->
 		<script src="{{asset('libraries/drag-drop/modernizr.custom.js')}}"></script> <!-- Drag Drop File -->
-		<script type="text/javascript" src='http://maps.google.com/maps/api/js'></script>
+		<script src="http://maps.google.com/maps/api/js" type="text/javascript"></script>
 		<script src="{{asset('libraries/gmap/jquery.gmap.min.js')}}"></script> <!-- map -->
 		<script src="{{asset('libraries/expanding-search/classie.js')}}"></script>
 		<script src="{{asset('libraries/expanding-search/uisearch.js')}}"></script>

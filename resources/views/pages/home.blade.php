@@ -39,21 +39,7 @@
 	<div id="search-section" class="search-section search-section2 container-fluid p_z">
 		<!-- Container -->
 		<div class="container">
-
-			<!-- col-md-10 -->
-			<div class="col-md-10 p_l_z">
-				@include('forms.homePropertySearch')
-			</div>
-			<!-- col-md-10 /- -->
-
-			<!-- col-md-2 -->
-			<div class="col-md-2">
-				<div class="section-header">
-					<h3><span>Search</span>Property</h3>
-					<a title="search" class="btn" href="#">Search</a>
-				</div>
-			</div>
-			<!-- col-md-2 /- -->
+			@include('forms.homePropertySearch')
 		</div><!-- Container /- -->
 	</div><!-- Search Section /- -->
 
