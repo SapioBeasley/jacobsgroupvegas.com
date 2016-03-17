@@ -1,3 +1,7 @@
-- [ ] Focus on search functionality tomorrow
+- [ ] Focus on search functionality today
 - [ ] Add community Pages
-- [ ] ....
+- [ ] Create agent migration, with name, title, short description, phone, email
+- [ ] link properties on search and list pages
+- [ ] Property Detail contact form functioning
+- [ ] To view 2nd property you must subscribe
+- [ ] Add listing table with Adress 1, Adress 2, City, State, Zip, Additional Rooms/Features, Approx. Size, Approx. Age of Kitchen, Approx. Age of Baths,  Message, First Name, Last Name, Email, Phone,
