@@ -14,7 +14,7 @@
 			<ul class="p_l_z">
 
 				@foreach ($communities as $community)
-					<li><a title="Quick Links" href="#">{{$community['community']}}</a></li>
+					<li><a title="Quick Links" href="{{route('communities.show', $community['community'])}}">{{$community['community']}}</a></li>
 				@endforeach
 
 			</ul>

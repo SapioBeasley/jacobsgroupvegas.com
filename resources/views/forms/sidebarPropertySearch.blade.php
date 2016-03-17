@@ -1,95 +1,17 @@
-<form>
-						<select>
-							<option value="selected">Property ID</option>
-							<option value="one">One</option>
-							<option value="two">Two</option>
-							<option value="three">Three</option>
-							<option value="four">Four</option>
-							<option value="five">Five</option>
-						</select>
-						<select>
-							<option value="selected">Location</option>
-							<option value="one">One</option>
-							<option value="two">Two</option>
-							<option value="three">Three</option>
-							<option value="four">Four</option>
-							<option value="five">Five</option>
-						</select>
-						<select>
-							<option value="selected">Type</option>
-							<option value="one">One</option>
-							<option value="two">Two</option>
-							<option value="three">Three</option>
-							<option value="four">Four</option>
-							<option value="five">Five</option>
-						</select>
-						<select>
-							<option value="selected">Status</option>
-							<option value="one">One</option>
-							<option value="two">Two</option>
-							<option value="three">Three</option>
-							<option value="four">Four</option>
-							<option value="five">Five</option>
-						</select>
-						<div class="col-md-6 col-sm-6 p_l_z">
-							<select>
-								<option value="selected">Beds</option>
-								<option value="one">One</option>
-								<option value="two">Two</option>
-								<option value="three">Three</option>
-								<option value="four">Four</option>
-								<option value="five">Five</option>
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6 p_r_z">
-							<select>
-								<option value="selected">Baths</option>
-								<option value="one">One</option>
-								<option value="two">Two</option>
-								<option value="three">Three</option>
-								<option value="four">Four</option>
-								<option value="five">Five</option>
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6 p_l_z">
-							<select>
-								<option value="selected">Min Price</option>
-								<option value="one">One</option>
-								<option value="two">Two</option>
-								<option value="three">Three</option>
-								<option value="four">Four</option>
-								<option value="five">Five</option>
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6 p_r_z">
-							<select>
-								<option value="selected">Max Price</option>
-								<option value="one">$3000</option>
-								<option value="two">$30000</option>
-								<option value="three">$300000</option>
-								<option value="four">$3000000</option>
-								<option value="five">$3000000000000000</option>
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6 p_l_z">
-							<select>
-								<option value="selected">Min Sqft</option>
-								<option value="one">One</option>
-								<option value="two">Two</option>
-								<option value="three">Three</option>
-								<option value="four">Four</option>
-								<option value="five">Five</option>
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6 p_r_z">
-							<select>
-								<option value="selected">Max Sqft</option>
-								<option value="one">One</option>
-								<option value="two">Two</option>
-								<option value="three">Three</option>
-								<option value="four">Four</option>
-								<option value="five">Five</option>
-							</select>
-						</div>
-						<input type="submit" value="Search Now" class="btn">
-					</form>
+{!! Form::open(['route' => 'postSearch']) !!}
+	{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
+	{!! Form::text('city', null, ['placeholder' => 'City']) !!}
+	{!! Form::select('community', $communitySelect) !!}
+	{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}
+	<div class="col-md-6 col-sm-6 p_l_z">
+		{!! Form::select('bedrooms', ['Beds', '1','2','3','4','5+']) !!}
+	</div>
+	<div class="col-md-6 col-sm-6 p_r_z">
+		{!! Form::select('totalBaths', ['Baths', '1','2','3','4','5+']) !!}
+	</div>
+	{!! Form::text('min_price', null, ['placeholder' => 'Min Price']) !!}
+	{!! Form::text('max_price', null, ['placeholder' => 'Max Price']) !!}
+	{!! Form::text('min_sqft', null, ['placeholder' => 'Min SqFt']) !!}
+	{!! Form::text('max_sqft', null, ['placeholder' => 'Max SqFt']) !!}
+	{!! Form::submit('Search Now', ['class' => 'btn']) !!}
+{!! Form::close() !!}

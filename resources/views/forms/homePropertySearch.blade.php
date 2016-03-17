@@ -1,23 +1,28 @@
-<!-- col-md-10 -->
-<div class="col-md-10 p_l_z">
-	{!! Form::select('listingId', ['Poperty ID','Property ID','Property ID','Property ID','Property ID','Property ID','Property ID']) !!}
-	{!! Form::select('city', ['Location','Location','Location','Location','Location','Location','Location']) !!}
-	{!! Form::select('propertyType', ['Type','Type','Type','Type','Type','Type','Type']) !!}
-	{!! Form::select('listingStatus', ['Status','Status','Status','Status','Status','Status','Status']) !!}
-	{!! Form::select('bedrooms', ['Bedrooms','Bedrooms','Bedrooms','Bedrooms','Bedrooms','Bedrooms','Bedrooms']) !!}
-	{!! Form::select('totalBaths', ['Bathrooms','Bathrooms','Bathrooms','Bathrooms','Bathrooms','Bathrooms','Bathrooms']) !!}
-	{!! Form::select('min_price', ['Mn Price','Min Price','Min Price','Min Price','Min Price','Min Price','Min Price']) !!}
-	{!! Form::select('max_price', ['Mx Price','Max Price','Max Price','Max Price','Max Price','Max Price','Max Price']) !!}
-	{!! Form::select('min_sqft', ['Mn Sqft','Min Sqft','Min Sqft','Min Sqft','Min Sqft','Min Sqft','Min Sqft']) !!}
-	{!! Form::select('max_sqft', ['Mx Sqft','Max Sqft','Max Sqft','Max Sqft','Max Sqft','Max Sqft','Max Sqft']) !!}
-</div>
-<!-- col-md-10 /- -->
+{!! Form::open(['route' => 'postSearch']) !!}
 
-<!-- col-md-2 -->
-<div class="col-md-2">
-	<div class="section-header">
-		<h3><span>Search</span>Property</h3>
-		<a title="search" class="btn" href="#">Search</a>
+	<!-- col-md-10 -->
+	<div class="col-md-10 p_l_z">
+		{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
+		{!! Form::text('city', null, ['placeholder' => 'City']) !!}
+		{!! Form::select('community', $communitySelect) !!}
+		{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}
+		{!! Form::select('bedrooms', ['Beds', '1','2','3','4','5+']) !!}
+		{!! Form::select('totalBaths', ['Baths', '1','2','3','4','5+']) !!}
+		{!! Form::text('min_price', null, ['placeholder' => 'Min Price']) !!}
+		{!! Form::text('max_price', null, ['placeholder' => 'Max Price']) !!}
+		{!! Form::text('min_sqft', null, ['placeholder' => 'Min SqFt']) !!}
+		{!! Form::text('max_sqft', null, ['placeholder' => 'Max SqFt']) !!}
 	</div>
-</div>
-<!-- col-md-2 /- -->
+	<!-- col-md-10 /- -->
+
+	<!-- col-md-2 -->
+	<div class="col-md-2">
+		<div class="section-header">
+			<h3><span>Search</span>Property</h3>
+			<!-- <a title="search" class="btn" href="#">Search</a> -->
+			{!! Form::submit('Search', ['class' => 'btn search-btn']) !!}
+		</div>
+	</div>
+	<!-- col-md-2 /- -->
+
+{!! Form::close() !!}
