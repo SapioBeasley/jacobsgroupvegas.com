@@ -18,6 +18,29 @@ img {
 	overflow: hidden;
 }
 
+.search-btn {
+	background-color: #4DC8E3;
+	/*max-width: 118px;*/
+	/*max-height: 37px;*/
+	line-height: 36px;
+	font-weight: bold;
+	font-size: 16px;
+	border-radius: 0;
+	color: #fff;
+	text-transform: uppercase;
+	padding: 0px 33px;
+	text-align: center;
+	display: block;
+}
+
+.sidebar-search-btn {
+	    background-color: #4DC8E3;
+    color: #fff;
+    padding: 15px 55px;
+    border-radius: 0;
+    font-size: 17px;
+}
+
 a,
 select,
 input,
@@ -760,6 +783,22 @@ textarea {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	background-image: url("images/icon/dropdown-arrow.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	box-shadow: none;
+	margin-left: 30px;
+	margin-bottom: 30px;
+	outline: none;
+}
+
+.search-section .col-md-10 input {
+	width: 16.4%;
+	padding: 12px 0;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid #c8c8c8;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 	background-position: right center;
 	background-repeat: no-repeat;
 	box-shadow: none;
@@ -1555,7 +1594,26 @@ textarea {
 	background-repeat: no-repeat;
 }
 
+.widget-search input,
+.submit-property .contact-feedback-form input {
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	border-bottom: 2px solid #c8c8c8;
+	padding: 10px 0;
+	border-radius: 0;
+	margin-bottom: 30px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
 .widget-search select:not(.col-md-6) {
+	width: 100%;
+}
+
+.widget-search input:not(.col-md-6) {
 	width: 100%;
 }
 
@@ -2290,7 +2348,7 @@ textarea {
 	display: inline-block;
 	border: 1px solid #c8c8c8;
 	border-top: 4px solid #3c3c44;
-	padding-bottom: 55px;
+	padding: 20px 0px;
 }
 
 .agent-detail-box .agent-header {
