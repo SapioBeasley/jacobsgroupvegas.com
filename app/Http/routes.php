@@ -31,11 +31,6 @@ Route::get('/properties', [
 	'uses' => 'PagesController@showProperties'
 ]);
 
-Route::get('/buying-services', [
-	'as' => 'services.buying',
-	'uses' => 'PagesController@showBuyingServices'
-]);
-
 Route::get('/listing-services', [
 	'as' => 'services.listing',
 	'uses' => 'PagesController@showLisingServices'
@@ -49,6 +44,26 @@ Route::get('/useful-links', [
 Route::get('/shortcodes', function () {
 	return view('shortcodes');
 });
+
+Route::get('/clear-session', [
+	'as' => 'clearSession',
+	'uses' => 'PagesController@clearSession'
+]);
+
+Route::get('/get-properties', [
+	'as' => 'getProperties',
+	'uses' => 'PagesController@getProperties'
+]);
+
+Route::get('/community/{community}', [
+	'as' => 'communities.show',
+	'uses' => 'PagesController@getCommunity'
+]);
+
+Route::get('/communities', [
+	'as' => 'communities',
+	'uses' => 'PagesController@showCommunities'
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -67,8 +82,20 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'PagesController@showHome'
 	]);
 
-	Route::get('/clear-session', 'PagesController@clearSession');
-	Route::get('/get-properties', 'PagesController@getProperties');
+	Route::get('/buying-services', [
+		'as' => 'services.buying',
+		'uses' => 'PagesController@showBuyingServices'
+	]);
+
+	Route::get('/search', [
+		'as' => 'search',
+		'uses' => 'PagesController@showSearch'
+	]);
+
+	Route::post('/post-search', [
+		'as' => 'postSearch',
+		'uses' => 'SearchesController@postSearch'
+	]);
 
 	Route::post('/post-listing', [
 		'as' => 'postListing',
