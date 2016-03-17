@@ -11,6 +11,8 @@ class PagesController extends Controller
 	public function __construct()
 	{
 		$this->communities = \App\Community::take(24)->get();
+
+		$this->communitySelect = $this->communitiesSelect($this->communities);
 	}
 
 	public function showHome(Request $request = null)
@@ -19,29 +21,91 @@ class PagesController extends Controller
 
 		return view('pages.home')->with([
 			'properties' => $properties,
-			'communities' => $this->communities
+			'communities' => $this->communities,
+			'communitySelect' => $this->communitySelect
 		]);
 	}
 
-	public function clearSession(Request $request) {
+	public function showSearch(Request $request)
+	{
+		$request->session()->reflash();
+
+		$properties = $request->session()->get('properties');
+
+		return view('pages.search')->with([
+			'properties' => $properties,
+			'communities' => $this->communities,
+			'communitySelect' => $this->communitySelect
+		]);
+	}
+
+	public function communitiesSelect($communities)
+	{
+		foreach ($communities as $communityKey => $communityValue) {
+			$communitySelect[$communityValue->community] = $communityValue->community;
+		}
+
+		$communitySelect[0] = 'Community';
+
+		$communitySelect = array_reverse($communitySelect);
+
+		return $communitySelect;
+	}
+
+	public function clearSession(Request $request)
+	{
 		$request->session()->flush();
 
 		return;
 	}
 
-	public function showAgents() {
+	public function getCommunity($community)
+	{
+
+		$community = \App\Community::where('community', '=', $community)->with('properties')->first();
+
+		if (is_null($community)) {
+			abort('404');
+		}
+
+		$properties = \App\Property::whereHas('community', function ($q) use ($community) {
+			$q->where('community', '=', $community['community']);
+			$q->where('listingStatus', '!=', 'closed');
+		})->paginate(15);
+
+		return view('pages.communityDetail')->with([
+			'community' => $community,
+			'properties' => $properties,
+			'communities' => $this->communities,
+			'communitySelect' => $this->communitySelect
+		]);
+	}
+
+	public function showCommunities()
+	{
+		return view('pages.listCommunities')->with([
+			'communities' => $this->communities,
+			'communitySelect' => $this->communitySelect
+		]);
+	}
+
+	public function showAgents()
+	{
 		return view('pages.listAgents')->with([
 			'communities' => $this->communities
 		]);
 	}
 
-	public function showContact() {
+	public function showContact()
+	{
 		return view('pages.contact')->with([
-			'communities' => $this->communities
+			'communities' => $this->communities,
+			'communitySelect' => $communitySelect
 		]);
 	}
 
-	public function showProperties() {
+	public function showProperties()
+	{
 		$properties = $this->getProperties();
 
 		return view('pages.listProperties')->with([
@@ -64,19 +128,25 @@ class PagesController extends Controller
 		]);
 	}
 
-	public function showBuyingServices() {
+	public function showBuyingServices()
+	{
+		$communitySelect = $this->communitiesSelect($this->communities);
+
 		return view('pages.buyingServices')->with([
-			'communities' => $this->communities
+			'communities' => $this->communities,
+			'communitySelect' => $communitySelect
 		]);
 	}
 
-	public function showLisingServices() {
+	public function showLisingServices()
+	{
 		return view('pages.listingServices')->with([
 			'communities' => $this->communities
 		]);
 	}
 
-	public function showUsefulLinks() {
+	public function showUsefulLinks()
+	{
 		return view('pages.usefulLinks')->with([
 			'communities' => $this->communities
 		]);

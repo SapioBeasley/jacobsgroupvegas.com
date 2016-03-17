@@ -49,7 +49,7 @@ class Rets extends Command
     public function handle()
     {
         $results = $this->rets->Search('Property', '1', '*', [
-              'Limit' => 500,
+              'Limit' => 1000,
               'StandardNames' => 0, // give system names
         ]);
 
@@ -423,23 +423,15 @@ class Rets extends Command
                 . $property['daysOnMarket'] . ' days. This ' . $property['propertyType'] . ' home is located at ' . $property['streetNumber'] . ' '
                 . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'] . ' home has ' . $property['totalBaths'] . ' baths, ' . ' '
                 . $property['lotSqft'] . ' sqft, ' . ' and ' . $property['bedrooms'] . ' bedrooms.';
-  // "waterHeaterDescription" => ""
-  // "garageDescription" => ""
   // "roofDescription" => ""Composition Shingle""
   // "lotDescription" => ""1/4 to 1 Acre""
-  // "spaDescription" => ""
-  // "poolDescription" => ""
   // "interiorDescription" => ""Blinds","Ceiling Fan(s)""
   // "otherApplianceDescription" => ""Microwave""
   // "constructionDescription" => ""Frame & Siding""
   // "flooringDescription" => ""Carpet","Linoleum/Vinyl""
   // "fireplaceDescription" => ""Wood Burning""
   // "builtDescription" => "Resale"
-  // "carportDescription" => ""
-  // "parkingDescription" => ""
-  // "5thBedroomDescription" => ""
   // "heatingDescription" => ""Central""
-  // "greatRoomDescription" => ""
   // "bathDownstairsDescription" => "Full Bath Downstairs"
   // "coolingFuelDescription" => "Electric"
   // "diningRoomDescription" => ""Dining Area""
@@ -447,9 +439,6 @@ class Rets extends Command
   // "kitchenDescription" => ""Breakfast Bar/Counter","Solid Surface Countertops","Linoleum/Vinyl Flooring""
   // "livingRoomDescription" => ""Front""
   // "masterBedroomDescription" => ""Mbr Walk-In Closet""
-  // "2ndBedroomDescription" => ""
-  // "3rdBedroomDescription" => ""
-  // "4thBedroomDescription" => ""
   // "possessionDescription" => "Close of Escrow"
   // "ovenDescription" => ""Cooktop (E)""
   // "equestrianDescription" => ""None""
@@ -459,8 +448,6 @@ class Rets extends Command
   // "heatingFuelDescription" => ""Electric""
   // "energyDescription" => ""None""
   // "furnishingsDescription" => "No Furniture"
-  // "loftDescription" => ""
-  // "unitDescription" => ""
 
         }
 
