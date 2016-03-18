@@ -36,20 +36,35 @@
 					</div>
 				</div>
 
-				@foreach ($properties as $property)
-					@include('pages.includes.propertiesLoopList')
-				@endforeach
+				@if (is_null($properties))
+					<h3>No Properties found. Please update your search </h3>
+				@else
+					@foreach ($properties as $property)
+						@include('pages.includes.propertiesLoopList')
+					@endforeach
 
-				<!-- Pagination -->
-				<div class="listing-pagination">
-					{{$properties->links()}}
-				</div><!-- Pagination /- -->
+					<!-- Pagination -->
+					<div class="listing-pagination">
+						{{$properties->links()}}
+					</div><!-- Pagination /- -->
+				@endif
 
 			</div>
 			<div class="col-md-3 col-sm-6 p_r_z property-sidebar widget-area">
 				<aside class="widget widget-search">
 					<h2 class="widget-title">search<span>property</span></h2>
 					@include('forms.sidebarPropertySearch')
+				</aside>
+				<aside class="widget widget-property-featured">
+					<h2 class="widget-title">Search by<span>Community</span></h2>
+
+					@foreach ($communities as $community)
+						<div class="property-featured-inner">
+							<div class="featured-content">
+								<a title="Fetured Property" href="{{route('communities.show', $community['community'])}}">{{$community['community']}}</a>
+							</div>
+						</div>
+					@endforeach
 				</aside>
 			</div>
 		</div>
