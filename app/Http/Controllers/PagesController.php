@@ -28,9 +28,22 @@ class PagesController extends Controller
 
 	public function showSearch(Request $request)
 	{
-		$request->session()->reflash();
 
-		$properties = $request->session()->get('properties');
+		switch (isset($request->city)) {
+			case true:
+				$properties = \App\Property::where('city', '=', $request->city)
+					->where('listingStatus', '!=', 'closed')
+					->with('propertyImages')
+					->orderBy('created_at', 'DESC')
+					->paginate(15);
+				break;
+
+			default:
+				$request->session()->reflash();
+
+				$properties = $request->session()->get('properties');
+				break;
+		}
 
 		return view('pages.search')->with([
 			'properties' => $properties,
