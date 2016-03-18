@@ -41,11 +41,10 @@ class SearchesController extends Controller
 						$searchKey = 'listingID';
 					}
 
-					// dd($searchKey . ', ' . $searchValue['operator'] . ', ' . $searchValue['value']);
 					$properties->where($searchKey, $searchValue['operator'], $searchValue['value']);
 				}
 
-				$properties = $properties->paginate(15);
+				$properties = $properties->where('listingStatus', '!=', 'closed')->paginate(15);
 				break;
 
 			default:
