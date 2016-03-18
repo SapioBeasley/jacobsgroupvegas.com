@@ -37,7 +37,7 @@
 				</div>
 
 				@foreach ($properties as $property)
-					@include('pages.includes.propertiesLoop')
+					@include('pages.includes.propertiesLoopList')
 				@endforeach
 
 				<!-- Pagination -->
