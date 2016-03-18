@@ -26,11 +26,6 @@ Route::get('/properties/{listingId}', [
 	'uses' => 'PagesController@showSingleProperties'
 ]);
 
-Route::get('/properties', [
-	'as' => 'properties',
-	'uses' => 'PagesController@showProperties'
-]);
-
 Route::get('/listing-services', [
 	'as' => 'services.listing',
 	'uses' => 'PagesController@showLisingServices'
@@ -53,11 +48,6 @@ Route::get('/clear-session', [
 Route::get('/get-properties', [
 	'as' => 'getProperties',
 	'uses' => 'PagesController@getProperties'
-]);
-
-Route::get('/community/{community}', [
-	'as' => 'communities.show',
-	'uses' => 'PagesController@getCommunity'
 ]);
 
 Route::get('/communities', [
@@ -92,6 +82,11 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'PagesController@showSearch'
 	]);
 
+	Route::get('/properties', [
+		'as' => 'properties',
+		'uses' => 'PagesController@showProperties'
+	]);
+
 	Route::post('/post-search', [
 		'as' => 'postSearch',
 		'uses' => 'SearchesController@postSearch'
@@ -100,5 +95,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/post-listing', [
 		'as' => 'postListing',
 		'uses' => 'PagesController@postListing'
+	]);
+
+	Route::get('/community/{community}', [
+		'as' => 'communities.show',
+		'uses' => 'PagesController@getCommunity'
 	]);
 });
