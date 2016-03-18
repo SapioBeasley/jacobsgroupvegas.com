@@ -110,7 +110,8 @@ class PagesController extends Controller
 
 		return view('pages.listProperties')->with([
 			'properties' => $properties,
-			'communities' => $this->communities
+			'communities' => $this->communities,
+			'communitySelect' => $communitySelect
 		]);
 	}
 
