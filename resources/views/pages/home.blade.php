@@ -63,7 +63,7 @@
 
 				<!-- Col-md-12 -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<a title="view in area" href="#" class="">View in Area</a>
+					<a title="view in area" href="{{route('search', 'city=las vegas')}}" class="">View in Area</a>
 				</div><!-- Col-md-12 -->
 
 			@else
@@ -97,7 +97,7 @@
 
 				<!-- Col-md-12 -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<a title="view in area" href="#" class="">View in Area</a>
+					<a title="view in area" href="{{route('search', 'city=henderson')}}" class="">View in Area</a>
 				</div><!-- Col-md-12 -->
 
 			@else
@@ -129,7 +129,7 @@
 
 				<!-- Col-md-12 -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<a title="view in area" href="#" class="">View in Area</a>
+					<a title="view in area" href="{{route('search', 'city=north las vegas')}}" class="">View in Area</a>
 				</div><!-- Col-md-12 -->
 
 			@else
@@ -161,7 +161,7 @@
 
 				<!-- Col-md-12 -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<a title="view in area" href="#" class="">View in Area</a>
+					<a title="view in area" href="{{route('search', 'city=boulder city')}}" class="">View in Area</a>
 				</div><!-- Col-md-12 -->
 
 			@else
