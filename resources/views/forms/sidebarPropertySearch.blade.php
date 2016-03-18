@@ -1,7 +1,7 @@
 {!! Form::open(['route' => 'postSearch']) !!}
 	{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
 	{!! Form::text('city', null, ['placeholder' => 'City']) !!}
-	{!! Form::select('community', $communitySelect) !!}
+	<!-- {!! Form::select('community', $communitySelect) !!} -->
 	{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}
 	<div class="col-md-6 col-sm-6 p_l_z">
 		{!! Form::select('bedrooms', ['Beds', '1','2','3','4','5+']) !!}

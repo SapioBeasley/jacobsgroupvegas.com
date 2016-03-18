@@ -4,7 +4,7 @@
 	<div class="col-md-10 p_l_z">
 		{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
 		{!! Form::text('city', null, ['placeholder' => 'City']) !!}
-		{!! Form::select('community', $communitySelect) !!}
+		<!-- {!! Form::select('community', $communitySelect) !!} -->
 		{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}
 		{!! Form::select('bedrooms', ['Beds', '1','2','3','4','5+']) !!}
 		{!! Form::select('totalBaths', ['Baths', '1','2','3','4','5+']) !!}
