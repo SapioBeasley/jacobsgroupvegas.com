@@ -1,8 +1,14 @@
-- [ ] Focus on search functionality today
-- [ ] Add community Pages
 - [ ] Create agent migration, with name, title, short description, phone, email
 - [ ] link properties on search and list pages
+- [ ] Communities count wrong on communities list
 - [ ] Property Detail contact form functioning
 - [ ] To view 2nd property you must subscribe
 - [ ] Add listing table with Adress 1, Adress 2, City, State, Zip, Additional Rooms/Features, Approx. Size, Approx. Age of Kitchen, Approx. Age of Baths,  Message, First Name, Last Name, Email, Phone,
 - [ ] Rename seach values after coming into search controller (ie. max_price needs to check listPrice value)
+- [ ] Resize all images to same sizes
+- [ ] Remove photoInstructions from db
+- [ ] New prop details slider with thumbs on bottom
+- [ ] List datails and descriptions on detail page
+- [ ] paginate needs fix
+- [ ] add lat long to gmap details
+- [ ] create lat long tables
