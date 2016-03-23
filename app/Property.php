@@ -70,6 +70,25 @@ class Property extends Model
         'sysId',
         'entryDate',
         'customPropertyDescription',
+        'virtualTourLink',
+        'solarElectric',
+        'ageRestricted',
+        'associationFee1',
+        'garage',
+        'internet',
+        '2ndBedroomDimensions',
+        '3rdBedroomDimensions',
+        '4thBedroomDimensions',
+        'diningRoomDimensions',
+        'familyRoomDimensions',
+        '5thBedroomDimensions',
+        'livingRoomDimensions',
+        'masterBedroomDimensions',
+        'model',
+        'pvPool',
+        'sewer',
+        'closePrice',
+        'closeDate',
     ];
 
     public function propertyImages()
@@ -80,5 +99,10 @@ class Property extends Model
     public function community()
     {
         return $this->belongsToMany('App\Community');
+    }
+
+    public function listingAgents()
+    {
+        return $this->belongsToMany('App\ListingAgent');
     }
 }

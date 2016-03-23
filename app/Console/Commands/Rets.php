@@ -31,10 +31,10 @@ class Rets extends Command
 
         $config = new \PHRETS\Configuration;
 
-        $config->setLoginUrl('http://glvar.apps.retsiq.com/rets/login')
-              ->setUsername('jet')
-              ->setPassword('glv06')
-              ->setRetsVersion('1.8');
+        $config->setLoginUrl(env('RETS_LOGIN_URL'))
+              ->setUsername(env('RETS_USERNAME'))
+              ->setPassword(env('RETS_PASSWORD'))
+              ->setRetsVersion(env('RETS_VERSION'));
 
         $this->rets = new \PHRETS\Session($config);
 
@@ -49,7 +49,7 @@ class Rets extends Command
     public function handle()
     {
         $results = $this->rets->Search('Property', '1', '*', [
-              'Limit' => 1000,
+              'Limit' => 550,
               'StandardNames' => 0, // give system names
         ]);
 
@@ -83,6 +83,27 @@ class Rets extends Command
                     $this->info('New Property Created');
 
                     $community = $property['communityName'];
+
+                    $listingAgent = [
+                        'name' => $property['listAgentName'],
+                        'phone' => $property['listAgentPhone'],
+                        'email' => $property['email'],
+                    ];
+
+                    if (! empty($listingAgent)) {
+                        $createdListingAgent = \App\ListingAgent::where('listAgentName', '=', $listingAgent['name'])->first();
+
+                        if (is_null($createdListingAgent)) {
+                            $createProperty->listingAgents()->create([
+                                'listAgentName' => $listingAgent['name'],
+                                'listAgentPhone' => $listingAgent['phone'],
+                                'email' => $listingAgent['email'],
+                            ]);
+                            $this->info('New Listing Agent Created');
+                        } else {
+                            $createProperty->listingAgents()->sync([$createdListingAgent->id]);
+                        }
+                    }
 
                     if ($community !== 'None') {
                         $createdCommunity = \App\Community::where('community', '=', $community)->first();
@@ -163,7 +184,7 @@ class Rets extends Command
                 'listingID' => $arrayData['163'],
                 'propertyDescription' => $arrayData['268'],
                 'totalBaths' => $arrayData['63'],
-                'lotSqft' => $arrayData['154'],
+                'lotSqft' => $arrayData['2953'],
                 'bedrooms' => $arrayData['68'],
                 'waterHeaterDescription' => $arrayData['2932'],
                 'garageDescription' => $arrayData['269'],
@@ -210,21 +231,39 @@ class Rets extends Command
                 'photoInstructions' => $arrayData['182'],
                 'communityName' => $arrayData['155'],
                 'entryDate' => $arrayData['104'],
-                'daysOnMarket' => $arrayData['101'],
-
-                // 'closePriceSale Price' => $arrayData['210'],
-                // 'closeDate' => $arrayData['25'],
+                'daysOnMarket' => $arrayData['2940'],
+                'virtualTourLink' => $arrayData['2139'],
+                'solarElectric' => $arrayData['2978'],
+                'ageRestricted' => $arrayData['2983'],
+                'associationFee1' => $arrayData['39'],
+                'garage' => $arrayData['122'],
+                'internet' => $arrayData['130'],
+                '2ndBedroomDimensions' => $arrayData['89'],
+                '3rdBedroomDimensions' => $arrayData['90'],
+                '4thBedroomDimensions' => $arrayData['91'],
+                'diningRoomDimensions' => $arrayData['92'],
+                'familyRoomDimensions' => $arrayData['93'],
+                '5thBedroomDimensions' => $arrayData['94'],
+                'livingRoomDimensions' => $arrayData['95'],
+                'masterBedroomDimensions' => $arrayData['96'],
+                'model' => $arrayData['164'],
+                'pvPool' => $arrayData['203'],
+                'sewer' => $arrayData['219'],
+                'closePriceSale Price' => $arrayData['210'],
+                'closeDate' => $arrayData['25'],
+                //
+                'listAgentName' => $arrayData['26'],
+                'listAgentPhone' => $arrayData['27'],
+                'email' => $arrayData['2385'],
 //
                 // TODO: Unset until column is in db
                 //  'legalLctnTownship' => $arrayData['3'],
                 //  'leaseEnd' => $arrayData['2977'],
                 // 'greenCertificationRating' => $arrayData['2931'],
-                // 'activeDom' => $arrayData['2940'],
                 // 'gated' => $arrayData['2946'],
-                // 'approxTotalLivAreaInt' => $arrayData['2953'],
                 // 'subdivisionName' => $arrayData['247'],
                 // 'masterPlanFeeAmount' => $arrayData['249'],
-                // 'email' => $arrayData['2385'],
+
                 // 'unitNumber' => $arrayData['2386'],
                 // 'width' => $arrayData['2448'],
                 // 'litigation' => $arrayData['2454'],
@@ -236,14 +275,7 @@ class Rets extends Command
                 // 'convertedGarage' => $arrayData['120'],
                 // 'manufactured' => $arrayData['2630'],
                 // 'contractDateAcceptance' => $arrayData['85'],
-                // 'solarElectric' => $arrayData['2978'],
-                // 'ageRestricted' => $arrayData['2983'],
-                // 'associationFee1' => $arrayData['39'],
-                // 'garage' => $arrayData['122'],
-                // 'internet' => $arrayData['130'],
-                // 'model' => $arrayData['164'],
-                // 'pvPool' => $arrayData['203'],
-                // 'sewer' => $arrayData['219'],
+
                 // 'legalLctnRange' => $arrayData['4'],
                 // 'legalLctnSection' => $arrayData['5'],
                 // 'additionalAUSoldTerms' => $arrayData['2890'],
@@ -278,7 +310,6 @@ class Rets extends Command
                 // 'modificationTimestamp' => $arrayData['135'],
                 // 'listDate' => $arrayData['138'],
                 // 'metroMapMapCoor' => $arrayData['158'],
-                // 'virtualTourLink' => $arrayData['2139'],
                 // 'LPSqFt' => $arrayData['2341'],
                 // 'associationFee2' => $arrayData['32'],
                 // 'refrigeratorIncluded' => $arrayData['33'],
@@ -306,8 +337,7 @@ class Rets extends Command
                 // 'lastTransactionCode' => $arrayData['134'],
                 // 'listOfficeOfficeID' => $arrayData['137'],
                 // 'statusChangeDate' => $arrayData['18'],
-                // 'listAgentFirstName' => $arrayData['26'],
-                // 'listAgentPhone' => $arrayData['27'],
+
                 // 'annualPropertyTaxes' => $arrayData['28'],
                 // 'dishwasherInc' => $arrayData['30'],
                 // 'disposalIncluded' => $arrayData['31'],
@@ -317,14 +347,7 @@ class Rets extends Command
                 // 'LPSqFtWithCents' => $arrayData['1738'],
                 // 'LOPhone' => $arrayData['172'],
                 // 'ownerLicensee' => $arrayData['175'],
-                // '2ndBedroomDimensions' => $arrayData['89'],
-                // '3rdBedroomDimensions' => $arrayData['90'],
-                // '4thBedroomDimensions' => $arrayData['91'],
-                // 'diningRoomDimensions' => $arrayData['92'],
-                // 'familyRoomDimensions' => $arrayData['93'],
-                // '5thBedroomDimensions' => $arrayData['94'],
-                // 'livingRoomDimensions' => $arrayData['95'],
-                // 'masterBedroomDimensions' => $arrayData['96'],
+
 //
                 // TODO: Properly Name
                 // 'TaxID  Parcel #' => $arrayData['176'],
@@ -353,7 +376,6 @@ class Rets extends Command
                 // 'Sellers Contribution $' => $arrayData['232'],
                 // 'soldTerm' => $arrayData['233'],
                 // 'Sort Price' => $arrayData['235'],
-                // LivingArea  Approx Liv Area'' => $arrayData['237'],
                 // 'Master Plan Fee - M,Q,Y,N' => $arrayData['250'],
                 // 'Legal Location Township' => $arrayData['253'],
                 // 'Washer Dryer Location' => $arrayData['260'],
@@ -370,7 +392,6 @@ class Rets extends Command
                 // 'Metro Map Page XP' => $arrayData['2345'],
                 // 'Subdivision Name XP' => $arrayData['2353'],
                 // 'SP/SqFt [w/cents]' => $arrayData['2359'],
-                // 'Approx Liv Area' => $arrayData['2361'],
                 // 'Subdivision #' => $arrayData['2367'],
                 // 'Short Sale' => $arrayData['2369'],
                 // 'Elementary School K-2' => $arrayData['2377'],
@@ -400,7 +421,6 @@ class Rets extends Command
                 // 'Loft Dimensions 2ndFloor' => $arrayData['2537'],
                 // 'Studio Y/N' => $arrayData['2547'],
                 // 'Condo Conversion Y/N' => $arrayData['2549'],
-                // 'Approx Addl Liv Area' => $arrayData['2576'],
                 // 'Repo/Reo Y/N' => $arrayData['2660'],
                 // 'NOD Date   DateTime    10' => $arrayData['2661'],
             ];
@@ -419,36 +439,7 @@ class Rets extends Command
                 }
             }
 
-            $newArray[$propertyArrayKey]['customPropertyDescription'] = $property['customPropertyDescription'] = 'Property has been listed with the Jacobs Group for '
-                . $property['daysOnMarket'] . ' days. This ' . $property['propertyType'] . ' home is located at ' . $property['streetNumber'] . ' '
-                . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'] . ' home has ' . $property['totalBaths'] . ' baths, ' . ' '
-                . $property['lotSqft'] . ' sqft, ' . ' and ' . $property['bedrooms'] . ' bedrooms.';
-  // "roofDescription" => ""Composition Shingle""
-  // "lotDescription" => ""1/4 to 1 Acre""
-  // "interiorDescription" => ""Blinds","Ceiling Fan(s)""
-  // "otherApplianceDescription" => ""Microwave""
-  // "constructionDescription" => ""Frame & Siding""
-  // "flooringDescription" => ""Carpet","Linoleum/Vinyl""
-  // "fireplaceDescription" => ""Wood Burning""
-  // "builtDescription" => "Resale"
-  // "heatingDescription" => ""Central""
-  // "bathDownstairsDescription" => "Full Bath Downstairs"
-  // "coolingFuelDescription" => "Electric"
-  // "diningRoomDescription" => ""Dining Area""
-  // "familyRoomDescription" => ""Separate Family Room""
-  // "kitchenDescription" => ""Breakfast Bar/Counter","Solid Surface Countertops","Linoleum/Vinyl Flooring""
-  // "livingRoomDescription" => ""Front""
-  // "masterBedroomDescription" => ""Mbr Walk-In Closet""
-  // "possessionDescription" => "Close of Escrow"
-  // "ovenDescription" => ""Cooktop (E)""
-  // "equestrianDescription" => ""None""
-  // "miscellaneousDescription" => ""None""
-  // "exteriorDescription" => ""None""
-  // "landscapeDescription" => ""No Landscaping Front","No Landscaping Rear""
-  // "heatingFuelDescription" => ""Electric""
-  // "energyDescription" => ""None""
-  // "furnishingsDescription" => "No Furniture"
-
+            $newArray[$propertyArrayKey]['customPropertyDescription'] = $this->buildPropertyDescription($newArray[$propertyArrayKey]);
         }
 
         return $newArray;
@@ -456,6 +447,256 @@ class Rets extends Command
 
     public function buildPropertyDescription($propertyArray)
     {
+        $properties = array_filter($propertyArray);
+        $paragraphArray = $this->makeSentences($properties);
 
+        return $paragraphArray;
+    }
+
+    public function makeSentences($property)
+    {
+        foreach ($property as $key => $propertyValue) {
+
+            switch ($key) {
+                case 'originalListPrice':
+                    $propertyParagraph[] = 'Original list price of this home is ' . $propertyValue;
+                    break;
+
+                case 'listingStatus':
+                    $propertyParagraph[] = 'Current listing status is ' . $propertyValue;
+                    break;
+
+                case 'propertyType':
+                    $propertyParagraph[] = 'Property is a ' . $propertyValue . ' property';
+                    break;
+
+                case 'listPrice':
+                    $propertyParagraph[] = 'The list price for this property is ' . $propertyValue;
+                    break;
+
+                case 'approximateAcreage':
+                    $propertyParagraph[] = 'The approximate acreage of this property is ' . $propertyValue;
+                    break;
+
+                case 'streetNumber':
+                    $propertyParagraph[] = 'Located at ' . $property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'] . ', ' . $property['postalCode'];
+                    break;
+
+                case 'yearBuilt':
+                    $propertyParagraph[] = 'Was built in ' . $propertyValue;
+                    break;
+
+                // case '"':
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                case 'listingID':
+                    $propertyParagraph[] = 'The listing ID for this location is '. $propertyValue;
+                    break;
+
+                // case 'propertyDescription':
+                //     $propertyParagraph[] = 'Property has ' . $propertyValue . ' ;
+                //     break;
+
+                case 'totalBaths':
+                    $propertyParagraph[] = 'This property has a total of ' . $propertyValue . ' baths';
+                    break;
+
+                // case 'lotSqft':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                case 'bedrooms':
+                    $propertyParagraph[] = 'This property has a total of ' . $propertyValue . ' bedrooms';
+                    break;
+
+                // case 'roofDescription':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'lotDescription':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'interiorDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'otherApplianceDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'constructionDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'flooringDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'fireplaceDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'builtDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'heatingDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'bathDownstairsDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'coolingFuelDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'diningRoomDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'familyRoomDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'kitchenDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'livingRoomDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'masterBedroomDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'possessionDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'ovenDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'equestrianDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'miscellaneousDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'exteriorDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'landscapeDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'heatingFuelDescription'
+                //     $propertyParagraph[] = . $property;
+                //     break;
+
+                // case 'energyDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'furnishingsDescription'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'saleType'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'idx'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'images'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'photoInstructions'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                case 'communityName':
+                    if ($propertyValue == 'none') {
+                        contnue;
+                    }
+
+                    $propertyParagraph[] = 'Located in the community of ' . $propertyValue;
+                    break;
+
+                // case 'entryDate'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'virtualTourLink':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'associationFee1':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'internet':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case '2ndBedroomDimensions':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case '3rdBedroomDimensions':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'diningRoomDimensions':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'familyRoomDimensions':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'livingRoomDimensions':
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                case 'masterBedroomDimensions':
+                    $propertyParagraph[] = 'Dimensions of the master bedroom are ' . $propertyValue;
+                    break;
+
+                // case 'pvPool'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'sewer'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+                // case 'closePriceSale'
+                //     $propertyParagraph[] = . $propertyValue;
+                //     break;
+
+
+                default:
+                    # contnue...
+                    break;
+            }
+        }
+
+        shuffle($propertyParagraph);
+
+        $propertyParagraph = implode('. ', $propertyParagraph);
+
+        return $propertyParagraph;
     }
 }
