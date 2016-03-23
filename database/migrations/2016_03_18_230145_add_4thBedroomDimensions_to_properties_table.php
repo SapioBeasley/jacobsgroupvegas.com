@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCustomPropertyDescriptionToPropertiesTable extends Migration
+class Add4thBedroomDimensionsToPropertiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddCustomPropertyDescriptionToPropertiesTable extends Migration
     public function up()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->string('customPropertyDescription', 700);
+            $table->string('4thBedroomDimensions');
         });
     }
 
@@ -25,7 +25,7 @@ class AddCustomPropertyDescriptionToPropertiesTable extends Migration
     public function down()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->dropColumn('customPropertyDescription');
+            $table->dropColumn('4thBedroomDimensions');
         });
     }
 }
