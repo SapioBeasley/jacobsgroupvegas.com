@@ -49,7 +49,7 @@ class Rets extends Command
     public function handle()
     {
         $results = $this->rets->Search('Property', '1', '*', [
-              'Limit' => 550,
+              'Limit' => env('RETS_PULL'),
               'StandardNames' => 0, // give system names
         ]);
 
