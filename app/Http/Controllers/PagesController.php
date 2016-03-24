@@ -226,10 +226,26 @@ class PagesController extends Controller
 		$propertyModel = new \App\Property;
 
 		$properties['all'] = $propertyModel->with('propertyImages')->orderBy('entryDate', 'DESC')->paginate(15);
-		$properties['lasVegas'] = $propertyModel->where('city', '=', 'Las Vegas')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
-		$properties['henderson'] = $propertyModel->where('city', '=', 'Henderson')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
-		$properties['northLasVegas'] = $propertyModel->where('city', '=', 'North Las Vegas')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
-		$properties['boulderCity'] = $propertyModel->where('city', '=', 'Boulder City')->where('listingStatus', '!=', 'Closed')->with('propertyImages')->orderBy('entryDate', 'DESC')->get();
+		$properties['lasVegas'] = $propertyModel->where('city', '=', 'Las Vegas')
+			->where('listingStatus', '!=', 'Closed')
+			->with('propertyImages')
+			->orderBy('entryDate', 'DESC')
+			->take(6)->get();
+		$properties['henderson'] = $propertyModel->where('city', '=', 'Henderson')
+			->where('listingStatus', '!=', 'Closed')
+			->with('propertyImages')
+			->orderBy('entryDate', 'DESC')
+			->take(6)->get();
+		$properties['northLasVegas'] = $propertyModel->where('city', '=', 'North Las Vegas')
+			->where('listingStatus', '!=', 'Closed')
+			->with('propertyImages')
+			->orderBy('entryDate', 'DESC')
+			->take(6)->get();
+		$properties['boulderCity'] = $propertyModel->where('city', '=', 'Boulder City')
+			->where('listingStatus', '!=', 'Closed')
+			->with('propertyImages')
+			->orderBy('entryDate', 'DESC')
+			->take(6)->get();
 
 		return $properties;
 	}
