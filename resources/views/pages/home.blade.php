@@ -13,13 +13,10 @@
 					<img src="images/slider/slide-1.jpg" alt="Slide 1">
 				</div>
 				<div class="item">
-					<img src="images/slider/slide-3.jpg" alt="Slide 1">
-				</div>
-				<div class="item">
 					<img src="images/slider/slide-2.jpg" alt="Slide 2">
 				</div>
 				<div class="item">
-					<img src="images/slider/slide-2.jpg" alt="Slide 2">
+					<img src="images/slider/slide-3.jpg" alt="Slide 3">
 				</div>
 			</div>
 
