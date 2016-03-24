@@ -12,3 +12,4 @@
 - [ ] paginate needs fix
 - [ ] add lat long to gmap details
 - [ ] create lat long tables
+- [ ] Which details would you like to add or remove from property details page?

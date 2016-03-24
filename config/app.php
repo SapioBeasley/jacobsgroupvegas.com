@@ -158,6 +158,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Spatie\Tail\TailServiceProvider::class,
         Sapioweb\CrudHelper\CrudHelperServiceProvider::class,
+        Sapioweb\Geocode\GeocodeServiceProvider::class,
 
     ],
 

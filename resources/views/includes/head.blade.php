@@ -6,7 +6,7 @@
 <title>@yield('title') JacobsGroupVegas.com</title>
 
 <link rel="shortcut icon" href="{{asset('favicon.ico?=' . rand())}}">
-<link href="{{asset('libraries/bootstrap/bootstrap.min.css')}}" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
 <linK href="{{asset('libraries/owl-carousel/owl.carousel.css')}}" rel="stylesheet"/> <!-- Core Owl Carousel CSS File  *  v1.3.3 -->
 <linK href="{{asset('libraries/owl-carousel/owl.theme.css')}}" rel="stylesheet"/> <!-- Core Owl Carousel CSS Theme  File  *  v1.3.3 -->
 <link href="{{asset('libraries/fonts/font-awesome.min.css')}}" rel="stylesheet"/>

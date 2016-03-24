@@ -16,8 +16,7 @@
 				<ul>
 					<li><i class="fa fa-expand"></i> {{$property['lotSqft']}} sq </li>
 					<li><img src="images/aa-listing/bedroom-icon.png" alt="bedroom-icon"> {{$property['bedrooms']}} </li>
-					<li><img src="images/aa-listing/bathroom-icon.png" alt="bathroom-icon">{{$property['totalBaths']}}2 </li>
-					<li><i class="fa fa-car"></i>1</li>
+					<li><img src="images/aa-listing/bathroom-icon.png" alt="bathroom-icon">{{$property['totalBaths']}} </li>
 				</ul>
 			</div>
 		</div>

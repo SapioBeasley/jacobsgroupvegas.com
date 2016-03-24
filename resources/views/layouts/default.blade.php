@@ -101,7 +101,7 @@
 		<!-- jQuery Include -->
 		<script src="{{asset('libraries/jquery.min.js')}}"></script>
 		<script src="{{asset('libraries/jquery.easing.min.js')}}"></script><!-- Easing Animation Effect -->
-		<script src="{{asset('libraries/bootstrap/bootstrap.min.js')}}"></script> <!-- Core Bootstrap v3.2.0 -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> <!-- Core Bootstrap v3.2.0 -->
 		<script src="{{asset('libraries/modernizr/modernizr.custom.37829.js')}}"></script> <!-- Modernizer -->
 		<script src="{{asset('libraries/jquery.appear.js')}}"></script> <!-- It Loads jQuery when element is appears -->
 		<script src="{{asset('libraries/owl-carousel/owl.carousel.min.js')}}"></script> <!-- Core Owl Carousel CSS File  *	v1.3.3 -->
@@ -110,11 +110,26 @@
 		<script src="{{asset('libraries/drag-drop/drag-drop.js')}}"></script> <!-- Drag Drop File -->
 		<script src="{{asset('libraries/drag-drop/modernizr.custom.js')}}"></script> <!-- Drag Drop File -->
 		<script src="http://maps.google.com/maps/api/js" type="text/javascript"></script>
-		<script src="{{asset('libraries/gmap/jquery.gmap.min.js')}}"></script> <!-- map -->
+		<script src="{{asset('libraries/gmap/gmap.js')}}"></script> <!-- map -->
 		<script src="{{asset('libraries/expanding-search/classie.js')}}"></script>
 		<script src="{{asset('libraries/expanding-search/uisearch.js')}}"></script>
 		<!-- Customized Scripts -->
 		<script src="{{asset('js/functions.js')}}"></script>
+		<linK href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.3/css/lightslider.min.css" rel="stylesheet"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.3/js/lightslider.min.js"></script>
+		<script type="text/javascript">
+			$('#lightSlider').lightSlider({
+			    gallery: true,
+			    item: 1,
+			    loop: true,
+			    slideMargin: 0,
+			    thumbItem: 9
+			});
+		</script>
+
+		@yield('mapCoords')
+		@yield('modal')
+
 		<script id="imageTemplate" type="text/x-jquery-tmpl">
 			<div class="col-md-3 col-sm-3 col-xs-6">
 				<div class="imageholder">

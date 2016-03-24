@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f1f2cc92c0c1663e5a4973da08f7210d",
-    "content-hash": "f0ef450ac877862b6625379cd9871469",
+    "hash": "26a83ff608bb708902ade20e1fe18f3b",
+    "content-hash": "201c77924ed8cd8b9cd9460a9d764b1f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1258,6 +1258,57 @@
                 "update"
             ],
             "time": "2016-02-04 20:30:22"
+        },
+        {
+            "name": "sapioweb/geocode",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SapioBeasley/geocode.git",
+                "reference": "ce312fd4ed7cbe5f6f9b3805f650007b088559e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SapioBeasley/geocode/zipball/ce312fd4ed7cbe5f6f9b3805f650007b088559e4",
+                "reference": "ce312fd4ed7cbe5f6f9b3805f650007b088559e4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sapioweb\\Geocode\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Beasley",
+                    "email": "andreas@sapioweb.com"
+                }
+            ],
+            "description": "PHP geocoding for laravel 5 & 5.1 using Google API",
+            "homepage": "http://localhost",
+            "keywords": [
+                "api",
+                "beasley",
+                "geocode",
+                "google",
+                "laravel",
+                "sapioweb",
+                "service provider",
+                "service providers"
+            ],
+            "time": "2015-12-06 01:01:11"
         },
         {
             "name": "sapioweb/phrets",

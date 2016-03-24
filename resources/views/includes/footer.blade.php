@@ -1,13 +1,6 @@
 
 <div class="container">
 
-	<!-- <div class="col-md-3 col-sm-6">
-		<aside class="widget widget_about">
-			<h3 class="widget-title">About Us</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-		</aside>
-	</div> --><!-- col-md-3 -->
-
 	<div class="col-md-9 col-sm-6">
 		<aside class="widget widget_quick_links">
 			<h3 class="widget-title">Communities</h3>
@@ -29,20 +22,6 @@
 			<a title="mailto" href="mailto:jonathan@jacobsgroupvegas.com">jonathan@jacobsgroupvegas.com</a>
 		</aside>
 	</div>
-
-	<!-- col-md-3 -->
-	<!-- <div class="col-md-3 col-sm-6">
-		<aside class="widget widget_newsletter">
-			<h3 class="widget-title">NewsLetter</h3>
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Enter Your ID">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">Go</button>
-				</span>
-			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-		</aside>
-	</div> -->
 
 </div>
 

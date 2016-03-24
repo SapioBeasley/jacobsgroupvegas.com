@@ -1,11 +1,9 @@
-@foreach($property->propertyImages as $imageKey => $image)
-	@if ($imageKey == 0)
-		<div class="item active">
-			<img src="{{asset($image['dataUri'])}}" alt="{{$property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state']}}">
-		</div>
-	@else
-		<div class="item">
-			<img src="{{asset($image['dataUri'])}}" alt="{{$property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state']}}">
-		</div>
-	@endif
-@endforeach
+<ul id="lightSlider">
+    @foreach($property->propertyImages as $imageKey => $image)
+
+        <li data-thumb="{{asset($image['dataUri'])}}">
+            <img src="{{asset($image['dataUri'])}}" />
+        </li>
+
+    @endforeach
+</ul>

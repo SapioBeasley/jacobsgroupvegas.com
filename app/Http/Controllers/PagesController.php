@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
-
+use Sapioweb\Geocode\Geocode;
 use App\Http\Requests;
 
 class PagesController extends Controller
 {
+	protected $views = 0;
+
 	public function __construct()
 	{
 		$this->communities = \App\Community::take(24)->get();
@@ -78,7 +81,7 @@ class PagesController extends Controller
 		$community = \App\Community::where('community', '=', $community)->with('properties')->first();
 
 		if (is_null($community)) {
-			abort('404');
+			abort(404);
 		}
 
 		$properties = \App\Property::whereHas('community', function ($q) use ($community) {
@@ -128,7 +131,7 @@ class PagesController extends Controller
 		]);
 	}
 
-	public function showSingleProperties($listingId)
+	public function showSingleProperties(Request $request, $listingId)
 	{
 		$property = \App\Property::where('listingID', '=', $listingId)->with('propertyImages')->first();
 
@@ -136,10 +139,60 @@ class PagesController extends Controller
 			abort(404);
 		}
 
-		return view('pages.propertyDetail')->with([
-			'property' => $property,
-			'communities' => $this->communities
-		]);
+		$geocode = new Geocode;
+
+		$address = $property['streetNumber']
+			. ' ' . $property['streetName']
+			. ' ' . $property['city']
+			. ' ' . $property['state']
+			. ' ' . $property['postalCode'];
+
+		$geoLocation = $geocode->getCoordinates($address);
+
+
+
+
+		switch (true) {
+			case ! is_null($request->cookie('propertyViews')):
+				$this->views = $this->views + (integer) $request->cookie('propertyViews');
+
+				if ($this->views > 0) {
+					$response = new \Illuminate\Http\Response(view('pages.propertyDetailSubscribe')->with([
+						'property' => $property,
+						'communities' => $this->communities,
+						'geoLocation' => $geoLocation
+					]));
+
+					// $response->withCookie(cookie()->forget('propertyViews'));
+				}
+				break;
+
+			default:
+				$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
+					'property' => $property,
+					'communities' => $this->communities,
+					'geoLocation' => $geoLocation
+				]));
+
+				$response->withCookie(cookie()->forever('propertyViews', $this->views + 1));
+				break;
+		}
+
+
+
+
+
+
+
+
+
+		return $response;
+
+		// return view('pages.propertyDetail')->with([
+		// 	'property' => $property,
+		// 	'communities' => $this->communities,
+		// 	'geoLocation' => $geoLocation
+		// ])->withCookie(cookie()->forever('property-views', '1'));
 	}
 
 	public function showBuyingServices()
