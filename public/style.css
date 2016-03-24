@@ -886,6 +886,11 @@ textarea {
 	overflow: hidden;
 }
 
+.register-modal {
+	width: 300px;
+	text-align: center;
+}
+
 .property-images-box > h4 {
 	padding: 7px 14px;
 	font-size: 17px;

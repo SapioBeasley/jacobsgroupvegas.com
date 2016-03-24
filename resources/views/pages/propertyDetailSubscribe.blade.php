@@ -129,18 +129,17 @@
 @section('modal')
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog register-modal" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Regsiter to View Property...</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-6">
-						<a href="" class="btn btn-primary">Register</a>
-					</div>
-					<div class="col-md-6" >
-						<a href="" class="btn btn-primary">Sign In</a>
+					<div class="col-md-12">
+						<a href="{{url('/register')}}" class="btn btn-primary btn-lg btn-block">Register</a>
+
+						<a href="{{url('/login')}}" class="btn btn-default btn-lg btn-block">Sign In</a>
 					</div>
 				</div>
 			</div>

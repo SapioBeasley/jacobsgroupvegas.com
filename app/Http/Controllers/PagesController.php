@@ -133,7 +133,8 @@ class PagesController extends Controller
 
 	public function showSingleProperties(Request $request, $listingId)
 	{
-		// dd(\Auth::check());
+
+
 		$property = \App\Property::where('listingID', '=', $listingId)->with('propertyImages')->first();
 
 		if (is_null($property)) {
@@ -150,21 +151,29 @@ class PagesController extends Controller
 
 		$geoLocation = $geocode->getCoordinates($address);
 
-
-
-
 		switch (true) {
 			case ! is_null($request->cookie('propertyViews')):
-				$this->views = $this->views + (integer) $request->cookie('propertyViews');
 
-				if ($this->views > 0) {
-					$response = new \Illuminate\Http\Response(view('pages.propertyDetailSubscribe')->with([
+				if (! \Auth::check()) {
+
+					$this->views = $this->views + (integer) $request->cookie('propertyViews');
+
+					if ($this->views > 0) {
+						$response = new \Illuminate\Http\Response(view('pages.propertyDetailSubscribe')->with([
+							'property' => $property,
+							'communities' => $this->communities,
+							'geoLocation' => $geoLocation
+						]));
+					}
+				} else {
+
+					$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 						'property' => $property,
 						'communities' => $this->communities,
 						'geoLocation' => $geoLocation
 					]));
 
-					// $response->withCookie(cookie()->forget('propertyViews'));
+					$response->withCookie(cookie()->forget('propertyViews'));
 				}
 				break;
 
@@ -178,14 +187,6 @@ class PagesController extends Controller
 				$response->withCookie(cookie()->forever('propertyViews', $this->views + 1));
 				break;
 		}
-
-
-
-
-
-
-
-
 
 		return $response;
 
