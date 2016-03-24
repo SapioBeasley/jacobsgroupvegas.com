@@ -48,14 +48,6 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        $data = [
-            'name' => $data['first_name'] . ' ' . $data['last_name'],
-            'email' => $data['email'],
-            'password' => $data['email'],
-            'password_confirmation' => $data['email'],
-            'phone' => $data['phone']
-        ];
-
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -71,21 +63,10 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $data = [
-            'name' => $data['first_name'] . ' ' . $data['last_name'],
-            'email' => $data['email'],
-            'password' => $data['email'],
-            'password_confirmation' => $data['email'],
-            'phone' => $data['phone']
-        ];
-
-        $response = new \Illuminate\Http\Response(User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]));
-
-        $response->withCookie(cookie()->forget('propertyViews'));
-        return $response;
+        ]);
     }
 }
