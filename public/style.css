@@ -882,6 +882,8 @@ textarea {
 
 .property-images-box {
 	position: relative;
+	max-height: 260px;
+	overflow: hidden;
 }
 
 .property-images-box > h4 {
