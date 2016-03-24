@@ -134,57 +134,16 @@
 			<div class="modal-header">
 				<h4 class="modal-title">Regsiter to View Property...</h4>
 			</div>
-			{!! Form::open(['url' => '/register']) !!}
-				<div class="modal-body">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6">
-								{!! Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => 'First Name']) !!}
-							</div>
-							<div class="col-md-6">
-								{!! Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Last Name']) !!}
-							</div>
-						</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<a href="" class="btn btn-primary">Register</a>
 					</div>
-					<div class="form-group">
-						{!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
-					</div>
-					<div class="form-group">
-						{!! Form::text('verify_email', null, ['class' => 'form-control', 'placeholder' => 'Verify Email']) !!}
-					</div>
-					<div class="form-group">
-						{!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => 'Phone']) !!}
-					</div>
-					<div class="form-group">
-						{!! Form::select('purchasing_when', ['Time from of buying', 'Immediately', '1 Month', '2 Months', '3 Months', '4 Months', '6 Months +', 'Unsure', 'Just Researching'], null, ['class' => 'form-control']) !!}
+					<div class="col-md-6" >
+						<a href="" class="btn btn-primary">Sign In</a>
 					</div>
 				</div>
-				 @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-@if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-
-                               @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-				<div class="modal-footer">
-					{!! Form::submit('Register', ['class' => 'btn btn-primary']) !!}
-				</div>
-			{!! Form::close() !!}
+			</div>
 		</div>
 	</div>
 </div>

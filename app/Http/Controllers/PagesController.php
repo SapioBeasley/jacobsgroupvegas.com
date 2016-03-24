@@ -133,6 +133,7 @@ class PagesController extends Controller
 
 	public function showSingleProperties(Request $request, $listingId)
 	{
+		// dd(\Auth::check());
 		$property = \App\Property::where('listingID', '=', $listingId)->with('propertyImages')->first();
 
 		if (is_null($property)) {
