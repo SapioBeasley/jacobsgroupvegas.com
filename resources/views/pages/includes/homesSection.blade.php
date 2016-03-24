@@ -13,7 +13,7 @@
 		<div class="property-details">
 			<a title="Property Title" href="{{route('properties.show', $property['listingID'])}}">{{$property['streetNumber'] . ' ' . $property['streetName']}}</a>
 			<h4>&dollar;{{$property['listPrice']}}</h4>
-			<p>{{strlen($property['customPropertyDescription']) > 150 ? substr($property['customPropertyDescription'],0,150)."..." : $property['customPropertyDescription']}} <a title="more" href="{{route('properties.show', $property['listingID'])}}">more</a></p>
+			<p>{{strlen($property['customPropertyDescription']) > 140 ? substr($property['customPropertyDescription'],0,140)."..." : $property['customPropertyDescription']}} <a title="more" href="{{route('properties.show', $property['listingID'])}}">more</a></p>
 			<ul>
 				<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
 				<li><i><img src="images/icon/bed-icon.png" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>
