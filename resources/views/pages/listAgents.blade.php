@@ -44,13 +44,13 @@
 					</div>
 					<!-- Agent List /- -->
 
-					<div class="listing-pagination">
+					<!-- <div class="listing-pagination">
 						<ul class="pagination">
 							<li class="active"><a href="#">1</a></li>
 							<li><a href="#">2</a></li>
 							<li><a href="#">3</a></li>
 						</ul>
-					</div>
+					</div> -->
 				</div><!-- col-md-9 /- -->
 				<!-- col-md-3 -->
 				<!-- <div class="col-md-3 col-sm-6 p_r_z property-sidebar">

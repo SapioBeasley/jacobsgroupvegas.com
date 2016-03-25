@@ -8,7 +8,8 @@
 - [ ] paginate needs fix
 - [ ] Which details would you like to add or remove from property details page?
 
-
+Can we put everyone on there and contact info for now? I will update the bios tomorrow.
+we still have the same pic twice on the scrolls on the home page.
 
 
 Jon
@@ -25,10 +26,6 @@ Kelly
 
 Nicole Davis
 Nicole began her career in real estate in 2011 where she started as the receptionist of Simply Vegas. Her ever-expanding role with the company quickly evolved in to becoming the Office Manager, to where she performs a wide variety of tasks including transaction coordination and file management. Before working in real estate she was an administrative assistant for a structural engineering firm, also assisting in project coordination. This background has helped her be meticulous in organization and dedicated to providing an extremely high standard of customer service.
-
-
-
-
 
 Washington Gonzalez
 Washington has been in the real estate industry for more than 10 years. Originally from Mexico City, Washington is bilingual and bi-cultural, speaking both Spanish and English fluently, as well as understanding both the Hispanic and Anglo cultures.
