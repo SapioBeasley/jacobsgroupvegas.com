@@ -7,9 +7,7 @@
 - [ ] Remove photoInstructions from db
 - [ ] paginate needs fix
 - [ ] Which details would you like to add or remove from property details page?
-
-Can we put everyone on there and contact info for now? I will update the bios tomorrow.
-we still have the same pic twice on the scrolls on the home page.
+- [ ] Reduce home page descriptions
 
 
 Jon
