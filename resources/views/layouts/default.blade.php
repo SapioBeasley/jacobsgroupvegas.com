@@ -101,7 +101,7 @@
 		<!-- jQuery Include -->
 		<script src="{{asset('libraries/jquery.min.js')}}"></script>
 		<script src="{{asset('libraries/jquery.easing.min.js')}}"></script><!-- Easing Animation Effect -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> <!-- Core Bootstrap v3.2.0 -->
+		<script src="{{asset('bootstrap/3.3.6/js/bootstrap.min.js')}}"></script> <!-- Core Bootstrap v3.2.0 -->
 		<script src="{{asset('libraries/modernizr/modernizr.custom.37829.js')}}"></script> <!-- Modernizer -->
 		<script src="{{asset('libraries/jquery.appear.js')}}"></script> <!-- It Loads jQuery when element is appears -->
 		<script src="{{asset('libraries/owl-carousel/owl.carousel.min.js')}}"></script> <!-- Core Owl Carousel CSS File  *	v1.3.3 -->
