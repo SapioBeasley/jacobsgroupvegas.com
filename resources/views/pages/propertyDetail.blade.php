@@ -32,6 +32,27 @@
 	<div class="property-main-details">
 		<!-- container -->
 		<div class="container">
+
+			<div class="shortcodes col-md-12 col-sm-12 col-xs-12 p_z">
+				@if (Session::has('success_message'))
+					<div class="alert alert-success" role="alert">
+						<span>Well done!</span> {{Session::get('success_message')}}
+					</div>
+				@elseif (Session::has('info_message'))
+					<div class="alert alert-info" role="alert">
+						<span>Heads Up!</span> {{Session::get('success_message')}}
+					</div>
+				@elseif (Session::has('warning_message'))
+					<div class="alert alert-warning" role="alert">
+						<span>Warning!</span> {{Session::get('warning_message')}}
+					</div>
+				@elseif (Session::has('error_message'))
+					<div class="alert alert-danger" role="alert">
+						<span>Well Done!</span> {{Session::get('error_message')}}
+					</div>
+				@endif
+			</div>
+
 			<div class="property-header">
 				<h3>{{$property['streetNumber'] .' ' . $property['streetName']}} - {{$property['city']}}
 					<span>{{$property['propertyType']}}</span>
@@ -50,15 +71,12 @@
 			<div class="property-details-content container-fluid p_z">
 				<!-- col-md-9 -->
 				<div class="col-md-9 col-sm-6 p_z">
+
 					<!-- Slider Section -->
 					<div  class="carousel slide property-detail1-slider" >
-
-						<!-- Wrapper for slides -->
-						<!-- <div class="carousel-inner" > -->
 							@include('pages.includes.propertiesDetailCarousel')
-						<!-- </div> -->
-
 					</div><!-- Slider Section /- -->
+
 					<div class="single-property-details">
 						<h3>Description</h3>
 						<p>{{$property['customPropertyDescription']}}</p>
@@ -91,6 +109,26 @@
 					<aside class="widget widget-search">
 						<h2 class="widget-title">Send Message to<span>View</span></h2>
 						@include('forms.propertyInquire')
+					</aside>
+					<aside class="widget widget-property-featured">
+						<h2 class="widget-title">Most<span>Recent</span></h2>
+
+						@foreach ($recent as $newProp)
+							<div class="property-featured-inner">
+								<div class="col-md-4 col-sm-3 col-xs-2 p_z">
+									@if (isset($newProp['propertyImages'][0]))
+										<a href="{{route('properties.show', $newProp['listingID'])}}" title="Fetured Property"><img src="{{asset($newProp['propertyImages'][0]['dataUri'])}}" alt="feacture1"></a>
+									@else
+										<a href="{{route('properties.show', $newProp['listingID'])}}" title="Fetured Property"><img src="http://placehold.it/73x55?text=No Image" alt="feacture1"></a>
+									@endif
+								</div>
+								<div class="col-md-8 col-sm-9 col-xs-10 featured-content">
+									<a href="{{route('properties.show', $newProp['listingID'])}}" title="Fetured Property">{{$newProp['streetNumber'] . ' ' . $newProp['streetName']}}</a>
+									<h3>&dollar;{{$newProp['listPrice']}}</h3>
+								</div>
+							</div>
+						@endforeach
+
 					</aside>
 				</div>
 			</div>

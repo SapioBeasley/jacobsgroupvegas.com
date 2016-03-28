@@ -101,6 +101,11 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'properties.show',
 		'uses' => 'PagesController@showSingleProperties'
 	]);
+
+	Route::post('/property-inquire', [
+		'as' => 'properties.inquire',
+		'uses' => 'ContactsController@propertyInquire'
+	]);
 });
 
 Route::group(['middleware' => 'web'], function () {

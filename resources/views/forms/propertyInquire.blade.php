@@ -1,6 +1,6 @@
-<form>
-	<input type="text" placeholder="Your Name" />
-	<input type="text" placeholder="Your Email ID" />
-	<textarea placeholder="Message"></textarea>
-	<input type="submit" value="Submit" class="btn">
-</form>
+{!! Form::open(['route' => ['properties.inquire', 'listingId=' . $property['listingID']]]) !!}
+	{!! Form::text('name', null, ['placeholder' => 'Your Name']) !!}
+	{!! Form::text('email', null, ['placeholder' => 'Your Email']) !!}
+	{!! Form::textarea('message', null, ['placeholder' => 'Message']) !!}
+	{!! Form::submit('Submit', ['class' => 'btn']) !!}
+{!! Form::close() !!}

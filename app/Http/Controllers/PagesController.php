@@ -16,6 +16,8 @@ class PagesController extends Controller
 		$this->communities = \App\Community::take(24)->get();
 
 		$this->communitySelect = $this->communitiesSelect($this->communities);
+
+		$this->recent = \App\Property::take(5)->orderBy('id', 'DESC')->with('propertyImages')->get();
 	}
 
 	public function showHome(Request $request = null)
@@ -124,6 +126,8 @@ class PagesController extends Controller
 	{
 		$properties = $this->getProperties();
 
+		$properties = $properties['all'];
+
 		return view('pages.listProperties')->with([
 			'properties' => $properties,
 			'communities' => $this->communities,
@@ -133,8 +137,6 @@ class PagesController extends Controller
 
 	public function showSingleProperties(Request $request, $listingId)
 	{
-
-
 		$property = \App\Property::where('listingID', '=', $listingId)->with('propertyImages')->first();
 
 		if (is_null($property)) {
@@ -165,12 +167,15 @@ class PagesController extends Controller
 							'geoLocation' => $geoLocation
 						]));
 					}
+
+					$response->withCookie(cookie()->forever('propertyViews', $this->views + 1));
 				} else {
 
 					$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 						'property' => $property,
 						'communities' => $this->communities,
-						'geoLocation' => $geoLocation
+						'geoLocation' => $geoLocation,
+						'recent' => $this->recent
 					]));
 
 					$response->withCookie(cookie()->forget('propertyViews'));
@@ -181,7 +186,8 @@ class PagesController extends Controller
 				$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 					'property' => $property,
 					'communities' => $this->communities,
-					'geoLocation' => $geoLocation
+					'geoLocation' => $geoLocation,
+					'recent' => $this->recent
 				]));
 
 				$response->withCookie(cookie()->forever('propertyViews', $this->views + 1));
@@ -189,12 +195,6 @@ class PagesController extends Controller
 		}
 
 		return $response;
-
-		// return view('pages.propertyDetail')->with([
-		// 	'property' => $property,
-		// 	'communities' => $this->communities,
-		// 	'geoLocation' => $geoLocation
-		// ])->withCookie(cookie()->forever('property-views', '1'));
 	}
 
 	public function showBuyingServices()

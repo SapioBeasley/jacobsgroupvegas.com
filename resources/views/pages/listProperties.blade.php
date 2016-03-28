@@ -36,13 +36,13 @@
 					</div>
 				</div>
 
-				@foreach ($properties['all'] as $property)
+				@foreach ($properties as $property)
 					@include('pages.includes.propertiesLoopList')
 				@endforeach
 
 				<!-- Pagination -->
 				<div class="listing-pagination">
-					{{$properties['all']->links()}}
+					{{$properties->links()}}
 				</div><!-- Pagination /- -->
 
 			</div>

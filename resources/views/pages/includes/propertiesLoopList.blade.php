@@ -4,7 +4,7 @@
 		@if (isset($property['propertyImages'][0]))
 			<div class="col-md-4 p_z property-image">
 				<a title="Property Image" href="{{route('properties.show', $property['listingID'])}}">
-					<img src="{{asset($property['propertyImages'][0]['dataUri'])}}" alt="property1">
+					<img src="{{asset($property['propertyImages'][0]['dataUri'])}}" alt="property1" onerror="this.src='http://placehold.it/350x260?text=No Image Available'">
 				</a>
 			</div>
 		@endif
