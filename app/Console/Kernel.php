@@ -35,6 +35,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('rets:properties')
             ->everyMinute()
             ->sendOutputTo($filePath)
-            ->emailOutputTo(env('MAIL_USERNAME'));
+            ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
     }
 }
