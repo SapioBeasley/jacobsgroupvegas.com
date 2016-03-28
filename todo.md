@@ -1,11 +1,14 @@
 - [ ] Create agent migration, with name, title, short description, phone, email
 - [ ] link properties on search and list pages
 - [ ] Communities count wrong on communities list
+- [ ] Community description on community page
 - [ ] Property Detail contact form functioning
 - [ ] Add listing table with Adress 1, Adress 2, City, State, Zip, Additional Rooms/Features, Approx. Size, Approx. Age of Kitchen, Approx. Age of Baths,  Message, First Name, Last Name, Email, Phone,
 - [ ] Rename seach values after coming into search controller (ie. max_price needs to check listPrice value)
 - [ ] Remove photoInstructions from db
 - [ ] paginate needs fix
+- [ ] Community contact page functioning
+- [ ] Search use url request and not sessions
 - [ ] Which details would you like to add or remove from property details page?
 - [ ] Reduce home page descriptions
 

@@ -25,6 +25,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('rets:properties')->everyThirtyMinutes();
+        $filePath = 'storage/app/scheduleResult.txt';
+
+        // $schedule->command('inspire')
+        //     ->everyMinute()
+        //     ->sendOutputTo($filePath)
+        //     ->emailOutputTo('andreas@sapioweb.com');
+
+        $schedule->command('rets:properties')
+            ->everyMinute()
+            ->sendOutputTo($filePath)
+            ->emailOutputTo(env('MAIL_USERNAME'));
     }
 }
