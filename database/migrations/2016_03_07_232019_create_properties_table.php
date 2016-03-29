@@ -14,6 +14,7 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('listingId');
             $table->string('propertyType');
             $table->string('streetNumber');
             $table->string('streetName');
@@ -22,6 +23,16 @@ class CreatePropertiesTable extends Migration
             $table->double('approximateAcreage');
             $table->double('value');
             $table->string('yearBuilt');
+            $table->string('state');
+            $table->string('listPrice');
+            $table->string('listingStatus');
+            $table->string('originalListPrice');
+            $table->string('propertyDescription');
+            $table->integer('totalBaths');
+            $table->integer('lotSqft');
+            $table->integer('bedrooms');
+            $table->string('waterHeaterDescription');
+            $table->string('garageDescription');
             $table->timestamps();
         });
     }
