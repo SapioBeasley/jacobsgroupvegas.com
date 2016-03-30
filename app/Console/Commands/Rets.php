@@ -139,6 +139,14 @@ class Rets extends Command
 
             $client = \Elasticsearch\ClientBuilder::create()->build();
 
+            $removeParams = [
+                'index' => 'properties',
+                'type' => 'property',
+                'id' => $property['listingId']
+            ];
+
+            $response = $client->delete($params);
+
             $params = [
                 'index' => 'properties',
                 'type' => 'property',

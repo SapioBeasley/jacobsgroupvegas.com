@@ -5,6 +5,7 @@
 - [ ] Property Detail contact form functioning
 - [ ] Add listing table with Adress 1, Adress 2, City, State, Zip, Additional Rooms/Features, Approx. Size, Approx. Age of Kitchen, Approx. Age of Baths,  Message, First Name, Last Name, Email, Phone,
 - [ ]  only show active listings
+- [ ] remove closed
 - [ ] Concat migrations
 - [ ] Put form on pop up and make ajax calls
 - [ ] Rename seach values after coming into search controller (ie. max_price needs to check listPrice value)
@@ -12,6 +13,7 @@
 - [ ] paginate needs fix
 - [ ] Community contact page functioning
 - [ ] Search use url request and not sessions
+- [ ] sort elasticsearch by entry date
 - [ ] Which details would you like to add or remove from property details page?
 - [ ] Copy prod kernel to local
 
