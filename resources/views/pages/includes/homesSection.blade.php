@@ -3,7 +3,7 @@
 
 		@if (isset($property['propertyImages'][0]))
 			<div class="property-images-box">
-				<a title="Property Image" href="{{route('properties.show', $property['listingID'])}}">
+				<a title="Property Image" href="{{route('properties.show', $property['listingId'])}}">
 					<img src="{{asset($property['propertyImages'][0]['dataUri'])}}" onerror="this.src='http://placehold.it/350x260?text=No Image Available'"/>
 				</a>
 			</div>
@@ -11,9 +11,9 @@
 
 		<div class="clearfix"></div>
 		<div class="property-details">
-			<a title="Property Title" href="{{route('properties.show', $property['listingID'])}}">{{$property['streetNumber'] . ' ' . $property['streetName']}}</a>
+			<a title="Property Title" href="{{route('properties.show', $property['listingId'])}}">{{$property['streetNumber'] . ' ' . $property['streetName']}}</a>
 			<h4>&dollar;{{$property['listPrice']}}</h4>
-			<p>{{strlen($property['customPropertyDescription']) > 130 ? substr($property['customPropertyDescription'],0,130)."..." : $property['customPropertyDescription']}} <a title="more" href="{{route('properties.show', $property['listingID'])}}">more</a></p>
+			<p>{{strlen($property['customPropertyDescription']) > 130 ? substr($property['customPropertyDescription'],0,130)."..." : $property['customPropertyDescription']}} <a title="more" href="{{route('properties.show', $property['listingId'])}}">more</a></p>
 			<ul>
 				<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
 				<li><i><img src="images/icon/bed-icon.png" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>

@@ -45,7 +45,6 @@
 
 					<!-- Pagination -->
 					<div class="listing-pagination">
-						{{$properties->links()}}
 					</div><!-- Pagination /- -->
 				@endif
 

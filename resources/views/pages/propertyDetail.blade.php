@@ -12,7 +12,7 @@
 		<div class="page-title">
 			<div class="container ">
 				<div class="banner-inner">
-					<h2>Listing ID# : {{$property['listingID']}}</h2>
+					<h2>Listing ID# : {{$property['listingId']}}</h2>
 				</div>
 			</div>
 			<div class="pages-breadcrumb">
@@ -59,7 +59,7 @@
 				</h3>
 				<ul>
 					<li>${{$property['listPrice']}}</li>
-					<li>Listing ID# : {{$property['listingID']}}</li>
+					<li>Listing ID# : {{$property['listingId']}}</li>
 					<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
 					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>
 					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['totalBaths']}}</li>
@@ -117,13 +117,13 @@
 							<div class="property-featured-inner">
 								<div class="col-md-4 col-sm-3 col-xs-2 p_z">
 									@if (isset($newProp['propertyImages'][0]))
-										<a href="{{route('properties.show', $newProp['listingID'])}}" title="Fetured Property"><img src="{{asset($newProp['propertyImages'][0]['dataUri'])}}" alt="feacture1"></a>
+										<a href="{{route('properties.show', $newProp['listingId'])}}" title="Fetured Property"><img src="{{asset($newProp['propertyImages'][0]['dataUri'])}}" alt="feacture1"></a>
 									@else
-										<a href="{{route('properties.show', $newProp['listingID'])}}" title="Fetured Property"><img src="http://placehold.it/73x55?text=No Image" alt="feacture1"></a>
+										<a href="{{route('properties.show', $newProp['listingId'])}}" title="Fetured Property"><img src="http://placehold.it/73x55?text=No Image" alt="feacture1"></a>
 									@endif
 								</div>
 								<div class="col-md-8 col-sm-9 col-xs-10 featured-content">
-									<a href="{{route('properties.show', $newProp['listingID'])}}" title="Fetured Property">{{$newProp['streetNumber'] . ' ' . $newProp['streetName']}}</a>
+									<a href="{{route('properties.show', $newProp['listingId'])}}" title="Fetured Property">{{$newProp['streetNumber'] . ' ' . $newProp['streetName']}}</a>
 									<h3>&dollar;{{$newProp['listPrice']}}</h3>
 								</div>
 							</div>

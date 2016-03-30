@@ -27,14 +27,11 @@ class Kernel extends ConsoleKernel
     {
         $filePath = 'storage/app/scheduleResult.txt';
 
-        // $schedule->command('inspire')
-        //     ->everyMinute()
-        //     ->sendOutputTo($filePath)
-        //     ->emailOutputTo('andreas@sapioweb.com');
-
-        $schedule->command('rets:properties')
-            ->everyMinute()
-            ->sendOutputTo($filePath)
-            ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
+        if (env('APP_ENV') != 'local') {
+            $schedule->command('rets:properties')
+                ->hourly()
+                ->sendOutputTo($filePath)
+                ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
+        }
     }
 }

@@ -36,14 +36,17 @@
 					</div>
 				</div>
 
-				@foreach ($properties as $property)
-					@include('pages.includes.propertiesLoopList')
-				@endforeach
+				@if (is_null($properties))
+					<h3>No Properties found. Please update your search </h3>
+				@else
+					@foreach ($properties as $property)
+						@include('pages.includes.propertiesLoopList')
+					@endforeach
 
-				<!-- Pagination -->
-				<div class="listing-pagination">
-					{{$properties->links()}}
-				</div><!-- Pagination /- -->
+					<!-- Pagination -->
+					<div class="listing-pagination">
+					</div><!-- Pagination /- -->
+				@endif
 
 			</div>
 			<div class="col-md-3 col-sm-6 p_r_z property-sidebar widget-area">

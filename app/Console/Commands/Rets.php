@@ -57,7 +57,7 @@ class Rets extends Command
 
         foreach ($results as $property) {
 
-            $createdProperty = \App\Property::where('listingID', '=', $property['listingID'])->with('propertyImages')->first();
+            $createdProperty = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first();
 
             switch (true) {
                 case ! is_null($createdProperty):
@@ -80,7 +80,8 @@ class Rets extends Command
 
                 default:
                     $createProperty = \App\Property::create($property);
-                    $this->info('New Property Created');
+
+                    $this->info('New Property Created and indexed');
 
                     $community = $property['communityName'];
 
@@ -130,6 +131,34 @@ class Rets extends Command
                     }
                     break;
             }
+
+            $client = \Elasticsearch\ClientBuilder::create()->build();
+
+            $params = [
+                'index' => 'properties',
+                'type' => 'property',
+                'id' => $property['listingId'],
+                'body' => [
+                    'address' => $property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'] . ' ' . $property['postalCode'],
+                    'propertyType' => $property['propertyType'],
+                    'postalCode' => $property['postalCode'],
+                    'streetName' => $property['streetName'],
+                    'streetNumber' => $property['streetNumber'],
+                    'city' => $property['city'],
+                    'state' => $property['state'],
+                    'listPrice' => $property['listPrice'],
+                    'listingStatus' => $property['listingStatus'],
+                    'listingId' => $property['listingId'],
+                    'totalBaths' => $property['totalBaths'],
+                    'lotSqft' => $property['lotSqft'],
+                    'bedrooms' => $property['bedrooms'],
+                    'communityName' => $property['communityName'],
+                    'description' => $property['customPropertyDescription'],
+                    'mainImage' => isset($images[0]) ? $images[0] : null
+                ]
+            ];
+
+            $response = $client->index($params);
         }
     }
 
@@ -181,7 +210,7 @@ class Rets extends Command
                 'listPrice' => $arrayData['144'],
                 'listingStatus' => $arrayData['242'],
                 'originalListPrice' => $arrayData['173'],
-                'listingID' => $arrayData['163'],
+                'listingId' => $arrayData['163'],
                 'propertyDescription' => $arrayData['268'],
                 'totalBaths' => $arrayData['63'],
                 'lotSqft' => $arrayData['2953'],
@@ -251,7 +280,6 @@ class Rets extends Command
                 'sewer' => $arrayData['219'],
                 'closePriceSale Price' => $arrayData['210'],
                 'closeDate' => $arrayData['25'],
-                //
                 'listAgentName' => $arrayData['26'],
                 'listAgentPhone' => $arrayData['27'],
                 'email' => $arrayData['2385'],
@@ -263,7 +291,6 @@ class Rets extends Command
                 // 'gated' => $arrayData['2946'],
                 // 'subdivisionName' => $arrayData['247'],
                 // 'masterPlanFeeAmount' => $arrayData['249'],
-
                 // 'unitNumber' => $arrayData['2386'],
                 // 'width' => $arrayData['2448'],
                 // 'litigation' => $arrayData['2454'],
@@ -275,7 +302,6 @@ class Rets extends Command
                 // 'convertedGarage' => $arrayData['120'],
                 // 'manufactured' => $arrayData['2630'],
                 // 'contractDateAcceptance' => $arrayData['85'],
-
                 // 'legalLctnRange' => $arrayData['4'],
                 // 'legalLctnSection' => $arrayData['5'],
                 // 'additionalAUSoldTerms' => $arrayData['2890'],
@@ -337,7 +363,6 @@ class Rets extends Command
                 // 'lastTransactionCode' => $arrayData['134'],
                 // 'listOfficeOfficeID' => $arrayData['137'],
                 // 'statusChangeDate' => $arrayData['18'],
-
                 // 'annualPropertyTaxes' => $arrayData['28'],
                 // 'dishwasherInc' => $arrayData['30'],
                 // 'disposalIncluded' => $arrayData['31'],
@@ -347,7 +372,6 @@ class Rets extends Command
                 // 'LPSqFtWithCents' => $arrayData['1738'],
                 // 'LOPhone' => $arrayData['172'],
                 // 'ownerLicensee' => $arrayData['175'],
-
 //
                 // TODO: Properly Name
                 // 'TaxID  Parcel #' => $arrayData['176'],
@@ -486,11 +510,7 @@ class Rets extends Command
                     $propertyParagraph[] = 'Was built in ' . $propertyValue;
                     break;
 
-                // case '"':
-                //     $propertyParagraph[] = . $property;
-                //     break;
-
-                case 'listingID':
+                case 'listingId':
                     $propertyParagraph[] = 'The listing ID for this location is '. $propertyValue;
                     break;
 
@@ -614,18 +634,6 @@ class Rets extends Command
                 //     $propertyParagraph[] = . $propertyValue;
                 //     break;
 
-                // case 'idx'
-                //     $propertyParagraph[] = . $propertyValue;
-                //     break;
-
-                // case 'images'
-                //     $propertyParagraph[] = . $propertyValue;
-                //     break;
-
-                // case 'photoInstructions'
-                //     $propertyParagraph[] = . $propertyValue;
-                //     break;
-
                 case 'communityName':
                     if ($propertyValue == 'none') {
                         contnue;
@@ -635,10 +643,6 @@ class Rets extends Command
                     break;
 
                 // case 'entryDate'
-                //     $propertyParagraph[] = . $propertyValue;
-                //     break;
-
-                // case 'virtualTourLink':
                 //     $propertyParagraph[] = . $propertyValue;
                 //     break;
 

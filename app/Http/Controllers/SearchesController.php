@@ -8,51 +8,102 @@ use App\Http\Requests;
 
 class SearchesController extends Controller
 {
-	public function postSearch(Request $request)
+	public function __construct()
 	{
-		$whereData = $request->all();
+		$this->communities = \App\Community::take(24)->get();
 
-		unset($whereData['_token']);
+		$this->communitySelect = $this->communitiesSelect($this->communities);
 
-		$whereData = $this->chooseOperator($whereData);
+		$this->recent = \App\Property::take(5)->orderBy('id', 'DESC')->with('propertyImages')->get();
+	}
 
-		$properties = $this->searchProperties($whereData);
+	public function communitiesSelect($communities)
+	{
+		foreach ($communities as $communityKey => $communityValue) {
+			$communitySelect[$communityValue->community] = $communityValue->community;
+		}
 
-		return redirect()->route('search')->with([
-			'properties' => $properties
+		$communitySelect[0] = 'Community';
+
+		$communitySelect = array_reverse($communitySelect);
+
+		return $communitySelect;
+	}
+
+	public function search(Request $request)
+	{
+		$queryFilter = array_filter($request->all());
+
+		$client = \Elasticsearch\ClientBuilder::create()->build();
+
+		foreach ($queryFilter as $requestKey => $requestValue) {
+			$fields[] = $requestKey;
+		}
+
+		for ($matchCount=0; $matchCount < count($fields); $matchCount++) {
+			$query[$matchCount]['match'][$fields[$matchCount]] = $request->{$fields[$matchCount]};
+		}
+
+		$params = [
+			'index' => 'properties',
+			'type' => 'property',
+			'body' => [
+				'query' => [
+					'filtered' => [
+						'query' => [
+							'bool' => [
+								'must' => [
+									$query,
+								]
+							],
+						],
+						'filter' => [
+							'bool' => [
+								'must_not' => [
+									'term' => [
+										'listingStatus' => 'closed'
+									]
+								],
+							]
+						],
+					]
+				]
+			]
+		];
+
+		$response = $client->search($params);
+
+		$properties = $response['hits']['hits'];
+
+		return view('pages.search')->with([
+			'properties' => $properties,
+			'communities' => $this->communities,
+			'communitySelect' => $this->communitySelect
 		]);
 	}
 
 	public function searchProperties($whereData)
 	{
-		$properties =\App\Property::with('propertyImages')->orderBy('created_at', 'DESC');
+		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		foreach ($whereData as $whereKey => $whereValue) {
-			if ($whereValue['value'] == '0' || empty($whereValue['value'])) {
-				unset($whereData[$whereKey]);
-			}
-		}
+		$params = [
+			'index' => 'properties',
+			'type' => 'property',
+			'body' => [
+				'query' => [
+					'match' => [
+						'listingId' => isset($whereData['listingId']['value']) ? $whereData['listingId']['value'] : null
+					],
+					'match' => [
+						'city' => isset($whereData['city']['value']) ? $whereData['city']['value'] : null
+					]
+				]
+			]
+		];
 
-		switch (true) {
-			case ! empty($whereData):
+		$response = $client->search($params);
 
-				foreach ($whereData as $searchKey => $searchValue) {
-					if ($searchKey == 'listingId') {
-						$searchKey = 'listingID';
-					}
-
-					$properties->where($searchKey, $searchValue['operator'], $searchValue['value']);
-				}
-
-				$properties = $properties->where('listingStatus', '!=', 'closed')->paginate(15);
-				break;
-
-			default:
-				$properties = $propertiesSearch->paginate(15);
-				break;
-		}
-
-		return $properties;
+		return $response;
 	}
 
 	public function chooseOperator($where)
