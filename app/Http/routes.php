@@ -57,6 +57,7 @@ Route::get('/communities', [
 */
 
 Route::group(['middleware' => ['web']], function () {
+
 	Route::get('/', [
 		'as' => 'home',
 		'uses' => 'PagesController@showHome'
@@ -69,17 +70,12 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/search', [
 		'as' => 'search',
-		'uses' => 'PagesController@showSearch'
+		'uses' => 'SearchesController@search'
 	]);
 
 	Route::get('/properties', [
 		'as' => 'properties',
 		'uses' => 'PagesController@showProperties'
-	]);
-
-	Route::post('/post-search', [
-		'as' => 'postSearch',
-		'uses' => 'SearchesController@postSearch'
 	]);
 
 	Route::post('/post-listing', [

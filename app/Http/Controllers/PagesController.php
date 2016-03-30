@@ -31,32 +31,6 @@ class PagesController extends Controller
 		]);
 	}
 
-	public function showSearch(Request $request)
-	{
-
-		switch (isset($request->city)) {
-			case true:
-				$properties = \App\Property::where('city', '=', $request->city)
-					->where('listingStatus', '!=', 'closed')
-					->with('propertyImages')
-					->orderBy('created_at', 'DESC')
-					->paginate(15);
-				break;
-
-			default:
-				$request->session()->reflash();
-
-				$properties = $request->session()->get('properties');
-				break;
-		}
-
-		return view('pages.search')->with([
-			'properties' => $properties,
-			'communities' => $this->communities,
-			'communitySelect' => $this->communitySelect
-		]);
-	}
-
 	public function communitiesSelect($communities)
 	{
 		foreach ($communities as $communityKey => $communityValue) {
@@ -124,9 +98,34 @@ class PagesController extends Controller
 
 	public function showProperties()
 	{
-		$properties = $this->getProperties();
+		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		$properties = $properties['all'];
+		$params = [
+			'index' => 'properties',
+			'type' => 'property',
+			'body' => [
+				'query' => [
+					'filtered' => [
+						'filter' => [
+							'bool' => [
+								'must_not' => [
+									'term' => [
+										'listingStatus' => 'closed'
+									]
+								],
+							]
+						],
+					]
+				]
+			]
+		];
+
+		$properties = $client->search($params);
+
+		$properties = $properties['hits']['hits'];
+		// $properties = $this->getProperties();
+
+		// $properties = $properties['all'];
 
 		return view('pages.listProperties')->with([
 			'properties' => $properties,
@@ -137,7 +136,7 @@ class PagesController extends Controller
 
 	public function showSingleProperties(Request $request, $listingId)
 	{
-		$property = \App\Property::where('listingID', '=', $listingId)->with('propertyImages')->first();
+		$property = \App\Property::where('listingId', '=', $listingId)->with('propertyImages')->first();
 
 		if (is_null($property)) {
 			abort(404);
@@ -226,21 +225,25 @@ class PagesController extends Controller
 		$propertyModel = new \App\Property;
 
 		$properties['all'] = $propertyModel->with('propertyImages')->orderBy('entryDate', 'DESC')->paginate(15);
+
 		$properties['lasVegas'] = $propertyModel->where('city', '=', 'Las Vegas')
 			->where('listingStatus', '!=', 'Closed')
 			->with('propertyImages')
 			->orderBy('entryDate', 'DESC')
 			->take(6)->get();
+
 		$properties['henderson'] = $propertyModel->where('city', '=', 'Henderson')
 			->where('listingStatus', '!=', 'Closed')
 			->with('propertyImages')
 			->orderBy('entryDate', 'DESC')
 			->take(6)->get();
+
 		$properties['northLasVegas'] = $propertyModel->where('city', '=', 'North Las Vegas')
 			->where('listingStatus', '!=', 'Closed')
 			->with('propertyImages')
 			->orderBy('entryDate', 'DESC')
 			->take(6)->get();
+
 		$properties['boulderCity'] = $propertyModel->where('city', '=', 'Boulder City')
 			->where('listingStatus', '!=', 'Closed')
 			->with('propertyImages')

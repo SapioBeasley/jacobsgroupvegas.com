@@ -12,7 +12,7 @@
 		<div class="page-title">
 			<div class="container ">
 				<div class="banner-inner">
-					<h2>Listing ID# : {{$property['listingID']}}</h2>
+					<h2>Listing ID# : {{$property['listingId']}}</h2>
 				</div>
 			</div>
 			<div class="pages-breadcrumb">
@@ -38,7 +38,7 @@
 				</h3>
 				<ul>
 					<li>${{$property['listPrice']}}</li>
-					<li>Listing ID# : {{$property['listingID']}}</li>
+					<li>Listing ID# : {{$property['listingId']}}</li>
 					<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
 					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>
 					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['totalBaths']}}</li>

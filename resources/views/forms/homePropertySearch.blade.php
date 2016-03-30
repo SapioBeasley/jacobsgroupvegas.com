@@ -1,4 +1,4 @@
-{!! Form::open(['route' => 'postSearch']) !!}
+{!! Form::open(['route' => 'search', 'method' => 'GET']) !!}
 
 	<!-- col-md-10 -->
 	<div class="col-md-10 p_l_z">

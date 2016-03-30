@@ -1,4 +1,4 @@
-{!! Form::open(['route' => 'postSearch']) !!}
+{!! Form::open(['route' => 'search', 'method' => 'GET']) !!}
 	{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
 	{!! Form::text('city', null, ['placeholder' => 'City']) !!}
 	<!-- {!! Form::select('community', $communitySelect) !!} -->
