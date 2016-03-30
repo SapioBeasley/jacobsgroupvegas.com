@@ -60,6 +60,13 @@ class Rets extends Command
         $results = $this->fieldRename($results);
         $this->info('Properties to input: ' . count($results));
 
+        $removeParams = [
+            'index' => 'properties',
+        ];
+
+        $response = $client->indices()->delete($params);
+        $this->info('Old indices removed');
+
         foreach ($results as $property) {
 
             $createdProperty = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first();
@@ -138,14 +145,6 @@ class Rets extends Command
             }
 
             $client = \Elasticsearch\ClientBuilder::create()->build();
-
-            $removeParams = [
-                'index' => 'properties',
-                'type' => 'property',
-                'id' => $property['listingId']
-            ];
-
-            $response = $client->delete($params);
 
             $params = [
                 'index' => 'properties',
