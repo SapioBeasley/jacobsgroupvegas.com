@@ -7,6 +7,12 @@
 					<img src="{{asset($property['_source']['mainImage'])}}" alt="property1" onerror="this.src='http://placehold.it/350x260?text=No Image Available'">
 				</a>
 			</div>
+		@else
+			<div class="col-md-4 p_z property-image">
+				<a title="Property Image" href="{{route('properties.show', $property['_source']['listingId'])}}">
+					<img src="http://placehold.it/350x260?text=No Image Available" alt="property1">
+				</a>
+			</div>
 		@endif
 		<div class="col-md-8 p_z">
 			<div class="property-details">
