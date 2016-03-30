@@ -54,7 +54,7 @@
 
 			@if(isset($properties['lasVegas'][0]))
 
-				@foreach ($properties['lasVegas']->take(6) as $property)
+				@foreach ($properties['lasVegas'] as $property)
 					@include('pages.includes.homesSection')
 				@endforeach
 
@@ -88,7 +88,7 @@
 
 			@if(isset($properties['henderson'][0]))
 
-				@foreach ($properties['henderson']->take(6) as $property)
+				@foreach ($properties['henderson'] as $property)
 					@include('pages.includes.homesSection')
 				@endforeach
 
@@ -120,7 +120,7 @@
 
 			@if(isset($properties['northLasVegas'][0]))
 
-				@foreach ($properties['northLasVegas']->take(6) as $property)
+				@foreach ($properties['northLasVegas'] as $property)
 					@include('pages.includes.homesSection')
 				@endforeach
 
@@ -152,7 +152,7 @@
 
 			@if(isset($properties['boulderCity'][0]))
 
-				@foreach ($properties['boulderCity']->take(6) as $property)
+				@foreach ($properties['boulderCity'] as $property)
 					@include('pages.includes.homesSection')
 				@endforeach
 

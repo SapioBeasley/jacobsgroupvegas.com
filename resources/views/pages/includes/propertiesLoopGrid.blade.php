@@ -8,6 +8,13 @@
 				</a>
 				<h4>&dollar; {{$property['listPrice']}}</h4>
 			</div>
+		@else
+			<div class="property-images-box">
+				<a title="Property Image" href="{{route('properties.show', $property['listingId'])}}">
+					<img src="http://placehold.it/350x260?text=No Image Available" alt="rent"/>
+				</a>
+				<h4>&dollar; {{$property['listPrice']}}</h4>
+			</div>
 		@endif
 		<div class="property-details">
 			<a title="Property Title" href="{{route('properties.show', $property['listingId'])}}">{{$property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city']}}</a>
