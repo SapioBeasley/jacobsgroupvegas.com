@@ -13,6 +13,7 @@
 - [ ] Community contact page functioning
 - [ ] Search use url request and not sessions
 - [ ] Which details would you like to add or remove from property details page?
+- [ ] Copy prod kernel to local
 
 Jon
 Jonathan Jacobs has been a licensed agent in Las Vegas since 2005 and a resident since 1995. Specializing in selling and acquiring residential single family homes for his clients, he has sold hundreds of properties in the Las Vegas valley. Mr. Jacobs has been involved in all aspects of the single family investment process, facilitating construction, leasing and property management services, selling and acquiring for investor clients and developers. Jonathan is an expert in Marketing and negotiation of homes in Las Vegas, where he lives and works. He was recently named a top 40 under 40 agent in Las Vegas by GLVAR and a top 250 Hispanic agent out of more than 50,000 agents in the Nation by NAHREP. Jonathan is fluent in both English and Spanish.
