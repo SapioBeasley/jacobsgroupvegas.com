@@ -53,19 +53,12 @@ class Rets extends Command
             'QueryType' => 'DMQL2',
             'Count' => 1, // count and records
             'Format' => 'COMPACT-DECODED',
-            'Limit' => 99999999,
+            'Limit' => 3,
             'StandardNames' => 0, // give system names
         ]);
 
         $results = $this->fieldRename($results);
         $this->info('Properties to input: ' . count($results));
-
-        $removeParams = [
-            'index' => 'properties',
-        ];
-        $removeIndex = \Elasticsearch\ClientBuilder::create()->build();
-        $response = $removeIndex->indices()->delete($removeParams);
-        $this->info('Old indices removed');
 
         foreach ($results as $property) {
 
