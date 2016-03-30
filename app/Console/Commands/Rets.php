@@ -53,7 +53,7 @@ class Rets extends Command
             'QueryType' => 'DMQL2',
             'Count' => 1, // count and records
             'Format' => 'COMPACT-DECODED',
-            'Limit' => 3,
+            'Limit' => env('RETS_PULL'),
             'StandardNames' => 0, // give system names
         ]);
 
