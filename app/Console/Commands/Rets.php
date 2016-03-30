@@ -58,7 +58,7 @@ class Rets extends Command
         ]);
 
         $results = $this->fieldRename($results);
-        dd(count($results));
+        $this->info('Properties to input: ' . count($results));
 
         foreach ($results as $property) {
 
