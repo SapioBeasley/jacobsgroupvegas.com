@@ -49,11 +49,16 @@ class Rets extends Command
     public function handle()
     {
         $results = $this->rets->Search('Property', '1', '*', [
-              'Limit' => env('RETS_PULL'),
-              'StandardNames' => 0, // give system names
+            // 'Limit' => env('RETS_PULL'),
+            'QueryType' => 'DMQL2',
+            'Count' => 1, // count and records
+            'Format' => 'COMPACT-DECODED',
+            'Limit' => 99999999,
+            'StandardNames' => 0, // give system names
         ]);
 
         $results = $this->fieldRename($results);
+        dd(count($results));
 
         foreach ($results as $property) {
 
