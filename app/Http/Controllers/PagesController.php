@@ -22,7 +22,10 @@ class PagesController extends Controller
 
 	public function showHome(Request $request = null)
 	{
-		$properties = $this->getProperties();
+		$properties['lasVegas'] = $this->getProperties('las vegas', 6);
+		$properties['henderson'] = $this->getProperties('henderson', 6);
+		$properties['northLasVegas'] = $this->getProperties('north las vegas', 6);
+		$properties['boulderCity'] = $this->getProperties('boulder city', 6);
 
 		return view('pages.home')->with([
 			'properties' => $properties,
@@ -104,6 +107,7 @@ class PagesController extends Controller
 			'index' => 'properties',
 			'type' => 'property',
 			'body' => [
+				'size' => '40',
 				'query' => [
 					'filtered' => [
 						'filter' => [
@@ -123,9 +127,6 @@ class PagesController extends Controller
 		$properties = $client->search($params);
 
 		$properties = $properties['hits']['hits'];
-		// $properties = $this->getProperties();
-
-		// $properties = $properties['all'];
 
 		return view('pages.listProperties')->with([
 			'properties' => $properties,
@@ -220,35 +221,43 @@ class PagesController extends Controller
 		]);
 	}
 
-	public function getProperties()
+	public function getProperties($city = null, $size = null)
 	{
-		$propertyModel = new \App\Property;
+		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		$properties['all'] = $propertyModel->with('propertyImages')->orderBy('entryDate', 'DESC')->paginate(15);
+		$params = [
+			'index' => 'properties',
+			'type' => 'property',
+			'body' => [
+				'size' => $size,
+				'query' => [
+					'filtered' => [
+						'query' => [
+							'bool' => [
+								'must' => [
+									'match' => [
+										'city' => $city
+									]
+								]
+							]
+						],
+						'filter' => [
+							'bool' => [
+								'must_not' => [
+									'term' => [
+										'listingStatus' => 'closed'
+									]
+								],
+							]
+						],
+					]
+				]
+			]
+		];
 
-		$properties['lasVegas'] = $propertyModel->where('city', '=', 'Las Vegas')
-			->where('listingStatus', '!=', 'Closed')
-			->with('propertyImages')
-			->orderBy('entryDate', 'DESC')
-			->take(6)->get();
+		$properties = $client->search($params);
 
-		$properties['henderson'] = $propertyModel->where('city', '=', 'Henderson')
-			->where('listingStatus', '!=', 'Closed')
-			->with('propertyImages')
-			->orderBy('entryDate', 'DESC')
-			->take(6)->get();
-
-		$properties['northLasVegas'] = $propertyModel->where('city', '=', 'North Las Vegas')
-			->where('listingStatus', '!=', 'Closed')
-			->with('propertyImages')
-			->orderBy('entryDate', 'DESC')
-			->take(6)->get();
-
-		$properties['boulderCity'] = $propertyModel->where('city', '=', 'Boulder City')
-			->where('listingStatus', '!=', 'Closed')
-			->with('propertyImages')
-			->orderBy('entryDate', 'DESC')
-			->take(6)->get();
+		$properties = $properties['hits']['hits'];
 
 		return $properties;
 	}

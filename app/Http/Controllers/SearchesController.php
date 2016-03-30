@@ -37,38 +37,111 @@ class SearchesController extends Controller
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
 		foreach ($queryFilter as $requestKey => $requestValue) {
-			$fields[] = $requestKey;
+			switch ($requestKey ) {
+				case 'max_price':
+					$fields['filter'][] = $requestKey;
+					break;
+
+				case 'min_sqft':
+					$fields['filter'][] = $requestKey;
+					break;
+
+				case 'max_sqft':
+					$fields['filter'][] = $requestKey;
+					break;
+
+				case 'listingId':
+					$fields['match'][] = $requestKey;
+					break;
+
+				case 'city':
+					$fields['match'][] = $requestKey;
+					break;
+
+				case 'postalCode':
+					$fields['match'][] = $requestKey;
+					break;
+
+				case 'bedrooms':
+					if ($requestValue > 4) {
+						$fields['filter'][] = $requestKey;
+					} else {
+						$fields['match'][] = $requestKey;
+					}
+					break;
+
+				case 'totalBaths':
+					if ($requestValue > 4) {
+						$fields['filter'][] = $requestKey;
+					} else {
+						$fields['match'][] = $requestKey;
+					}
+					break;
+
+				case 'min_price':
+					$fields['filter'][] = $requestKey;
+					break;
+
+				default:
+					# code...
+					break;
+			}
 		}
 
-		for ($matchCount=0; $matchCount < count($fields); $matchCount++) {
-			$query[$matchCount]['match'][$fields[$matchCount]] = $request->{$fields[$matchCount]};
+		if (isset($fields['match'])) {
+			for ($matchCount=0; $matchCount < count($fields['match']); $matchCount++) {
+
+				$query['match']['bool']['must'][$matchCount]['match'][$fields['match'][$matchCount]] = $request->{$fields['match'][$matchCount]};
+			}
 		}
 
-		$params = [
-			'index' => 'properties',
-			'type' => 'property',
-			'body' => [
-				'query' => [
-					'filtered' => [
-						'query' => [
-							'bool' => [
-								'must' => [
-									$query,
-								]
-							],
-						],
-						'filter' => [
-							'bool' => [
-								'must_not' => [
-									'term' => [
-										'listingStatus' => 'closed'
-									]
-								],
-							]
-						],
-					]
-				]
-			]
+		$defaultFilter = ['bool' => ['must_not' => ['term' => ['listingStatus' => 'closed']]]];
+
+		if (isset($fields['filter'])) {
+			for ($matchCount=0; $matchCount < count($fields['filter']); $matchCount++) {
+
+				switch ($fields['filter'][$matchCount]) {
+					case 'min_price':
+						$originalName = 'listPrice';
+						break;
+
+					case 'max_price':
+						$originalName = 'listPrice';
+						break;
+
+					case 'max_sqft':
+						$originalName = 'lotSqft';
+						break;
+
+					case 'min_sqft':
+						$originalName = 'lotSqft';
+						break;
+
+					default:
+						$originalName = $fields['filter'][$matchCount];
+						break;
+				}
+
+				if ((strpos($fields['filter'][$matchCount], 'min') !== false) || ($fields['filter'][$matchCount] === 'bedrooms') || ($fields['filter'][$matchCount] === 'totalBaths')) {
+					$query['filter']['bool']['must'][$matchCount]['range'][$originalName]['gte'] = $request->{$fields['filter'][$matchCount]};
+				} else {
+					$query['filter']['bool']['must'][$matchCount]['range'][$originalName]['lte'] = $request->{$fields['filter'][$matchCount]};
+				}
+			}
+
+			foreach ($query['filter'] as $queryFilterKey => $queryFilterValue) {
+				$bool2 = $defaultFilter[$queryFilterKey];
+				$filter[$queryFilterKey] = $queryFilterValue + $bool2;
+			}
+		}
+
+		$query = isset($query['match']) ? $query['match'] : ['match_all' => []];
+
+		$params['index'] = 'properties';
+		$params['type'] = 'property';
+		$params['body']['query']['filtered'] = [
+			'query' => $query,
+			'filter' => isset($filter) ? $filter : $defaultFilter,
 		];
 
 		$response = $client->search($params);
