@@ -64,7 +64,7 @@ class Rets extends Command
             'index' => 'properties',
         ];
         $removeIndex = \Elasticsearch\ClientBuilder::create()->build();
-        $response = $removeIndex->indices()->delete($params);
+        $response = $removeIndex->indices()->delete($removeParams);
         $this->info('Old indices removed');
 
         foreach ($results as $property) {
