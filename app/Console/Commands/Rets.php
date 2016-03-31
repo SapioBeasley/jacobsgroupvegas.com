@@ -167,7 +167,7 @@ class Rets extends Command
                     'communityName' => $property['communityName'],
                     'description' => $property['customPropertyDescription'],
                     'mainImage' => isset($images[0]) ? $images[0] : null,
-                    'entryDate' => $property['created_at']
+                    'entryDate' => $createProperty['created_at']
                 ]
             ];
 
