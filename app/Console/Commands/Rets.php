@@ -69,8 +69,14 @@ class Rets extends Command
 
                     $createProperty = $createdProperty->update($property);
 
+                    $createdAt = $createdProperty->toArray();
+
+                    $createdAt = $createdAt['created_at'];
+
                     if ($createdProperty->listingStatus !== 'Closed') {
                         $images = $createdProperty->propertyImages->toArray();
+
+                        $this->info($images);
                     }
 
                     if ($createdProperty->listingStatus == 'Closed') {
@@ -89,6 +95,10 @@ class Rets extends Command
 
                 default:
                     $createProperty = \App\Property::create($property);
+
+                    $createdAt = $createProperty->toArray();
+
+                    $createdAt = $createdAt['created_at'];
 
                     $this->info('New Property Created and indexed');
 
@@ -139,6 +149,7 @@ class Rets extends Command
 
                         $propertyImages = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first()->toArray();
                         $images = $propertyImages['property_images'][0];
+                        $this->info($images);
                         $this->info('Property Images added');
                     }
                     break;
@@ -166,8 +177,8 @@ class Rets extends Command
                     'bedrooms' => $property['bedrooms'],
                     'communityName' => $property['communityName'],
                     'description' => $property['customPropertyDescription'],
-                    'mainImage' => isset($images[0]) ? $images[0] : null,
-                    'entryDate' => $createProperty['created_at']
+                    'mainImage' => isset($images[1]) ? $images[1] : null,
+                    'entryDate' => $createdAt
                 ]
             ];
 

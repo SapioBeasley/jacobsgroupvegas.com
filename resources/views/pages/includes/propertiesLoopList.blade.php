@@ -10,7 +10,7 @@
 		@else
 			<div class="col-md-4 p_z property-image">
 				<a title="Property Image" href="{{route('properties.show', $property['_source']['listingId'])}}">
-					<img src="http://placehold.it/350x260?text=No Image Available" alt="property1">
+					<img src="http://placehold.it/350x260?text=No Image Available" alt="property1-missin">
 				</a>
 			</div>
 		@endif
