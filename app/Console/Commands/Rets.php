@@ -48,14 +48,11 @@ class Rets extends Command
      */
     public function handle()
     {
-        $results = $this->rets->Search('Property', '1', '*', [
-            // 'Limit' => env('RETS_PULL'),
-            'QueryType' => 'DMQL2',
-            'Count' => 1, // count and records
-            'Format' => 'COMPACT-DECODED',
-            'Limit' => env('RETS_PULL'),
-            'StandardNames' => 0, // give system names
-        ]);
+        $date = date('Y-m-d\T00:00:00', strtotime("-30 days"));
+
+        $results = $this->rets->Search('Property', '1', '(135=2016-01-01T00:00:00+)');
+
+        dd(count($results));
 
         $results = $this->fieldRename($results);
         $this->info('Properties to input: ' . count($results));

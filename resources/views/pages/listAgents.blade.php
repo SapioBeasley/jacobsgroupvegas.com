@@ -40,7 +40,9 @@
 
 					<!-- Agent List -->
 					<div class="agent-list row">
-						@include('pages.includes.agentsSection')
+						@foreach ($agents as $agent)
+							@include('pages.includes.agentsSection')
+						@endforeach
 					</div>
 					<!-- Agent List /- -->
 

@@ -2398,7 +2398,7 @@ textarea {
 
 .agent-detail-box .agent-header {
 	padding: 0 15px;
-	margin-top: -50px;
+	/*margin-top: -50px;*/
 }
 
 .agent-detail-box .agent-header .agent-img,
@@ -2450,7 +2450,7 @@ textarea {
 }
 
 .agent-detail-box .about-agent {
-	margin-top: 90px;
+	/*margin-top: 90px;*/
 	border-left: 1px solid #dcdfe1;
 	padding-left: 33px;
 }

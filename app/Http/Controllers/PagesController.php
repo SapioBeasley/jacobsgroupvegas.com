@@ -34,6 +34,21 @@ class PagesController extends Controller
 		]);
 	}
 
+	public function showSingleAgents(Request $request, $agent)
+	{
+		$agent = \App\Agent::where('name', '=', $agent)->first();
+
+		if (is_null($agent)) {
+			abort(404);
+		}
+
+		return view('pages.agentDetails')->with([
+			'agent' => $agent,
+			'communities' => $this->communities,
+			'communitySelect' => $this->communitySelect
+		]);
+	}
+
 	public function communitiesSelect($communities)
 	{
 		foreach ($communities as $communityKey => $communityValue) {
@@ -86,7 +101,10 @@ class PagesController extends Controller
 
 	public function showAgents()
 	{
+		$agents = \App\Agent::all();
+
 		return view('pages.listAgents')->with([
+			'agents' => $agents,
 			'communities' => $this->communities
 		]);
 	}

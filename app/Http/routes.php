@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/agents', [
-	'as' => 'agents',
-	'uses' => 'PagesController@showAgents'
-]);
-
 Route::get('/contact', [
 	'as' => 'contact',
 	'uses' => 'PagesController@showContact'
@@ -102,10 +97,20 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'properties.inquire',
 		'uses' => 'ContactsController@propertyInquire'
 	]);
+
+	Route::get('/agents/{agent}', [
+		'as' => 'agents.show',
+		'uses' => 'PagesController@showSingleAgents'
+	]);
+
+	Route::get('/agents', [
+		'as' => 'agents',
+		'uses' => 'PagesController@showAgents'
+	]);
 });
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    // Route::get('/home', 'HomeController@index');
 });
