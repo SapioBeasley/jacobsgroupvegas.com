@@ -1,10 +1,10 @@
 <div class="property-listing-box sale-block">
 	<!-- Property Main Box -->
 	<div class="property-main-box">
-		@if (isset($property['_source']['mainImage']) && ! is_array($property['_source']['mainImage']))
+		@if (isset($property['_source']['mainImage']['dataUri']) && ! is_null($property['_source']['mainImage']['dataUri']))
 			<div class="col-md-4 p_z property-image">
 				<a title="Property Image" href="{{route('properties.show', $property['_source']['listingId'])}}">
-					<img src="{{asset($property['_source']['mainImage'])}}" alt="property1" onerror="this.src='http://placehold.it/350x260?text=No Image Available'">
+					<img src="{{asset($property['_source']['mainImage']['dataUri'])}}" alt="property1" onerror="this.src='http://placehold.it/350x260?text=No Image Available'">
 				</a>
 			</div>
 		@else

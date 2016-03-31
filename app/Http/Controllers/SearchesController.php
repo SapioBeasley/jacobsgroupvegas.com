@@ -139,6 +139,11 @@ class SearchesController extends Controller
 
 		$params['index'] = 'properties';
 		$params['type'] = 'property';
+		$params['body']['sort'] = [
+			'entryDate' => [
+				'order' => 'desc'
+			]
+		];
 		$params['body']['query']['filtered'] = [
 			'query' => $query,
 			'filter' => isset($filter) ? $filter : $defaultFilter,
@@ -163,6 +168,11 @@ class SearchesController extends Controller
 			'index' => 'properties',
 			'type' => 'property',
 			'body' => [
+				'sort' => [
+					'entryDate' => [
+						'order' => 'DESC'
+					]
+				],
 				'query' => [
 					'match' => [
 						'listingId' => isset($whereData['listingId']['value']) ? $whereData['listingId']['value'] : null
