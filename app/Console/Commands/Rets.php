@@ -75,8 +75,6 @@ class Rets extends Command
 
                     if ($createdProperty->listingStatus !== 'Closed') {
                         $images = $createdProperty->propertyImages->toArray();
-
-                        $this->info($images);
                     }
 
                     if ($createdProperty->listingStatus == 'Closed') {
