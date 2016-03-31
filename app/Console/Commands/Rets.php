@@ -69,6 +69,10 @@ class Rets extends Command
 
                     $createProperty = $createdProperty->update($property);
 
+                    if ($createdProperty->listingStatus !== 'Closed') {
+                        $images = $createdProperty->propertyImages->toArray();
+                    }
+
                     if ($createdProperty->listingStatus == 'Closed') {
 
                         if (! empty($createdProperty->propertyImages->toArray())) {
@@ -132,6 +136,9 @@ class Rets extends Command
                                 'dataUri' => $image
                             ]);
                         }
+
+                        $propertyImages = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first()->toArray();
+                        $images = $propertyImages['property_images'][0];
                         $this->info('Property Images added');
                     }
                     break;
@@ -159,7 +166,8 @@ class Rets extends Command
                     'bedrooms' => $property['bedrooms'],
                     'communityName' => $property['communityName'],
                     'description' => $property['customPropertyDescription'],
-                    'mainImage' => isset($images[0]) ? $images[0] : null
+                    'mainImage' => isset($images[0]) ? $images[0] : null,
+                    'entryDate' => $property['created_at']
                 ]
             ];
 

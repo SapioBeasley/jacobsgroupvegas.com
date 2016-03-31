@@ -107,7 +107,12 @@ class PagesController extends Controller
 			'index' => 'properties',
 			'type' => 'property',
 			'body' => [
-				'size' => '40',
+				'sort' => [
+					'entryDate' => [
+						'order' => 'DESC'
+					]
+				],
+				'size' => '50',
 				'query' => [
 					'filtered' => [
 						'filter' => [
@@ -250,6 +255,11 @@ class PagesController extends Controller
 								],
 							]
 						],
+					]
+				],
+				'sort' => [
+					'entryDate' => [
+						'order' => 'desc'
 					]
 				]
 			]
