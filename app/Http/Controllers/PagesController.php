@@ -130,7 +130,7 @@ class PagesController extends Controller
 						'order' => 'DESC'
 					]
 				],
-				'size' => '50',
+				'size' => '100',
 				'query' => [
 					'filtered' => [
 						'filter' => [
