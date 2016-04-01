@@ -67,7 +67,7 @@
 							<div class="navbar-collapse collapse" id="navbar">
 								<ul class="nav navbar-nav">
 									<!-- <li><a href="{{route('home')}}">Home</a></li> -->
-									<li><a href="{{route('agents')}}">Agents</a></li>
+									<li><a href="{{route('agents')}}">The Team</a></li>
 									<li class="dropdown">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Services</a>
 										<ul class="dropdown-menu" role="menu">

@@ -371,7 +371,7 @@ textarea {
 	border: none;
 	margin-bottom: 0;
 	min-height: 1px;
-	width: 84%;
+	width: 85%;
 }
 
 .menu-block .navbar-default .navbar-nav {
@@ -405,7 +405,7 @@ textarea {
 
 .menu-block > a {
 	background-color: #4DC8E3;
-	padding: 8px 20px;
+	padding: 8px 15px;
 	color: #fff;
 	font-size: 16px;
 	top: 0;

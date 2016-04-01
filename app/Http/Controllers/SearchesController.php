@@ -140,7 +140,7 @@ class SearchesController extends Controller
 		$params['index'] = 'properties';
 		$params['type'] = 'property';
 		$params['body']['sort'] = [
-			'entryDate' => [
+			'listDate' => [
 				'order' => 'desc'
 			]
 		];
@@ -169,7 +169,7 @@ class SearchesController extends Controller
 			'type' => 'property',
 			'body' => [
 				'sort' => [
-					'entryDate' => [
+					'listDate' => [
 						'order' => 'DESC'
 					]
 				],

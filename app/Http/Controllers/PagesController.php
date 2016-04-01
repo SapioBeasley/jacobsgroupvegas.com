@@ -126,7 +126,7 @@ class PagesController extends Controller
 			'type' => 'property',
 			'body' => [
 				'sort' => [
-					'entryDate' => [
+					'listDate' => [
 						'order' => 'DESC'
 					]
 				],
@@ -276,7 +276,7 @@ class PagesController extends Controller
 					]
 				],
 				'sort' => [
-					'entryDate' => [
+					'listDate' => [
 						'order' => 'desc'
 					]
 				]

@@ -48,136 +48,143 @@ class Rets extends Command
      */
     public function handle()
     {
-        $date = date('Y-m-d\T00:00:00', strtotime("-30 days"));
+        $days = 280;
 
-        $results = $this->rets->Search('Property', '1', '(135=2016-01-01T00:00:00+)');
+        $time = date('H:i:s');
+        $startDate = date('Y-m-d', strtotime('-300 days'));
+        $date = date('Y-m-d', strtotime('-0days'));
 
-        dd(count($results));
+        while ($startDate <= $date) {
 
-        $results = $this->fieldRename($results);
-        $this->info('Properties to input: ' . count($results));
+            $results = $this->rets->Search('Property', '1', '(37=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (242=EA, ER) AND (138=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')', [
+                'QueryType' => 'DMQL2',
+                'Count' => 1, // count and records
+                'Format' => 'COMPACT-DECODED',
+                'StandardNames' => 0, // give system names
+            ]);
 
-        foreach ($results as $property) {
+            $days = $days - 20;
 
-            $createdProperty = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first();
+            $startDate = date('Y-m-d', strtotime("+20 days", strtotime($startDate)));
 
-            switch (true) {
-                case ! is_null($createdProperty):
+            $results = $this->fieldRename($results);
+            $this->info('Import began at ' . $time);
+            $this->info('Properties to input: ' . count($results));
+            $this->info('Date Range: ' . $startDate . ' to ' . date('Y-m-d', strtotime('-' . $days . 'days')));
 
-                    $createProperty = $createdProperty->update($property);
+            foreach ($results as $property) {
 
-                    $createdAt = $createdProperty->toArray();
+                $createdProperty = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first();
 
-                    $createdAt = $createdAt['created_at'];
+                switch (true) {
+                    case ! is_null($createdProperty):
 
-                    if ($createdProperty->listingStatus !== 'Closed') {
+                        $createProperty = $createdProperty->update($property);
+
+                        $createdAt = $createdProperty->toArray();
+
+                        $createdAt = $createdAt['created_at'];
+
                         $images = $createdProperty->propertyImages->toArray();
-                    }
 
-                    if ($createdProperty->listingStatus == 'Closed') {
+                        if ($createdProperty->listingStatus == 'Closed') {
 
-                        if (! empty($createdProperty->propertyImages->toArray())) {
-                            $closedImages = $createdProperty->propertyImages;
+                            if (! empty($createdProperty->propertyImages->toArray())) {
+                                $closedImages = $createdProperty->propertyImages;
 
-                            $this->removeClosedImages($closedImages);
-                            $this->info('Closed listing images removed');
+                                $this->removeClosedImages($closedImages);
+                            }
+
                         }
 
-                    }
+                        break;
 
-                    $this->info('Property found and updated');
-                    break;
+                    default:
+                        $createProperty = \App\Property::create($property);
 
-                default:
-                    $createProperty = \App\Property::create($property);
+                        $createdAt = $createProperty->toArray();
 
-                    $createdAt = $createProperty->toArray();
+                        $createdAt = $createdAt['created_at'];
 
-                    $createdAt = $createdAt['created_at'];
+                        $community = $property['communityName'];
 
-                    $this->info('New Property Created and indexed');
+                        $listingAgent = [
+                            'name' => $property['listAgentName'],
+                            'phone' => $property['listAgentPhone'],
+                            'email' => $property['email'],
+                        ];
 
-                    $community = $property['communityName'];
+                        if (! empty($listingAgent)) {
+                            $createdListingAgent = \App\ListingAgent::where('listAgentName', '=', $listingAgent['name'])->first();
 
-                    $listingAgent = [
-                        'name' => $property['listAgentName'],
-                        'phone' => $property['listAgentPhone'],
-                        'email' => $property['email'],
-                    ];
-
-                    if (! empty($listingAgent)) {
-                        $createdListingAgent = \App\ListingAgent::where('listAgentName', '=', $listingAgent['name'])->first();
-
-                        if (is_null($createdListingAgent)) {
-                            $createProperty->listingAgents()->create([
-                                'listAgentName' => $listingAgent['name'],
-                                'listAgentPhone' => $listingAgent['phone'],
-                                'email' => $listingAgent['email'],
-                            ]);
-                            $this->info('New Listing Agent Created');
-                        } else {
-                            $createProperty->listingAgents()->sync([$createdListingAgent->id]);
-                        }
-                    }
-
-                    if ($community !== 'None') {
-                        $createdCommunity = \App\Community::where('community', '=', $community)->first();
-
-                        if (is_null($createdCommunity)) {
-                            $createProperty->community()->create([
-                                'community' => $community
-                            ]);
-                            $this->info('New Community Created');
-                        } else {
-                            $createProperty->community()->sync([$createdCommunity->id]);
-                        }
-                    }
-
-                    if ($createProperty->listingStatus !== 'Closed') {
-                        $images = $this->getPropertyImages($property['sysId']);
-
-                        foreach ($images as $image) {
-                            $createProperty->propertyImages()->create([
-                                'dataUri' => $image
-                            ]);
+                            if (is_null($createdListingAgent)) {
+                                $createProperty->listingAgents()->create([
+                                    'listAgentName' => $listingAgent['name'],
+                                    'listAgentPhone' => $listingAgent['phone'],
+                                    'email' => $listingAgent['email'],
+                                ]);
+                            } else {
+                                $createProperty->listingAgents()->sync([$createdListingAgent->id]);
+                            }
                         }
 
-                        $propertyImages = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first()->toArray();
-                        $images = $propertyImages['property_images'][0];
-                        $this->info($images);
-                        $this->info('Property Images added');
-                    }
-                    break;
+                        if ($community !== 'None') {
+                            $createdCommunity = \App\Community::where('community', '=', $community)->first();
+
+                            if (is_null($createdCommunity)) {
+                                $createProperty->community()->create([
+                                    'community' => $community
+                                ]);
+                            } else {
+                                $createProperty->community()->sync([$createdCommunity->id]);
+                            }
+                        }
+
+                        if ($createProperty->listingStatus !== 'Closed') {
+                            $images = $this->getPropertyImages($property['sysId']);
+
+                            foreach ($images as $image) {
+                                $createProperty->propertyImages()->create([
+                                    'dataUri' => $image
+                                ]);
+                            }
+
+                            $propertyImages = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first()->toArray();
+                            $images = $propertyImages['property_images'];
+                        }
+                        break;
+                }
+
+                $client = \Elasticsearch\ClientBuilder::create()->build();
+
+                $params = [
+                    'index' => 'properties',
+                    'type' => 'property',
+                    'id' => $property['listingId'],
+                    'body' => [
+                        'address' => $property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'] . ' ' . $property['postalCode'],
+                        'propertyType' => $property['propertyType'],
+                        'postalCode' => $property['postalCode'],
+                        'streetName' => $property['streetName'],
+                        'streetNumber' => $property['streetNumber'],
+                        'city' => $property['city'],
+                        'state' => $property['state'],
+                        'listPrice' => $property['listPrice'],
+                        'listingStatus' => $property['listingStatus'],
+                        'listingId' => $property['listingId'],
+                        'totalBaths' => $property['totalBaths'],
+                        'lotSqft' => $property['lotSqft'],
+                        'bedrooms' => $property['bedrooms'],
+                        'communityName' => $property['communityName'],
+                        'description' => $property['customPropertyDescription'],
+                        'mainImage' => isset($images[1]) ? $images[1] : null,
+                        'entryDate' => $createdAt,
+                        'listDate' => $property['listDate']
+                    ]
+                ];
+
+                $response = $client->index($params);
             }
-
-            $client = \Elasticsearch\ClientBuilder::create()->build();
-
-            $params = [
-                'index' => 'properties',
-                'type' => 'property',
-                'id' => $property['listingId'],
-                'body' => [
-                    'address' => $property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'] . ' ' . $property['postalCode'],
-                    'propertyType' => $property['propertyType'],
-                    'postalCode' => $property['postalCode'],
-                    'streetName' => $property['streetName'],
-                    'streetNumber' => $property['streetNumber'],
-                    'city' => $property['city'],
-                    'state' => $property['state'],
-                    'listPrice' => $property['listPrice'],
-                    'listingStatus' => $property['listingStatus'],
-                    'listingId' => $property['listingId'],
-                    'totalBaths' => $property['totalBaths'],
-                    'lotSqft' => $property['lotSqft'],
-                    'bedrooms' => $property['bedrooms'],
-                    'communityName' => $property['communityName'],
-                    'description' => $property['customPropertyDescription'],
-                    'mainImage' => isset($images[1]) ? $images[1] : null,
-                    'entryDate' => $createdAt
-                ]
-            ];
-
-            $response = $client->index($params);
         }
     }
 
@@ -302,6 +309,7 @@ class Rets extends Command
                 'listAgentName' => $arrayData['26'],
                 'listAgentPhone' => $arrayData['27'],
                 'email' => $arrayData['2385'],
+                'listDate' => $arrayData['138'],
 //
                 // TODO: Unset until column is in db
                 //  'legalLctnTownship' => $arrayData['3'],
@@ -353,7 +361,6 @@ class Rets extends Command
                 // 'fullBaths' => $arrayData['61'],
                 // 'halfBaths' => $arrayData['62'],
                 // 'modificationTimestamp' => $arrayData['135'],
-                // 'listDate' => $arrayData['138'],
                 // 'metroMapMapCoor' => $arrayData['158'],
                 // 'LPSqFt' => $arrayData['2341'],
                 // 'associationFee2' => $arrayData['32'],

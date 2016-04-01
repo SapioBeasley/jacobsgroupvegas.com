@@ -79,7 +79,7 @@
 					</div> --><!-- Other Property -->
 					<!-- Agent Contatct Form -->
 					<div class="contact-feedback-form">
-						<h3><span>Send message To</span>John Doe</h3>
+						<h3><span>Send message To</span>{{$agent->name}}</h3>
 						<form>
 							<div class="col-md-6 col-xs-12">
 								<input type="text" id="name" placeholder="Your Name">

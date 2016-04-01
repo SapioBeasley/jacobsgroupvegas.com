@@ -1,10 +1,7 @@
-- [ ] Create agent migration, with name, title, short description, phone, email
-- [ ] link properties on search and list pages
 - [ ] Communities count wrong on communities list
 - [ ] Community description on community page
 - [ ] Property Detail contact form functioning
 - [ ] Add listing table with Adress 1, Adress 2, City, State, Zip, Additional Rooms/Features, Approx. Size, Approx. Age of Kitchen, Approx. Age of Baths,  Message, First Name, Last Name, Email, Phone,
-- [ ] remove closed
 - [ ] Concat migrations
 - [ ] Put form on pop up and make ajax calls
 - [ ] Remove photoInstructions from db
@@ -14,3 +11,6 @@
 - [ ] Which details would you like to add or remove from property details page?
 - [ ] Offset on rets
 - [ ] Send email from agent page
+- [ ] john doe change on singe agent
+- [ ] add mark doppe to agents list
+- [ ] No longer holding closed properties, so closed conditionals on rets command are not needed
