@@ -37,6 +37,7 @@ class SearchesController extends Controller
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
 		foreach ($queryFilter as $requestKey => $requestValue) {
+
 			switch ($requestKey ) {
 				case 'max_price':
 					$fields['filter'][] = $requestKey;
@@ -51,6 +52,10 @@ class SearchesController extends Controller
 					break;
 
 				case 'listingId':
+					$fields['match'][] = $requestKey;
+					break;
+
+				case 'address':
 					$fields['match'][] = $requestKey;
 					break;
 
@@ -139,11 +144,6 @@ class SearchesController extends Controller
 
 		$params['index'] = 'properties';
 		$params['type'] = 'property';
-		$params['body']['sort'] = [
-			'listDate' => [
-				'order' => 'desc'
-			]
-		];
 		$params['body']['query']['filtered'] = [
 			'query' => $query,
 			'filter' => isset($filter) ? $filter : $defaultFilter,

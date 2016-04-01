@@ -1,5 +1,7 @@
 {!! Form::open(['route' => 'search', 'method' => 'GET']) !!}
-
+	<div class="col-md-12 home-search">
+		{!! Form::text('address', null, ['placeholder' => 'Enter Address', 'class' => 'form-control']) !!}
+	</div>
 	<!-- col-md-10 -->
 	<div class="col-md-10 p_l_z">
 		{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
