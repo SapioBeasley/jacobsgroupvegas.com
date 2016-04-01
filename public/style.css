@@ -13,6 +13,11 @@ img {
 	height: auto;
 }
 
+.home-search {
+	padding-left: 27px;
+	margin-bottom: 25px;
+}
+
 .property-image {
 	max-height: 182px;
 	overflow: hidden;
