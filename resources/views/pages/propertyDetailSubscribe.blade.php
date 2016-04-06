@@ -136,7 +136,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-xs-6" id="modalLoginForm">
+					<div class="col-md-6 col-xs-12" id="modalLoginForm">
 						@{{credentials.email}}
 						<div class="well">
 							<form method="POST" v-on:submit.prevent="login">
@@ -148,7 +148,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-md-6 col-xs-12">
 						<p class="lead">Register now for <span class="text-success">FREE</span></p>
 						<ul class="list-unstyled" style="line-height: 2.5">
 							<li><span class="fa fa-check text-success"></span> See all of our exclusive properties</li>

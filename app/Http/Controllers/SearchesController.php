@@ -144,7 +144,7 @@ class SearchesController extends Controller
 
 		$params['index'] = 'properties';
 		$params['type'] = 'property';
-		$params['body']['size'] = '300';
+		$params['body']['size'] = '100';
 		$params['body']['query']['filtered'] = [
 			'query' => $query,
 			'filter' => isset($filter) ? $filter : $defaultFilter,

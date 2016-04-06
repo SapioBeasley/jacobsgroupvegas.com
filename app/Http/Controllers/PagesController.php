@@ -132,7 +132,7 @@ class PagesController extends Controller
 						'order' => 'DESC'
 					]
 				],
-				'size' => '300',
+				'size' => '100',
 				'query' => [
 					'filtered' => [
 						'filter' => [
@@ -260,8 +260,8 @@ class PagesController extends Controller
 						'query' => [
 							'bool' => [
 								'must' => [
-									'match' => [
-										'city' => $city
+									'match_phrase' => [
+										'city' => $city,
 									]
 								]
 							]

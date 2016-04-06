@@ -53,7 +53,11 @@ class AuthController extends Controller
             return $sessionData->get('errors')->toJson();
         }
 
-        return;
+        $response = new \Illuminate\Http\Response();
+
+        $response->withCookie(cookie()->forget('propertyViews'));
+
+        return $response;
     }
 
     /**
