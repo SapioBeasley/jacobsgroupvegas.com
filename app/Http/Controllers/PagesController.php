@@ -93,8 +93,10 @@ class PagesController extends Controller
 
 	public function showCommunities()
 	{
+		$communities = \App\Community::with('properties')->get();
+
 		return view('pages.listCommunities')->with([
-			'communities' => $this->communities,
+			'communities' => $communities,
 			'communitySelect' => $this->communitySelect
 		]);
 	}
