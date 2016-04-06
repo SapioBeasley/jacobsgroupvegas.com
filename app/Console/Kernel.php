@@ -25,20 +25,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $inspireFile = storage_path('app/inspire.txt');
-
-        $schedule->command('inspire')
-            ->twiceDaily(1, 13)
-            ->sendOutputTo($inspireFile)
-            ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
-
         $filePath = storage_path('app/scheduleResult.txt');
 
         if (env('APP_ENV') != 'local') {
-            $schedule->command('rets:properties')
+            $schedule->command('rets:properties --function=pull')
                 ->twiceDaily(1, 13)
                 ->sendOutputTo($filePath)
                 ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
+
+                $schedule->command('rets:properties --function=remove')
+                ->hourly();
         }
     }
 }
