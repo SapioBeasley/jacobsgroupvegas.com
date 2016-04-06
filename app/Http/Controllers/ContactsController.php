@@ -12,12 +12,26 @@ class ContactsController extends Controller
 	{
 		$user = $request->all();
 
-		\Mail::send('emails.propertyInquire', ['user' => $user], function ($m) use ($user) {
+		switch (true) {
+			case isset($user['listingId']):
+				$email = 'emails.propertyInquire';
+				break;
+
+			case isset($user['community']):
+				$email = 'emails.communityInquire';
+				break;
+
+			default:
+				$email = 'emails.agentInquire';
+				break;
+		}
+
+		\Mail::send($email, ['user' => $user], function ($m) use ($user) {
 			$m->from($user['email'], $user['name']);
 
-			$m->to(env('MAIL_USERNAME'), 'Jacobs Site')->subject('Property Inquire');
+			$m->to(env('MAIL_USERNAME'), 'Jacobs Site')->subject('New Inquire');
 		});
 
-		return redirect()->back()->with('success_message', 'Your inquire for this property has been sent...');
+		return redirect()->back()->with('success_message', 'Your inquiry has been sent...');
 	}
 }
