@@ -1,4 +1,4 @@
-{!! Form::open(['route' => ['properties.inquire', 'listingId=' . $property['listingId']]]) !!}
+{!! Form::open(['route' => ['inquire', 'listingId=' . $property['listingId']]]) !!}
 	{!! Form::text('name', null, ['placeholder' => 'Your Name']) !!}
 	{!! Form::text('email', null, ['placeholder' => 'Your Email']) !!}
 	{!! Form::textarea('message', null, ['placeholder' => 'Message']) !!}

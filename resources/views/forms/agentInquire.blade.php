@@ -1,4 +1,4 @@
-{!! Form::open(['route' => ['inquire', 'community=' . $community['community']]]) !!}
+{!! Form::open(['route' => ['inquire', 'agent=' . $agent->name]]) !!}
 	<div class="col-md-6 col-xs-12">
 		{!! Form::text('name', null, ['placeholder' => 'Your Name']) !!}
 	</div>

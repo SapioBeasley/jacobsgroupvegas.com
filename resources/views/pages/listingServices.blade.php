@@ -47,7 +47,7 @@
 							<p>We look forward to earning your business as a client.</p>
 
 							{!! Form::open(['route' => 'postListing']) !!}
-								@include('forms.listingInquire')
+								@include('forms.postListing')
 							{!! Form::close() !!}
 						</div>
 					</div>
