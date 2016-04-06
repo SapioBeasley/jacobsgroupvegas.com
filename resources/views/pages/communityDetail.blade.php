@@ -35,14 +35,13 @@
 				<!-- col-md-9 -->
 				<div class="col-md-9 col-sm-6 p_l_z">
 					<!-- Agent Detail Box -->
-					<div class="agent-detail-box">
-						<!-- col-md-8 -->
+					<!-- <div class="agent-detail-box">
 						<div class="col-md-12">
 							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 							<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum, Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</p>
 							<p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
-						</div><!-- col-md-8 /- -->
-					</div><!-- Agent Detail Box -->
+						</div>
+					</div> --><!-- Agent Detail Box -->
 					<!-- Other Property -->
 					<div class="other-properties row">
 
@@ -51,6 +50,8 @@
 						@foreach ($properties as $property)
 							@include('pages.includes.propertiesLoopGrid')
 						@endforeach
+
+						{{$properties->links()}}
 
 					</div><!-- Other Property -->
 					<!-- Agent Contatct Form -->

@@ -11,6 +11,8 @@ class AgentsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('agents')->truncate();
+
         $agents = [
         	[
         		'name' => 'Jonathan Jacobs',
