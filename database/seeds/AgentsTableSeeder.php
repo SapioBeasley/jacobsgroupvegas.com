@@ -50,11 +50,11 @@ class AgentsTableSeeder extends Seeder
 	        	'description' => '',
         	],
               [
-                           'name' => 'Kelly',
-                           'email' => 'info@jacobsgroupvegas.com',
-                           'title' => 'Real Estate Agent',
-                           'phone' => '',
-                           'description' => '',
+                     'name' => 'Vasily',
+                     'email' => 'vasily@jacobsgroupvegas.com',
+                     'title' => 'Real Estate Agent',
+                     'phone' => '',
+                     'description' => '',
              ],
         	[
         		'name' => 'Washington Gonzalez',
