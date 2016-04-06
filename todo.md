@@ -11,3 +11,10 @@
 - [ ] Send email from agent page
 - [ ] add mark doppe to agents list
 - [ ] No longer holding closed properties, so closed conditionals on rets command are not needed
+- [ ] Images to s3 bucket, use https://laravel.com/docs/master/filesystem
+- [ ] Buying service page form fix
+- [ ] Listing service form fix
+- [ ] social auth to login form
+- [ ] Remove closed properties
+- [ ] Test migratinos and auth before push
+- [ ] Test property removal
