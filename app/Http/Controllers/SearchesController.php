@@ -144,7 +144,7 @@ class SearchesController extends Controller
 
 		$params['index'] = 'properties';
 		$params['type'] = 'property';
-		$params['body']['size'] = '100';
+		$params['body']['size'] = '300';
 		$params['body']['query']['filtered'] = [
 			'query' => $query,
 			'filter' => isset($filter) ? $filter : $defaultFilter,
@@ -160,37 +160,6 @@ class SearchesController extends Controller
 			'communitySelect' => $this->communitySelect
 		]);
 	}
-
-	// TODO: Remove if nothing is using it
-	// public function searchProperties($whereData)
-	// {
-	// 	$client = \Elasticsearch\ClientBuilder::create()->build();
-
-	// 	$params = [
-	// 		'index' => 'properties',
-	// 		'type' => 'property',
-	// 		'body' => [
-	// 			'size' => '100',
-	// 			'sort' => [
-	// 				'listDate' => [
-	// 					'order' => 'DESC'
-	// 				]
-	// 			],
-	// 			'query' => [
-	// 				'match' => [
-	// 					'listingId' => isset($whereData['listingId']['value']) ? $whereData['listingId']['value'] : null
-	// 				],
-	// 				'match' => [
-	// 					'city' => isset($whereData['city']['value']) ? $whereData['city']['value'] : null
-	// 				]
-	// 			]
-	// 		]
-	// 	];
-
-	// 	$response = $client->search($params);
-
-	// 	return $response;
-	// }
 
 	public function chooseOperator($where)
 	{
