@@ -11,7 +11,7 @@ class Rets extends Command
      *
      * @var string
      */
-    protected $signature = 'rets:properties';
+    protected $signature = 'rets:properties {--function=}';
 
     /**
      * The console command description.
@@ -47,6 +47,60 @@ class Rets extends Command
      * @return mixed
      */
     public function handle()
+    {
+        switch ($this->option('function')) {
+            case 'pull':
+                $properties = $this->pullProperties();
+                break;
+
+            case 'remove':
+                $properties = $this->removeProperties();
+                break;
+
+            default:
+                $this->error('Your must specify either a pull or remove function');
+                break;
+        }
+
+    }
+
+    public function removeProperties()
+    {
+        $properties = \App\Property::with('propertyImages')->get();
+
+        foreach ($properties as $checkProperty) {
+            $results = $this->rets->Search('Property', '1', '(sysid = ' .  $checkProperty['sysId'] . ')', [
+                'QueryType' => 'DMQL2',
+                'Count' => 1, // count and records
+                'Format' => 'COMPACT-DECODED',
+                'StandardNames' => 0, // give system names
+            ]);
+
+            $results = $this->fieldRename($results);
+
+            foreach ($results as $property) {
+                switch (($property['listingStatus'] === 'Active-Exclusive Right') || ($property['listingStatus'] === 'Exclusive Agency')) {
+                    case false:
+                            if (! empty(($checkProperty->propertyImages->toArray()))) {
+                                $closedImages = $checkProperty->propertyImages;
+
+                                $this->removeClosedImages($closedImages);
+                            }
+
+                            $property = \App\Property::find($checkProperty['id']);
+                            $this->info('unavailable property removed');
+                            $property->delete();
+                        break;
+
+                    default:
+                        # continue...
+                        break;
+                }
+            }
+        }
+    }
+
+    public function pullProperties()
     {
         $days = 280;
 
@@ -87,7 +141,7 @@ class Rets extends Command
 
                         $images = $createdProperty->propertyImages->toArray();
 
-                        if ($createdProperty->listingStatus == 'Closed') {
+                        if (($createdProperty->listingStatus !== 'Active-Exclusive Right') || ($createdProperty->listingStatus !== 'Exclusive Agency')) {
 
                             if (! empty($createdProperty->propertyImages->toArray())) {
                                 $closedImages = $createdProperty->propertyImages;
@@ -195,11 +249,9 @@ class Rets extends Command
             $propertyImage = \App\Image::find($image->id);
 
             $propertyImage->delete();
-            $this->info($image->dataUri . ' has been deleted from DB');
 
             if (file_exists(public_path($image->dataUri))) {
                 unlink(public_path($image->dataUri));
-                $this->info(public_path($image->dataUri) . ' has been deleted');
             }
         }
 
