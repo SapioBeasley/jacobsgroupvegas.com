@@ -34,8 +34,8 @@ class AgentsTableSeeder extends Seeder
                            'description' => 'Nicole began her career in real estate in 2011 where she started as the receptionist of Simply Vegas. Her ever-expanding role with the company quickly evolved in to becoming the Office Manager, to where she performs a wide variety of tasks including transaction coordination and file management. Before working in real estate she was an administrative assistant for a structural engineering firm, also assisting in project coordination. This background has helped her be meticulous in organization and dedicated to providing an extremely high standard of customer service.',
              ],
         	[
-        		'name' => 'Vasily',
-	        	'email' => 'vasily@jacobsgroupvegas.com',
+        		'name' => 'Mark Doppe',
+	        	'email' => 'mark@jacobsgroupvegas.com',
 	        	'title' => 'Real Estate Agent',
 	        	'phone' => '',
 	        	'description' => '',
@@ -47,6 +47,13 @@ class AgentsTableSeeder extends Seeder
 	        	'phone' => '',
 	        	'description' => '',
         	],
+              [
+                           'name' => 'Kelly',
+                           'email' => 'info@jacobsgroupvegas.com',
+                           'title' => 'Real Estate Agent',
+                           'phone' => '',
+                           'description' => '',
+             ],
         	[
         		'name' => 'Washington Gonzalez',
 	        	'email' => 'info@jacobsgroupvegas.com',
