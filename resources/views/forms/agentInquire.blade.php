@@ -1,4 +1,4 @@
-{!! Form::open(['route' => ['properties.inquire', 'agent=' . $agent->name]]) !!}
+{!! Form::open(['route' => ['inquire', 'agent=' . $agent->name]]) !!}
 	<div class="col-md-6 col-xs-12">
 		{!! Form::text('name', null, ['placeholder' => 'Your Name']) !!}
 	</div>

@@ -16,11 +16,6 @@ Route::get('/contact', [
 	'uses' => 'PagesController@showContact'
 ]);
 
-Route::get('/listing-services', [
-	'as' => 'services.listing',
-	'uses' => 'PagesController@showLisingServices'
-]);
-
 Route::get('/useful-links', [
 	'as' => 'useful.links',
 	'uses' => 'PagesController@showUsefulLinks'
@@ -68,6 +63,11 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'SearchesController@search'
 	]);
 
+	Route::get('/listing-services', [
+		'as' => 'services.listing',
+		'uses' => 'PagesController@showLisingServices'
+	]);
+
 	Route::get('/properties', [
 		'as' => 'properties',
 		'uses' => 'PagesController@showProperties'
@@ -75,7 +75,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::post('/post-listing', [
 		'as' => 'postListing',
-		'uses' => 'PagesController@postListing'
+		'uses' => 'ContactsController@postListing'
 	]);
 
 	Route::get('/community/{community}', [
@@ -93,9 +93,9 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'PagesController@showSingleProperties'
 	]);
 
-	Route::post('/property-inquire', [
-		'as' => 'properties.inquire',
-		'uses' => 'ContactsController@propertyInquire'
+	Route::post('/inquire', [
+		'as' => 'inquire',
+		'uses' => 'ContactsController@inquire'
 	]);
 
 	Route::get('/agents/{agent}', [
