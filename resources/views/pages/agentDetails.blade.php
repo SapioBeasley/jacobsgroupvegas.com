@@ -37,7 +37,7 @@
 					<!-- Agent Detail Box -->
 					<div class="agent-detail-box">
 						<!-- col-md-4 -->
-						<div class="col-md-4">
+						<div class="col-md-5">
 							<div class="agent-header">
 								<div class="agent-name">
 									<h5>{{$agent->name}} <span>{{$agent->title}}</span></h5>
@@ -49,7 +49,7 @@
 							</div>
 						</div><!-- col-md-4 /- -->
 						<!-- col-md-8 -->
-						<div class="col-md-8">
+						<div class="col-md-7">
 							<div class="about-agent">
 								<h5>ABOUT ME</h5>
 								<p>{{$agent->description}}</p>
