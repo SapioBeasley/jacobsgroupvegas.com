@@ -110,6 +110,8 @@
 		<script src="{{asset('libraries/drag-drop/drag-drop.js')}}"></script> <!-- Drag Drop File -->
 		<script src="{{asset('libraries/drag-drop/modernizr.custom.js')}}"></script> <!-- Drag Drop File -->
 		<script src="http://maps.google.com/maps/api/js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.20/vue.min.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js" type="text/javascript"></script>
 		<script src="{{asset('libraries/gmap/gmap.js')}}"></script> <!-- map -->
 		<script src="{{asset('libraries/expanding-search/classie.js')}}"></script>
 		<script src="{{asset('libraries/expanding-search/uisearch.js')}}"></script>
@@ -117,6 +119,48 @@
 		<script src="{{asset('js/functions.js')}}"></script>
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.3/css/lightslider.min.css" rel="stylesheet"/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.3/js/lightslider.min.js"></script>
+
+		@yield('mapCoords')
+		@yield('modal')
+
+		<script type="text/javascript">
+			Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
+
+			new Vue({
+				el: '#modalLoginForm',
+				data() {
+					return {
+						fields: {
+							email: '',
+							password: '',
+						},
+						credentials: []
+					}
+				},
+				methods: {
+					login: function (e) {
+						e.preventDefault();
+						var creds = this.fields;
+
+						// this.credentials.push(creds);
+
+						var newJson = JSON.stringify({'email': creds.email, 'password': creds.email});
+
+						this.$http.post('/ajax-auth', newJson, function(response) {
+
+							this.credentials = response;
+
+							if (this.credentials == '') {
+								location.reload();
+							}
+						}).error(function (response) {
+							this.credentials = response;
+						});
+
+					}
+				}
+			})
+		</script>
 		<script type="text/javascript">
 			$('#lightSlider').lightSlider({
 			    gallery: true,
@@ -126,9 +170,6 @@
 			    thumbItem: 9
 			});
 		</script>
-
-		@yield('mapCoords')
-		@yield('modal')
 
 		<script id="imageTemplate" type="text/x-jquery-tmpl">
 			<div class="col-md-3 col-sm-3 col-xs-6">

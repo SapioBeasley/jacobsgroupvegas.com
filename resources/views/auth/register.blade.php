@@ -33,28 +33,34 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Register</div>
 						<div class="panel-body">
-							<form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-								{!! csrf_field() !!}
 
-								<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-									<label class="col-md-4 control-label">Name</label>
+							{!! Form::open(['url' => 'register', 'class' => 'form-horizontal', 'role' => 'form']) !!}
 
+								<div class="form-group">
 									<div class="col-md-6">
-										<input type="text" class="form-control" name="name" value="{{ old('name') }}">
+										{!! Form::text('first_name', old('name'), ['class' => 'form-control', 'placeholder' => 'First Name']) !!}
 
-										@if ($errors->has('name'))
+										@if ($errors->has('first_name'))
 											<span class="help-block">
-												<strong>{{ $errors->first('name') }}</strong>
+												<strong>{{ $errors->first('first_name') }}</strong>
+											</span>
+										@endif
+									</div>
+									<div class="col-md-6">
+										{!! Form::text('last_name', old('last_name'), ['class' => 'form-control', 'placeholder' => 'Last Name']) !!}
+
+										@if ($errors->has('last_name'))
+											<span class="help-block">
+												<strong>{{ $errors->first('last_name') }}</strong>
 											</span>
 										@endif
 									</div>
 								</div>
 
-								<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-									<label class="col-md-4 control-label">E-Mail Address</label>
+								<div class="form-group">
 
-									<div class="col-md-6">
-										<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+									<div class="col-md-12">
+										{!! Form::text('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Email (Will also be used to log you in)']) !!}
 
 										@if ($errors->has('email'))
 											<span class="help-block">
@@ -64,42 +70,41 @@
 									</div>
 								</div>
 
-								<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-									<label class="col-md-4 control-label">Password</label>
+								<div class="form-group">
 
-									<div class="col-md-6">
-										<input type="password" class="form-control" name="password">
+									<div class="col-md-12">
+										{!! Form::text('email_confirm', null, ['class' => 'form-control', 'placeholder' => 'Confirm Email']) !!}
 
-										@if ($errors->has('password'))
+										@if ($errors->has('email_confirmation'))
 											<span class="help-block">
-												<strong>{{ $errors->first('password') }}</strong>
-											</span>
-										@endif
-									</div>
-								</div>
-
-								<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-									<label class="col-md-4 control-label">Confirm Password</label>
-
-									<div class="col-md-6">
-										<input type="password" class="form-control" name="password_confirmation">
-
-										@if ($errors->has('password_confirmation'))
-											<span class="help-block">
-												<strong>{{ $errors->first('password_confirmation') }}</strong>
+												<strong>{{ $errors->first('email_confirmation') }}</strong>
 											</span>
 										@endif
 									</div>
 								</div>
 
 								<div class="form-group">
-									<div class="col-md-6 col-md-offset-4">
+
+									<div class="col-md-12">
+										{!! Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'Phone']) !!}
+
+										@if ($errors->has('phone'))
+											<span class="help-block">
+												<strong>{{ $errors->first('phone') }}</strong>
+											</span>
+										@endif
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-6">
 										<button type="submit" class="btn btn-primary">
 											<i class="fa fa-btn fa-user"></i>Register
 										</button>
 									</div>
 								</div>
-							</form>
+
+							{!! Form::close() !!}
 						</div>
 					</div>
 				</div>

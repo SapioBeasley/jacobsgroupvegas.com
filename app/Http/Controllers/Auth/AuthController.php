@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -38,6 +39,21 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    public function ajaxAuth(Request $request)
+    {
+        $login = $this->login($request);
+
+        $sessionData = $login->getSession();
+
+        if (! is_null($sessionData->get('errors'))) {
+            $errors = $sessionData->get('errors')->toJson();
+
+            return $sessionData->get('errors')->toJson();
+        }
+
+        return;
     }
 
     /**

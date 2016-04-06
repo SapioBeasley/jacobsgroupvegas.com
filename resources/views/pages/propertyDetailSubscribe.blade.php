@@ -132,14 +132,28 @@
 	<div class="modal-dialog register-modal" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Regsiter to View Property...</h4>
+				<h4 class="modal-title" id="myModalLabel">Login to View Property</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-12">
-						<a href="{{url('/register')}}" class="btn btn-primary btn-lg btn-block">Register</a>
-
-						<a href="{{url('/login')}}" class="btn btn-default btn-lg btn-block">Sign In</a>
+					<div class="col-xs-6" id="modalLoginForm">
+						@{{credentials.email}}
+						<div class="well">
+							<form method="POST" v-on:submit.prevent="login">
+								<div class="form-group">
+									<label for="email" class="control-label">Email</label>
+									<input type="text" name="email" class="form-control" v-model="fields.email">
+								</div>
+								<button type="submit" class="btn btn-success btn-block">Login</button>
+							</form>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<p class="lead">Register now for <span class="text-success">FREE</span></p>
+						<ul class="list-unstyled" style="line-height: 2.5">
+							<li><span class="fa fa-check text-success"></span> See all of our exclusive properties</li>
+						</ul>
+						<p><a href="{{url('register')}}" class="btn btn-info btn-block">Yes please, register now!</a></p>
 					</div>
 				</div>
 			</div>

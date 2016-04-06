@@ -112,5 +112,10 @@ Route::group(['middleware' => ['web']], function () {
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
+    Route::post('/ajax-auth', [
+		'as' => 'ajax.auth',
+		'uses' => '\App\Http\Controllers\Auth\AuthController@ajaxAuth'
+	]);
+
     // Route::get('/home', 'HomeController@index');
 });
