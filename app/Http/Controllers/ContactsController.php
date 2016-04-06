@@ -74,6 +74,8 @@ class ContactsController extends Controller
 
 		$email = 'emails.listingPost';
 
+		$data['name'] = $userData['name'];
+
 		$this->mailIt($email, $data);
 
 		return redirect()->back()->with('success_message', 'Your listing has been sent for review...');
