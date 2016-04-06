@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta id="token" name="token" value="{{csrf_token()}}">
 <title>@yield('title') JacobsGroupVegas.com</title>
 
 <link rel="shortcut icon" href="{{asset('favicon.ico?=' . rand())}}">
