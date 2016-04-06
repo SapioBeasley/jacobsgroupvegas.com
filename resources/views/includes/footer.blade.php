@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="col-md-9 col-sm-6">
 			<aside class="widget widget_quick_links">
-				<h3 class="widget-title">Communities</h3>
+				<h3 class="widget-title">Communities <small><a href="{{route('communities')}}">View All</a></small></h3>
 				<ul class="p_l_z">
 					@foreach ($communities as $community)
 						<li><a title="Quick Links" href="{{route('communities.show', $community['community'])}}">{{$community['community']}}</a></li>
