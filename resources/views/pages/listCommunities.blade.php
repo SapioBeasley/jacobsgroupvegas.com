@@ -51,7 +51,7 @@
 						<div class="property-details">
 							<a title="Property Title" href="{{route('communities.show', $community['community'])}}">{{$community['community']}}</a>
 							<ul>
-								<li><i class="fa fa-home"></i>3326 Available Properties</li>
+								<li><i class="fa fa-home"></i>{{count($community->properties)}} Available Properties</li>
 							</ul>
 						</div>
 					</div>
