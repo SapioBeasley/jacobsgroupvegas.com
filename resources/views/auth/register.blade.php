@@ -46,6 +46,8 @@
 											</span>
 										@endif
 									</div>
+								</div>
+								<div class="form-group">
 									<div class="col-md-6">
 										{!! Form::text('last_name', old('last_name'), ['class' => 'form-control', 'placeholder' => 'Last Name']) !!}
 
