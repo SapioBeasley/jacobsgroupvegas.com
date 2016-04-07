@@ -4,6 +4,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta id="token" name="token" value="{{csrf_token()}}">
+
+<meta name="theme-color" content="#4DC8E3">
+<meta name="msapplication-navbutton-color" content="#4DC8E3">
+<meta name="apple-mobile-web-app-status-bar-style" content="#4DC8E3">
+
 <title>@yield('title') JacobsGroupVegas.com</title>
 
 <link rel="shortcut icon" href="{{asset('favicon.ico?=' . rand())}}">

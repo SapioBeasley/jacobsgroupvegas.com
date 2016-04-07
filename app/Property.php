@@ -66,7 +66,6 @@ class Property extends Model
         'idx',
         'images',
         'photoExcluded',
-        'photoInstructions',
         'sysId',
         'entryDate',
         'customPropertyDescription',

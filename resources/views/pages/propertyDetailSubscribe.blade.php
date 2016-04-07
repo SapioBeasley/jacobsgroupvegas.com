@@ -45,7 +45,6 @@
 					<li><i class="fa fa-video-camera"></i><a target="_blank" title="print" href="{{$property['virtualTourLink']}}">Virtual Tour</a></li>
 					<!-- <li><i class="fa fa-car"></i>1</li> -->
 				</ul>
-				<a title="print" href="#"><i class="fa fa-print"></i> Print</a>
 			</div>
 			<div class="property-details-content container-fluid p_z">
 				<!-- col-md-9 -->

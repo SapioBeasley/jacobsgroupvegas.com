@@ -24,7 +24,7 @@ class CreatePropertiesTable extends Migration
             $table->double('value');
             $table->string('yearBuilt');
             $table->string('state');
-            $table->string('listPrice');
+            $table->integer('listPrice');
             $table->string('listingStatus');
             $table->string('originalListPrice');
             $table->string('propertyDescription');

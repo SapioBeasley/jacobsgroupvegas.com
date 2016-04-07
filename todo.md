@@ -1,6 +1,4 @@
 - [ ] Community description on community page (removed for now)
-- [ ] Concat migrations
-- [ ] Remove photoInstructions from db
 - [ ] No longer holding closed properties, so closed conditionals on rets command are not needed
 - [ ] Images to s3 bucket, use https://laravel.com/docs/master/filesystem
 - [ ] social auth to login form

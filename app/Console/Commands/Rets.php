@@ -223,7 +223,7 @@ class Rets extends Command
                         'streetNumber' => $property['streetNumber'],
                         'city' => $property['city'],
                         'state' => $property['state'],
-                        'listPrice' => $property['listPrice'],
+                        'listPrice' => (integer) $property['listPrice'],
                         'listingStatus' => $property['listingStatus'],
                         'listingId' => $property['listingId'],
                         'totalBaths' => $property['totalBaths'],
@@ -239,6 +239,8 @@ class Rets extends Command
 
                 $response = $client->index($params);
             }
+
+            $this->info('Set Complete');
         }
     }
 
@@ -285,9 +287,9 @@ class Rets extends Command
                 'yearBuilt' => $arrayData['264'],
                 'city' => $arrayData['2909'],
                 'state' => $arrayData['2963'],
-                'listPrice' => $arrayData['144'],
+                'listPrice' => (integer) $arrayData['144'],
                 'listingStatus' => $arrayData['242'],
-                'originalListPrice' => $arrayData['173'],
+                'originalListPrice' => (integer) $arrayData['173'],
                 'listingId' => $arrayData['163'],
                 'propertyDescription' => $arrayData['268'],
                 'totalBaths' => $arrayData['63'],
@@ -335,7 +337,6 @@ class Rets extends Command
                 'idx' => $arrayData['1809'],
                 'images' => $arrayData['129'],
                 'photoExcluded' => $arrayData['2883'],
-                'photoInstructions' => $arrayData['182'],
                 'communityName' => $arrayData['155'],
                 'entryDate' => $arrayData['104'],
                 'daysOnMarket' => $arrayData['2940'],
@@ -356,7 +357,7 @@ class Rets extends Command
                 'model' => $arrayData['164'],
                 'pvPool' => $arrayData['203'],
                 'sewer' => $arrayData['219'],
-                'closePriceSale Price' => $arrayData['210'],
+                'closePriceSale Price' => (integer) $arrayData['210'],
                 'closeDate' => $arrayData['25'],
                 'listAgentName' => $arrayData['26'],
                 'listAgentPhone' => $arrayData['27'],

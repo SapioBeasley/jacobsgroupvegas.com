@@ -63,10 +63,9 @@
 					<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
 					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>
 					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['totalBaths']}}</li>
-					<li><i class="fa fa-video-camera"></i><a target="_blank" title="print" href="{{$property['virtualTourLink']}}">Virtual Tour</a></li>
+					<li><i class="fa fa-video-camera"></i><a target="_blank" title="virtual tour" href="{{$property['virtualTourLink']}}">Virtual Tour</a></li>
 					<!-- <li><i class="fa fa-car"></i>1</li> -->
 				</ul>
-				<a title="print" href="#"><i class="fa fa-print"></i> Print</a>
 			</div>
 			<div class="property-details-content container-fluid p_z">
 				<!-- col-md-9 -->
