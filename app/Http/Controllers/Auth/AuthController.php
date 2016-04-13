@@ -87,6 +87,12 @@ class AuthController extends Controller
     {
         $data = $this->mapData($data);
 
+        \Mail::raw($data['name'] . ' has just registered. Email is ' . $data['email'] . ' and phone number: ' $data['phone'], function ($m) use ($user) {
+            $m->from($data['email'], $data['name']);
+
+            $m->to(env('MAIL_USERNAME'), 'Jacobs Site')->subject('New Site Registration');
+        });
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
