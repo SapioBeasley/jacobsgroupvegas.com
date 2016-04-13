@@ -37,7 +37,7 @@
 							{!! Form::open(['url' => 'register', 'class' => 'form-horizontal', 'role' => 'form']) !!}
 
 								<div class="form-group">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										{!! Form::text('first_name', old('name'), ['class' => 'form-control', 'placeholder' => 'First Name']) !!}
 
 										@if ($errors->has('first_name'))
@@ -48,7 +48,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										{!! Form::text('last_name', old('last_name'), ['class' => 'form-control', 'placeholder' => 'Last Name']) !!}
 
 										@if ($errors->has('last_name'))
