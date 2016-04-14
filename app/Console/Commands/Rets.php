@@ -141,14 +141,14 @@ class Rets extends Command
 
                         $images = $createdProperty->propertyImages->toArray();
 
-                        if (($createdProperty->listingStatus !== 'Active-Exclusive Right') || ($createdProperty->listingStatus !== 'Exclusive Agency')) {
+                        switch (true) {
+                            case ! isset($images[1]):
+                                $images[1] = isset($images[0]) ? $images[0] : [];
+                                break;
 
-                            if (! empty($createdProperty->propertyImages->toArray())) {
-                                $closedImages = $createdProperty->propertyImages;
-
-                                $this->removeClosedImages($closedImages);
-                            }
-
+                            default:
+                                // dd('contiue on');
+                                break;
                         }
 
                         break;
