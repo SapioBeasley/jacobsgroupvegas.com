@@ -139,8 +139,7 @@
 	</div><!-- Featured Section /- -->
 
 	<!-- Featured Section -->
-	<div id="featured-section" class="featured-section featured-section2 container-fluid p_z">
-		<!-- container -->
+	<!-- <div id="featured-section" class="featured-section featured-section2 container-fluid p_z">
 		<div class="container">
 
 			<div class="section-header">
@@ -156,10 +155,9 @@
 					@include('pages.includes.homesSection')
 				@endforeach
 
-				<!-- Col-md-12 -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<a title="view in area" href="{{route('search', 'city=boulder city')}}" class="">View in Area</a>
-				</div><!-- Col-md-12 -->
+				</div>
 
 			@else
 				<div class="col-md-12 col-sm-12 col-xs-12">
@@ -167,8 +165,8 @@
 				</div>
 			@endif
 
-		</div><!-- container -->
-	</div><!-- Featured Section /- -->
+		</div>
+	</div> -->
 
 </div>
 @endsection

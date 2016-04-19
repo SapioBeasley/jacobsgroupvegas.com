@@ -74,13 +74,12 @@
 											<li><a href="{{route('services.buying')}}">Buying Services</a></li>
 											<li><a href="{{route('services.listing')}}">Listing Services</a></li>
 											<li><a href="{{route('useful.links')}}">Useful Links</a></li>
-											<li><a href="http://jacobsgroupvegas.com/property-value/" target="_blank">Home Value</a></li>
 										</ul>
 									</li>
 									<li><a href="{{route('home')}}#las-vegas-properties">LAS VEGAS</a>
 									<li><a href="{{route('home')}}#henderson-properties">HENDERSON</a>
 									<li><a href="{{route('home')}}#north-las-vegas-properties">N. LAS VEGAS</a>
-									<li><a href="{{route('home')}}#boulder-city-properties">BOULDER CITY</a>
+									<li><a href="http://jacobsgroupvegas.com/property-value/" target="_blank">HOME VALUE</a></li>
 								</ul>
 							</div><!--/.nav-collapse -->
 						</nav><!-- nav /- -->
