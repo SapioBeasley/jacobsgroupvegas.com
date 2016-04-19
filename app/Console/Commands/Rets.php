@@ -81,11 +81,23 @@ class Rets extends Command
             foreach ($results as $property) {
                 switch (($property['listingStatus'] === 'Active-Exclusive Right') || ($property['listingStatus'] === 'Exclusive Agency')) {
                     case false:
+
                             if (! empty(($checkProperty->propertyImages->toArray()))) {
                                 $closedImages = $checkProperty->propertyImages;
 
                                 $this->removeClosedImages($closedImages);
                             }
+
+                            $client = \Elasticsearch\ClientBuilder::create()->build();
+
+                            // Find Document
+                           $params = [
+					'index' => 'properties',
+					'type' => 'property',
+					'id' => $property['listingId']
+				];
+
+				$response = $client->delete($params);
 
                             $property = \App\Property::find($checkProperty['id']);
                             $this->info('unavailable property removed');
@@ -117,18 +129,30 @@ class Rets extends Command
                 'StandardNames' => 0, // give system names
             ]);
 
+            // New Query
+            // $results = $this->rets->Search('Property', 'listing', '*', [
+            //     // 'Limit' => 1,
+            // ]);
+
             $days = $days - 20;
 
             $startDate = date('Y-m-d', strtotime("+20 days", strtotime($startDate)));
 
-            $results = $this->fieldRename($results);
             $this->info('Import began at ' . $time);
             $this->info('Properties to input: ' . count($results));
             $this->info('Date Range: ' . $startDate . ' to ' . date('Y-m-d', strtotime('-' . $days . 'days')));
 
+            // dd($results);
+
+            $results = $this->fieldRename($results);
+
             foreach ($results as $property) {
 
                 $createdProperty = \App\Property::where('listingId', '=', $property['listingId'])->with('propertyImages')->first();
+
+                // if (! is_null($createdProperty) && $createdProperty->listingId == '1549821') {
+                // 	dd($createdProperty->toArray());
+                // }
 
                 switch (true) {
                     case ! is_null($createdProperty):
@@ -276,6 +300,8 @@ class Rets extends Command
 
     public function fieldRename($oldArray)
     {
+    	$newArray = [];
+
         foreach ($oldArray as $arrayData) {
             $newArray[] = [
                 'sysId' => $arrayData['sysid'],
@@ -544,6 +570,7 @@ class Rets extends Command
 
             $newArray[$propertyArrayKey]['customPropertyDescription'] = $this->buildPropertyDescription($newArray[$propertyArrayKey]);
         }
+
 
         return $newArray;
     }
