@@ -157,13 +157,27 @@ class Rets extends Command
                 switch (true) {
                     case ! is_null($createdProperty):
 
+                        $this->info('Property Found Updating it');
+
                         $createProperty = $createdProperty->update($property);
 
                         $createdAt = $createdProperty->toArray();
 
                         $createdAt = $createdAt['created_at'];
 
-                        $images = $createdProperty->propertyImages->toArray();
+                        // $images = $createdProperty->propertyImages->toArray();
+
+                        $this->info('Grabbing images');
+
+                        if ($createdProperty->listingStatus !== 'Closed') {
+                            $images = $this->getPropertyImages($property['sysId']);
+
+                            foreach ($images as $image) {
+                                $createdProperty->propertyImages()->create([
+                                    'dataUri' => $image
+                                ]);
+                            }
+                        }
 
                         switch (true) {
                             case ! isset($images[1]):
