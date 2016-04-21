@@ -93,10 +93,28 @@ class Rets extends Command
 						$params = [
 							'index' => 'properties',
 							'type' => 'property',
-							'id' => $property['listingId']
+							'body' => [
+								'query' => [
+									'match' => [
+										'id' => $property['listingId']
+									]
+								]
+							]
 						];
 
-						$response = $client->delete($params);
+						$response = $client->search($params);
+
+						if (! empty($response['hits']['hits'])) {
+							$params = [
+								'index' => 'properties',
+								'type' => 'property',
+								'id' => $property['listingId']
+							];
+
+							$response = $client->delete($params);
+						} else {
+							$this->info('Not found in Index');
+						}
 
 						$property = \App\Property::find($checkProperty['id']);
 						$this->info('unavailable property removed');
