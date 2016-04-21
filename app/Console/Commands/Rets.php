@@ -65,68 +65,75 @@ class Rets extends Command
 
 	public function removeProperties()
 	{
-		$properties = \App\Property::with('propertyImages')->get();
+		$skip = 0;
 
-		foreach ($properties as $checkProperty) {
-			$results = $this->rets->Search('Property', '1', '(sysid = ' .  $checkProperty['sysId'] . ')', [
-				'QueryType' => 'DMQL2',
-				'Count' => 1, // count and records
-				'Format' => 'COMPACT-DECODED',
-				'StandardNames' => 0, // give system names
-			]);
+		do {
+			$properties = \App\Property::with('propertyImages')->take(20)->skip($skip)->get();
 
-			$results = $this->fieldRename($results);
+			foreach ($properties as $checkProperty) {
 
-			foreach ($results as $property) {
-				switch (($property['listingStatus'] === 'Active-Exclusive Right') || ($property['listingStatus'] === 'Exclusive Agency')) {
-					case false:
+				$results = $this->rets->Search('Property', '1', '(sysid = ' .  $checkProperty['sysId'] . ')', [
+					'QueryType' => 'DMQL2',
+					'Count' => 1, // count and records
+					'Format' => 'COMPACT-DECODED',
+					'StandardNames' => 0, // give system names,
+					'Limit' => 1
+				]);
 
-						if (! empty(($checkProperty->propertyImages->toArray()))) {
-							$closedImages = $checkProperty->propertyImages;
+				$results = $this->fieldRename($results);
 
-							$this->removeClosedImages($closedImages);
-						}
+				foreach ($results as $property) {
+					switch (($property['listingStatus'] === 'Active-Exclusive Right') || ($property['listingStatus'] === 'Exclusive Agency')) {
+						case false:
 
-						$client = \Elasticsearch\ClientBuilder::create()->build();
+							if (! empty(($checkProperty->propertyImages->toArray()))) {
+								$closedImages = $checkProperty->propertyImages;
 
-						// Find Document
-						$params = [
-							'index' => 'properties',
-							'type' => 'property',
-							'body' => [
-								'query' => [
-									'match' => [
-										'id' => $property['listingId']
-									]
-								]
-							]
-						];
+								$this->removeClosedImages($closedImages);
+							}
 
-						$response = $client->search($params);
+							$client = \Elasticsearch\ClientBuilder::create()->build();
 
-						if (! empty($response['hits']['hits'])) {
+							// Find Document
 							$params = [
 								'index' => 'properties',
 								'type' => 'property',
-								'id' => $property['listingId']
+								'body' => [
+									'query' => [
+										'match' => [
+											'id' => $property['listingId']
+										]
+									]
+								]
 							];
 
-							$response = $client->delete($params);
-						} else {
-							$this->info('Not found in Index');
-						}
+							$response = $client->search($params);
 
-						$property = \App\Property::find($checkProperty['id']);
-						$this->info('unavailable property removed');
-						$property->delete();
-						break;
+							if (! empty($response['hits']['hits'])) {
+								$params = [
+									'index' => 'properties',
+									'type' => 'property',
+									'id' => $property['listingId']
+								];
 
-					default:
-						# continue...
-						break;
+								$response = $client->delete($params);
+							} else {
+								$this->info('Not found in Index');
+							}
+
+							$property = \App\Property::find($checkProperty['id']);
+							$this->info('unavailable property removed');
+							$property->delete();
+							break;
+
+						default:
+							# continue...
+							break;
+					}
 				}
 			}
-		}
+
+		} while (count($properties) != '0');
 	}
 
 	public function pullProperties()
