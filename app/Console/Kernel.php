@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
                 ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
 
                 $schedule->command('rets:properties --function=remove')
-                ->twiceDaily(1, 13)
+                ->twiceDaily(3, 15)
                 ->sendOutputTo($removeFilePath)
                 ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
         }
