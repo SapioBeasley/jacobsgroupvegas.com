@@ -25,16 +25,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $filePath = storage_path('app/scheduleResult.txt');
+        $pullFilePath = storage_path('app/pullResult.txt');
+        $removeFilePath = storage_path('app/removeResult.txt');
 
         if (env('APP_ENV') != 'local') {
             $schedule->command('rets:properties --function=pull')
                 ->twiceDaily(1, 13)
-                ->sendOutputTo($filePath)
+                ->sendOutputTo($pullFilePath)
                 ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
 
                 $schedule->command('rets:properties --function=remove')
-                ->hourly();
+                ->twiceDaily(1, 13)
+                ->sendOutputTo($removeFilePath)
+                ->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
         }
     }
 }

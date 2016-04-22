@@ -83,6 +83,7 @@ class Rets extends Command
 				$results = $this->fieldRename($results);
 
 				foreach ($results as $property) {
+
 					switch (($property['listingStatus'] === 'Active-Exclusive Right') || ($property['listingStatus'] === 'Exclusive Agency')) {
 						case false:
 
@@ -122,8 +123,9 @@ class Rets extends Command
 							}
 
 							$property = \App\Property::find($checkProperty['id']);
-							$this->info('unavailable property removed');
 							$property->delete();
+
+							$this->info('Property Removed');
 							break;
 
 						default:
@@ -181,17 +183,11 @@ class Rets extends Command
 				switch (true) {
 					case ! is_null($createdProperty):
 
-						$this->info('Property Found Updating it');
-
 						$createProperty = $createdProperty->update($property);
 
 						$createdAt = $createdProperty->toArray();
 
 						$createdAt = $createdAt['created_at'];
-
-						// $images = $createdProperty->propertyImages->toArray();
-
-						$this->info('Grabbing images');
 
 						if ($createdProperty->listingStatus !== 'Closed') {
 							$images = $this->getPropertyImages($property['sysId']);
@@ -276,8 +272,6 @@ class Rets extends Command
 				$mainImage = null;
 
 				$mainImage = $this->setMainImage($images);
-
-				$this->info($mainImage);
 
 				$params = [
 					'index' => 'properties',
