@@ -29,6 +29,9 @@
 	<div class="agent-listing agent-listing2">
 		<!-- container -->
 		<div class="container">
+
+			@include('pages.includes.statusMessages')
+
 			<!-- container fluid -->
 			<div class="container-fluid p_z">
 				<!-- col-md-9 -->

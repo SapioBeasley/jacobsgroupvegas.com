@@ -28,6 +28,9 @@
 	<!-- contact-detail -->
 	<div id="contact-detail" class="contact-detail">
 		<div class="container">
+
+			@include('pages.includes.statusMessages')
+
 			<!-- contact-address-section -->
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="contact-logo-box">

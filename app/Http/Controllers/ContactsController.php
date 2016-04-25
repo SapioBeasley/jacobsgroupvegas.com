@@ -78,11 +78,19 @@ class ContactsController extends Controller
 
 		$this->mailIt($email, $data);
 
+		dd($request->getSession());
+
 		return redirect()->back()->with('success_message', 'Your listing has been sent for review...');
 	}
 
 	public function mailIt($template, $user)
 	{
+		foreach ($user as $userKey => $userValue) {
+			if (((strpos($userValue, 'blade') !== false) || strpos($userValue, 'gold') !== false) || strpos($userValue, 'bns') !== false) {
+				return redirect()->back()->with('error_message', 'Sorry Blade and Gold You are no longer able to send us anything...');
+			}
+		}
+
 		\Mail::send($template, ['user' => $user], function ($m) use ($user) {
 			$m->from($user['email'], $user['name']);
 

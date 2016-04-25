@@ -45,6 +45,8 @@
 		<!-- container -->
 		<div class="container">
 
+			@include('pages.includes.statusMessages')
+
 			<div class="section-header">
 				<div class="col-md-8 col-sm-7">
 					<p id="las-vegas-properties">New Properties in</p>

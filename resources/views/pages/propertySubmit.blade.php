@@ -128,6 +128,9 @@
 	<!-- submit-property-1 -->
 	<div class="submit-property">
 		<div class="container">
+
+			@include('pages.includes.statusMessages')
+
 			<div role="tabpanel">
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">

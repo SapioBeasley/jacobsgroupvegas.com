@@ -28,6 +28,9 @@
 	<!-- Property Listing Section -->
 	<div id="property-listing" class="property-listing">
 		<div class="container">
+
+			@include('pages.includes.statusMessages')
+
 			<div class="property-left col-md-9 col-sm-6 p_l_z content-area">
 				<div class="section-header p_l_z">
 					<div class="col-md-12 col-sm-12 p_l_z">

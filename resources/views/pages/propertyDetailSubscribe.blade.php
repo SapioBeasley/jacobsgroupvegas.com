@@ -32,6 +32,9 @@
 	<div class="property-main-details">
 		<!-- container -->
 		<div class="container">
+
+			@include('pages.includes.statusMessages')
+
 			<div class="property-header">
 				<h3>{{$property['streetNumber'] .' ' . $property['streetName']}} - {{$property['city']}}
 					<span>{{$property['propertyType']}}</span>

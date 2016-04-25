@@ -36,6 +36,9 @@
 	<div id="featured-section" class="featured-section featured-section2 container-fluid p_z">
 		<!-- container -->
 		<div class="container">
+
+			@include('pages.includes.statusMessages')
+
 			<div class="section-header">
 				<div class="col-md-8 col-sm-7">
 					<p>Select your</p>
