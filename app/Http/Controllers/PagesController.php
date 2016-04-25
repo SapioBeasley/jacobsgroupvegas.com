@@ -123,27 +123,23 @@ class PagesController extends Controller
 	{
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		$params = [
-			'index' => 'properties',
-			'type' => 'property',
-			'body' => [
-				'sort' => [
-					'listDate' => [
-						'order' => 'DESC'
-					]
-				],
-				'size' => '100',
-				'query' => [
-					'filtered' => [
-						'filter' => [
-							'bool' => [
-								'must_not' => [
-									'term' => [
-										'listingStatus' => 'closed'
-									]
-								],
+		$params['index'] = 'properties';
+		$params['type'] = 'property';
+		$params['body']['sort'] = [
+			'listDate' => [
+				'order' => 'DESC'
+			]
+		];
+		$params['body']['size'] = '100';
+		$params['body']['query'] = [
+			'filtered' => [
+				'filter' => [
+					'bool' => [
+						'must_not' => [
+							'term' => [
+								'listingStatus' => 'closed'
 							]
-						],
+						]
 					]
 				]
 			]
@@ -189,7 +185,7 @@ class PagesController extends Controller
 						$response = new \Illuminate\Http\Response(view('pages.propertyDetailSubscribe')->with([
 							'property' => $property,
 							'communities' => $this->communities,
-							'geoLocation' => $geoLocation
+							'geoLocation' => $geoLocation['geometry']['location']
 						]));
 					}
 
@@ -199,7 +195,7 @@ class PagesController extends Controller
 					$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 						'property' => $property,
 						'communities' => $this->communities,
-						'geoLocation' => $geoLocation,
+						'geoLocation' => $geoLocation['geometry']['location'],
 						'recent' => $this->recent
 					]));
 
@@ -211,7 +207,7 @@ class PagesController extends Controller
 				$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 					'property' => $property,
 					'communities' => $this->communities,
-					'geoLocation' => $geoLocation,
+					'geoLocation' => $geoLocation['geometry']['location'],
 					'recent' => $this->recent
 				]));
 
@@ -250,38 +246,30 @@ class PagesController extends Controller
 	{
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		$params = [
-			'index' => 'properties',
-			'type' => 'property',
-			'body' => [
-				'size' => $size,
-				'query' => [
-					'filtered' => [
-						'query' => [
-							'bool' => [
-								'must' => [
-									'match_phrase' => [
-										'city' => $city,
-									]
-								]
-							]
-						],
-						'filter' => [
-							'bool' => [
-								'must_not' => [
-									'term' => [
-										'listingStatus' => 'closed'
-									]
-								],
-							]
-						],
-					]
-				],
-				'sort' => [
-					'listDate' => [
-						'order' => 'desc'
+		$params['index'] = 'properties';
+		$params['type'] = 'property';
+		$params['body']['size'] = $size;
+		$params['body']['sort'] = [
+			'listDate' => [
+				'order' => 'desc'
+			]
+		];
+		$params['body']['query']['filtered']['query'] = [
+			'bool' => [
+				'must' => [
+					'match_phrase' => [
+						'city' => $city,
 					]
 				]
+			]
+		];
+		$params['body']['query']['filtered']['filter'] = [
+			'bool' => [
+				'must_not' => [
+					'term' => [
+						'listingStatus' => 'closed'
+					]
+				],
 			]
 		];
 

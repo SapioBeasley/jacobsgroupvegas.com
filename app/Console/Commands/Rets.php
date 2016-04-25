@@ -136,6 +136,8 @@ class Rets extends Command
 			}
 
 		} while (count($properties) != '0');
+
+		$this->info('Removed Unavailable Properties');
 	}
 
 	public function pullProperties()
