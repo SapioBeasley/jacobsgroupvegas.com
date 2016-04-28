@@ -80,7 +80,7 @@ class PagesController extends Controller
 
 		$properties = \App\Property::whereHas('community', function ($q) use ($community) {
 			$q->where('community', '=', $community['community']);
-			$q->where('listingStatus', '!=', 'closed');
+			$q->where('Status', '!=', 'closed');
 		})->paginate(15);
 
 		return view('pages.communityDetail')->with([
@@ -126,7 +126,7 @@ class PagesController extends Controller
 		$params['index'] = 'properties';
 		$params['type'] = 'property';
 		$params['body']['sort'] = [
-			'listDate' => [
+			'OriginalEntryTimestamp' => [
 				'order' => 'DESC'
 			]
 		];
@@ -137,7 +137,7 @@ class PagesController extends Controller
 					'bool' => [
 						'must_not' => [
 							'term' => [
-								'listingStatus' => 'closed'
+								'Status' => 'closed'
 							]
 						]
 					]
@@ -156,9 +156,74 @@ class PagesController extends Controller
 		]);
 	}
 
+	public function getAmentities($property)
+	{
+		$amentities = array_filter($property->toArray());
+
+  		unset($amentities['id']);
+  		unset($amentities['created_at']);
+  		unset($amentities['updated_at']);
+  		unset($amentities['property_images']);
+  		unset($amentities['VirtualTourLink']);
+  		unset($amentities['City']);
+  		unset($amentities['CurrentPrice']);
+  		unset($amentities['ExistingRent']);
+  		unset($amentities['AnnualPropertyTaxes']);
+  		unset($amentities['LastChangeTimestamp']);
+  		unset($amentities['OriginalEntryTimestamp']);
+  		unset($amentities['StatusChangeTimestamp']);
+  		unset($amentities['PhotoModificationTimestamp']);
+  		unset($amentities['StatusContractualSearchDate']);
+  		unset($amentities['FinancingConsidered']);
+  		unset($amentities['IDX']);
+  		unset($amentities['ListingContractDate']);
+  		unset($amentities['PriceChgDate']);
+	 	unset($amentities['IDXOptInYN']);
+		unset($amentities['ListAgent_MUI']);
+		unset($amentities['ListAgentDirectWorkPhone']);
+		unset($amentities['ListAgentFullName']);
+		unset($amentities['ListAgentMLSID']);
+		unset($amentities['ListingAgreementType']);
+		unset($amentities['ListOffice_MUI']);
+		unset($amentities['ListOfficeMLSID']);
+		unset($amentities['ListOfficeName']);
+		unset($amentities['ListOfficePhone']);
+		unset($amentities['Matrix_Unique_ID']);
+		unset($amentities['MatrixModifiedDT']);
+		unset($amentities['StateOrProvince']);
+		unset($amentities['Status']);
+		unset($amentities['StreetDirPrefix']);
+		unset($amentities['StreetName']);
+		unset($amentities['StreetNumber']);
+		unset($amentities['StreetNumberNumeric']);
+		unset($amentities['MetroMapPageXP']);
+		unset($amentities['MLS']);
+		unset($amentities['MLSNumber']);
+		unset($amentities['PhotoCount']);
+		unset($amentities['PhotoInstructions']);
+		unset($amentities['PostalCode']);
+		unset($amentities['ParcelNumber']);
+		unset($amentities['OriginalListPrice']);
+		unset($amentities['LastChangeType']);
+		unset($amentities['LastListPrice']);
+		unset($amentities['LastStatus']);
+		unset($amentities['LeedCertified']);
+		unset($amentities['LegalDescription']);
+		unset($amentities['ListPrice']);
+		unset($amentities['Area']);
+		unset($amentities['BuiltDescription']);
+		unset($amentities['EarnestDeposit']);
+		unset($amentities['PublicAddress']);
+		unset($amentities['PublicAddressYN']);
+		unset($amentities['RATIO_CurrentPrice_By_SQFT']);
+		unset($amentities['RealtorYN']);
+
+		return $amentities;
+	}
+
 	public function showSingleProperties(Request $request, $listingId)
 	{
-		$property = \App\Property::where('listingId', '=', $listingId)->with('propertyImages')->first();
+		$property = \App\Property::where('MLSNumber', '=', $listingId)->with('propertyImages')->first();
 
 		if (is_null($property)) {
 
@@ -175,13 +240,15 @@ class PagesController extends Controller
 			return redirect()->route('properties')->with('error_message', 'Property is no longer available');
 		}
 
+		$amentities = $this->getAmentities($property);
+
 		$geocode = new Geocode;
 
-		$address = $property['streetNumber']
-			. ' ' . $property['streetName']
-			. ' ' . $property['city']
-			. ' ' . $property['state']
-			. ' ' . $property['postalCode'];
+		$address = $property['StreetNumber']
+			. ' ' . $property['StreetName']
+			. ' ' . $property['City']
+			. ' ' . $property['StateOrProvince']
+			. ' ' . $property['PostalCode'];
 
 		$geoLocation = $geocode->getCoordinates($address);
 
@@ -196,6 +263,7 @@ class PagesController extends Controller
 						$response = new \Illuminate\Http\Response(view('pages.propertyDetailSubscribe')->with([
 							'property' => $property,
 							'communities' => $this->communities,
+							'amentities' => $amentities,
 							'geoLocation' => $geoLocation['geometry']['location']
 						]));
 					}
@@ -206,6 +274,7 @@ class PagesController extends Controller
 					$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 						'property' => $property,
 						'communities' => $this->communities,
+						'amentities' => $amentities,
 						'geoLocation' => $geoLocation['geometry']['location'],
 						'recent' => $this->recent
 					]));
@@ -218,6 +287,7 @@ class PagesController extends Controller
 				$response = new \Illuminate\Http\Response(view('pages.propertyDetail')->with([
 					'property' => $property,
 					'communities' => $this->communities,
+					'amentities' => $amentities,
 					'geoLocation' => $geoLocation['geometry']['location'],
 					'recent' => $this->recent
 				]));
@@ -261,7 +331,7 @@ class PagesController extends Controller
 		$params['type'] = 'property';
 		$params['body']['size'] = $size;
 		$params['body']['sort'] = [
-			'listDate' => [
+			'OriginalEntryTimestamp' => [
 				'order' => 'desc'
 			]
 		];
@@ -278,7 +348,7 @@ class PagesController extends Controller
 			'bool' => [
 				'must_not' => [
 					'term' => [
-						'listingStatus' => 'closed'
+						'Status' => 'closed'
 					]
 				],
 			]

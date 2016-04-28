@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', $property['streetNumber'] . ' ' . $property['streetName'] . ' ' . $property['city'] . ' ' . $property['state'])
+@section('title', $property['StreetNumber'] . ' ' . $property['StreetName'] . ' ' . $property['City'] . ' ' . $property['State'])
 
 @section('content')
 <!-- Page Content -->
@@ -21,7 +21,7 @@
 					<ol class="breadcrumb page-breadcrumb pull-right">
 						<li><a href="{{route('home')}}">Home</a></li>
 						<li><a href="{{route('properties')}}">Properties</a></li>
-						<li class="active">{{$property['streetNumber'] .' ' . $property['streetName']}}</li>
+						<li class="active">{{$property['StreetNumber'] .' ' . $property['StreetName']}}</li>
 					</ol>
 				</div>
 			</div>
@@ -36,31 +36,28 @@
 			@include('pages.includes.statusMessages')
 
 			<div class="property-header">
-				<h3>{{$property['streetNumber'] .' ' . $property['streetName']}} - {{$property['city']}}
-					<span>{{$property['propertyType']}}</span>
+				<h3>{{$property['StreetNumber'] .' ' . $property['StreetName']}} - {{$property['City']}}
+					<span>{{$property['Zoning']}}</span>
 				</h3>
 				<ul>
-					<li>${{$property['listPrice']}}</li>
-					<li>Listing ID# : {{$property['listingId']}}</li>
-					<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
-					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>
-					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['totalBaths']}}</li>
-					<li><i class="fa fa-video-camera"></i><a target="_blank" title="print" href="{{$property['virtualTourLink']}}">Virtual Tour</a></li>
+					<li>${{$property['CurrentPrice']}}</li>
+					<li>Listing ID# : {{$property['MLSnumber']}}</li>
+					<li><i class="fa fa-expand"></i>{{$property['LotSqft']}} sq</li>
+					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['BedsTotal']}}</li>
+					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['BathsTotal']}}</li>
+					<li><i class="fa fa-video-camera"></i><a target="_blank" title="print" href="{{$property['VirtualTourLink']}}">Virtual Tour</a></li>
 					<!-- <li><i class="fa fa-car"></i>1</li> -->
 				</ul>
 			</div>
 			<div class="property-details-content container-fluid p_z">
 				<!-- col-md-9 -->
 				<div class="col-md-9 col-sm-6 p_z">
+
 					<!-- Slider Section -->
 					<div  class="carousel slide property-detail1-slider" >
-
-						<!-- Wrapper for slides -->
-						<!-- <div class="carousel-inner" > -->
 							@include('pages.includes.propertiesDetailCarousel')
-						<!-- </div> -->
-
 					</div><!-- Slider Section /- -->
+
 					<div class="single-property-details">
 						<h3>Description</h3>
 						<p>{{$property['customPropertyDescription']}}</p>
