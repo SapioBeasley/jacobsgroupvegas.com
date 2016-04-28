@@ -21,7 +21,7 @@
 					<ol class="breadcrumb page-breadcrumb pull-right">
 						<li><a href="{{route('home')}}">Home</a></li>
 						<li><a href="{{route('properties')}}">Properties</a></li>
-						<li class="active">{{$property['streetNumber'] .' ' . $property['streetName']}}</li>
+						<li class="active">{{$property['StreetNumber'] .' ' . $property['StreetName']}}</li>
 					</ol>
 				</div>
 			</div>
@@ -36,16 +36,20 @@
 			@include('pages.includes.statusMessages')
 
 			<div class="property-header">
-				<h3>{{$property['streetNumber'] .' ' . $property['streetName']}} - {{$property['city']}}
-					<span>{{$property['propertyType']}}</span>
+				<h3>{{$property['StreetNumber'] .' ' . $property['StreetName']}} - {{$property['City']}}
+					@if (!empty($property['Zoning']))
+						<span>{{$property['Zoning']}}</span>
+					@endif
 				</h3>
 				<ul>
-					<li>${{$property['listPrice']}}</li>
-					<li>Listing ID# : {{$property['listingId']}}</li>
-					<li><i class="fa fa-expand"></i>{{$property['lotSqft']}} sq</li>
-					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['bedrooms']}}</li>
-					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['totalBaths']}}</li>
-					<li><i class="fa fa-video-camera"></i><a target="_blank" title="virtual tour" href="{{$property['virtualTourLink']}}">Virtual Tour</a></li>
+					<li>${{$property['CurrentPrice']}}</li>
+					<li>Listing ID# : {{$property['MLSNumber']}}</li>
+					@if ($property['LotSqft'] != 0)
+						<li><i class="fa fa-expand"></i>{{$property['LotSqft']}} sq</li>
+					@endif
+					<li><i><img src="{{asset('images/icon/bed-icon.png')}}" alt="bed-icon" /></i>{{$property['BedsTotal']}}</li>
+					<li><i><img src="{{asset('images/icon/bath-icon.png')}}" alt="bath-icon" /></i>{{$property['BathsTotal']}}</li>
+					<li><i class="fa fa-video-camera"></i><a target="_blank" title="print" href="{{$property['VirtualTourLink']}}">Virtual Tour</a></li>
 					<!-- <li><i class="fa fa-car"></i>1</li> -->
 				</ul>
 			</div>
@@ -98,14 +102,14 @@
 							<div class="property-featured-inner">
 								<div class="col-md-4 col-sm-3 col-xs-2 p_z">
 									@if (isset($newProp['propertyImages'][0]))
-										<a href="{{route('properties.show', $newProp['listingId'])}}" title="Fetured Property"><img src="{{asset($newProp['propertyImages'][0]['dataUri'])}}" alt="feacture1"></a>
+										<a href="{{route('properties.show', $newProp['MLSNumber'])}}" title="Fetured Property"><img src="{{asset($newProp['propertyImages'][0]['dataUri'])}}" alt="feacture1"></a>
 									@else
-										<a href="{{route('properties.show', $newProp['listingId'])}}" title="Fetured Property"><img src="http://placehold.it/73x55?text=No Image" alt="feacture1"></a>
+										<a href="{{route('properties.show', $newProp['MLSNumber'])}}" title="Fetured Property"><img src="http://placehold.it/73x55?text=No Image" alt="feacture1"></a>
 									@endif
 								</div>
 								<div class="col-md-8 col-sm-9 col-xs-10 featured-content">
-									<a href="{{route('properties.show', $newProp['listingId'])}}" title="Fetured Property">{{$newProp['streetNumber'] . ' ' . $newProp['streetName']}}</a>
-									<h3>&dollar;{{$newProp['listPrice']}}</h3>
+									<a href="{{route('properties.show', $newProp['MLSNumber'])}}" title="Fetured Property">{{$newProp['StreetNumber'] . ' ' . $newProp['StreetName']}}</a>
+									<h3>&dollar;{{$newProp['CurrentPrice']}}</h3>
 								</div>
 							</div>
 						@endforeach
