@@ -74,10 +74,8 @@ class Rets extends Command
 
 				$results = $this->retsQuery('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
 
-
 				foreach ($results as $property) {
-
-					switch (($property['Status'] === 'Active-Exclusive Right') || ($property['Status'] === 'Exclusive Agency')) {
+					switch (($property['Status']) === 'Active' || (($property['Status'] === 'Active-Exclusive Right') || ($property['Status'] === 'Exclusive Agency'))) {
 						case false:
 
 							if (! empty(($checkProperty->propertyImages->toArray()))) {
@@ -88,8 +86,6 @@ class Rets extends Command
 
 							$property = \App\Property::find($checkProperty['id']);
 							$property->delete();
-
-							$this->info('Property Removed');
 							break;
 
 						default:
@@ -284,7 +280,7 @@ class Rets extends Command
 			'body' => [
 				'query' => [
 					'match' => [
-						'id' => $mlsNumber
+						'MLSNumber' => $mlsNumber
 					]
 				]
 			]
@@ -296,10 +292,12 @@ class Rets extends Command
 			$params = [
 				'index' => 'properties',
 				'type' => 'property',
-				'id' => $mlsNumber
+				'id' => $response['hits']['hits'][0]['_id']
 			];
 
 			$response = $client->delete($params);
+
+			$this->info('Property Removed');
 		} else {
 			$this->info('Not found in Index');
 		}
