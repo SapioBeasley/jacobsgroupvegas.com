@@ -402,7 +402,9 @@ class Rets extends Command
 					break;
 
 				case 'StreetNumber':
-					$propertyParagraph[] = 'Located at ' . $property['StreetNumber'] . ' ' . $property['StreetName'] . ' ' . $property['City'] . ' ' . $property['StateOrProvince'] . ', ' . $property['PostalCode'];
+					$city = isset($property['City']) ? ' ' . $property['City'] . ' ' : ' ';
+
+					$propertyParagraph[] = 'Located at ' . $property['StreetNumber'] . ' ' . $property['StreetName'] . $city . $property['StateOrProvince'] . ', ' . $property['PostalCode'];
 					break;
 
 				case 'BedsTotal':
