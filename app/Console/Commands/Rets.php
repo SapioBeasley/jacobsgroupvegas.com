@@ -264,7 +264,11 @@ class Rets extends Command
 
 	public function setMainImage($images)
 	{
-		$mainImage = isset($images[0]) ? $images[0] : null;
+		if (! empty($images)) {
+			$image = \App\Image::find($images[0]);
+		}
+
+		$mainImage = isset($image->dataUri) ? $image->dataUri : null;
 
 		return $mainImage;
 	}
