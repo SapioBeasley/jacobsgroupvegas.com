@@ -434,7 +434,7 @@ class Rets extends Command
 					$includes = isset($property['AssociationFeeIncludes']) ? 'Which includes ' . $property['AssociationFeeIncludes'] . '. ' : ', ';
 					$fee = isset($property['AssociationFee1']) ?  $property['AssociationFee1'] . '/' . $rate :  'undefined';
 
-					$propertyParagraph[] = 'The association fee for this property is ' . $fee . ' ' . $includes . ' and paid to ' . $property['AssociationName'] . '.';
+					$propertyParagraph[] = 'The association fee for this property is ' . $fee . ' ' . $includes . ' and paid to ' . isset($property['AssociationName']) ? $property['AssociationName'] : 'association' . '.';
 					break;
 
 				case 'BathDownstairsDescription':
