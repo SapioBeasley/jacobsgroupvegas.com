@@ -429,10 +429,14 @@ class Rets extends Command
 						contnue;
 					}
 
-					$includes = isset($property['AssociationFeeIncludes']) ? 'Which includes ' . $property['AssociationFeeIncludes'] . '. ' : ', ';
-					$fee = isset($property['AssociationFee1']) ?  $property['AssociationFee1'] . '/' . $property['AssociationFee1MQYN'] :  'undefined';
+					$rate = isset($property['AssociationFee1MQYN']) ? $property['AssociationFee1MQYN'] : 'undefined';
 
-					$propertyParagraph[] = 'The association fee for this property is ' . $fee . ' ' . $includes . ' and paid to ' . $property['AssociationName'] . '.';
+					$includes = isset($property['AssociationFeeIncludes']) ? 'Which includes ' . $property['AssociationFeeIncludes'] . '. ' : ', ';
+					$fee = isset($property['AssociationFee1']) ?  $property['AssociationFee1'] . '/' . $rate :  'undefined';
+
+					$name =  isset($property['AssociationName']) ? $property['AssociationName'] : 'association';
+
+					$propertyParagraph[] = 'The association fee for this property is ' . $fee . ' ' . $includes . ' and paid to ' . $name . '.';
 					break;
 
 				case 'BathDownstairsDescription':
@@ -447,7 +451,9 @@ class Rets extends Command
 					break;
 
 				case 'CurrentPrice':
-					$propertyParagraph[] = 'Current price of this ' . $property['City'] . ' property is ' . $property['CurrentPrice'] . '.';
+					$city = isset($property['City']) ? $property['City'] : 'home';
+
+					$propertyParagraph[] = 'Current price of this ' . $city . ' property is ' . $property['CurrentPrice'] . '.';
 					break;
 
 				default:
