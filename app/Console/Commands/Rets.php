@@ -429,10 +429,10 @@ class Rets extends Command
 						contnue;
 					}
 
-					$rate = isset($property['AssociationFee1MQYN']) ? $property['AssociationFee1MQYN'] :  'undefined';
+					$rate = isset($property['AssociationFee1MQYN']) ? $property['AssociationFee1MQYN'] : 'undefined';
 
 					$includes = isset($property['AssociationFeeIncludes']) ? 'Which includes ' . $property['AssociationFeeIncludes'] . '. ' : ', ';
-					$fee = isset($property['AssociationFee1']) ?  $property['AssociationFee1'] . '/' . $rate;
+					$fee = isset($property['AssociationFee1']) ?  $property['AssociationFee1'] . '/' . $rate :  'undefined';
 
 					$propertyParagraph[] = 'The association fee for this property is ' . $fee . ' ' . $includes . ' and paid to ' . $property['AssociationName'] . '.';
 					break;
