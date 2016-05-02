@@ -451,7 +451,9 @@ class Rets extends Command
 					break;
 
 				case 'CurrentPrice':
-					$propertyParagraph[] = 'Current price of this ' . $property['City'] . ' property is ' . $property['CurrentPrice'] . '.';
+					$city = isset($property['City']) ? $property['City'] : 'home';
+
+					$propertyParagraph[] = 'Current price of this ' . $city . ' property is ' . $property['CurrentPrice'] . '.';
 					break;
 
 				default:
