@@ -57,8 +57,12 @@ class Rets extends Command
 				$properties = $this->removeProperties();
 				break;
 
+			case 'clean':
+				$clean = $this->removeUnrelatedImages();
+				break;
+
 			default:
-				$this->error('Your must specify either a pull or remove function');
+				$this->error('Your must specify either a pull, clean, or remove function');
 				break;
 		}
 	}
@@ -96,6 +100,8 @@ class Rets extends Command
 			}
 
 		} while (count($properties) != '0');
+
+		$this->removeUnrelatedImages();
 
 		$this->info('Removed Unavailable Properties');
 	}
@@ -470,5 +476,16 @@ class Rets extends Command
 		$propertyParagraph = implode('. ', $propertyParagraph);
 
 		return $propertyParagraph;
+	}
+
+	public function removeUnrelatedImages()
+	{
+		$images = \App\Image::whereDoesntHave('property')->with('property')->get();
+
+		foreach ($images as $image) {
+			\App\Image::find($image->id)->delete();
+		};
+
+		return;
 	}
 }
