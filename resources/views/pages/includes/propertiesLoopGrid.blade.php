@@ -2,9 +2,9 @@
 	<!-- Property Main Box -->
 	<div class="property-main-box">
 		@if (isset($property['propertyImages'][0]))
-			<div class="property-images-box">
+			<div class="property-images-box" style="background-image: url({{asset($property['propertyImages'][0]['dataUri'])}});width: 100%;max-width: 260px;background-position: 50%;background-size: 140%;height: 182px;">
 				<a title="Property Image" href="{{route('properties.show', $property['MLSNumber'])}}">
-					<img src="{{asset($property['propertyImages'][0]['dataUri'])}}" alt="rent" onerror="this.src='http://placehold.it/350x260?text=No Image Available'"/>
+					<!-- <img src="{{asset($property['propertyImages'][0]['dataUri'])}}" alt="rent" onerror="this.src='http://placehold.it/350x260?text=No Image Available'"/> -->
 				</a>
 				<h4>&dollar; {{$property['CurrentPrice']}}</h4>
 			</div>

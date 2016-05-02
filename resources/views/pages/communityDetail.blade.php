@@ -46,7 +46,7 @@
 						</div>
 					</div> --><!-- Agent Detail Box -->
 					<!-- Other Property -->
-					<div class="other-properties row">
+					<div class="other-properties row col-md-12">
 
 						<h3>COMMUNITY LISTINGS</h3>
 
