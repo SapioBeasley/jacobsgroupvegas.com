@@ -72,15 +72,8 @@ class Rets extends Command
 
 			foreach ($properties as $checkProperty) {
 
-				$results = $this->rets->Search('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')', [
-					'QueryType' => 'DMQL2',
-					'Count' => 1, // count and records
-					'Format' => 'COMPACT-DECODED',
-					'StandardNames' => 0, // give system names,
-					'Limit' => 1
-				]);
+				$results = $this->retsQuery('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
 
-				// $results = $this->fieldRename($results);
 
 				foreach ($results as $property) {
 
@@ -88,39 +81,10 @@ class Rets extends Command
 						case false:
 
 							if (! empty(($checkProperty->propertyImages->toArray()))) {
-								$closedImages = $checkProperty->propertyImages;
-
-								$this->removeClosedImages($closedImages);
+								$this->removeClosedImages($checkProperty->propertyImages);
 							}
 
-							$client = \Elasticsearch\ClientBuilder::create()->build();
-
-							// Find Document
-							$params = [
-								'index' => 'properties',
-								'type' => 'property',
-								'body' => [
-									'query' => [
-										'match' => [
-											'id' => $property['MLSNumber']
-										]
-									]
-								]
-							];
-
-							$response = $client->search($params);
-
-							if (! empty($response['hits']['hits'])) {
-								$params = [
-									'index' => 'properties',
-									'type' => 'property',
-									'id' => $property['MLSNumber']
-								];
-
-								$response = $client->delete($params);
-							} else {
-								$this->info('Not found in Index');
-							}
+							$this->removeFromElasticSearch($property['MLSNumber']);
 
 							$property = \App\Property::find($checkProperty['id']);
 							$property->delete();
@@ -150,20 +114,7 @@ class Rets extends Command
 
 		while ($startDate <= $date) {
 
-			// $results = $this->rets->Search('Property', '1', '(37=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (242=EA, ER) AND (138=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')', [
-			// 	'QueryType' => 'DMQL2',
-			// 	'Count' => 1, // count and records
-			// 	'Format' => 'COMPACT-DECODED',
-			// 	'StandardNames' => 0, // give system names
-			// ]);
-
-			// New Query
-			$results = $this->rets->Search('Property', 'Listing', '(Area=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (Status=A,EA) AND (OriginalEntryTimestamp=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')', [
-				'QueryType' => 'DMQL2',
-				'Count' => 1, // count and records
-				'Format' => 'COMPACT-DECODED',
-				'StandardNames' => 0, // give system names
-			]);
+			$results = $this->retsQuery('Property', 'Listing', '(Area=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (Status=A,EA) AND (OriginalEntryTimestamp=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')');
 
 			$days = $days - 20;
 
@@ -175,7 +126,6 @@ class Rets extends Command
 
 			$results = $this->appendDescription($results->toArray());
 
-			// Check PhotoCount for number of images to deal with images
 			foreach ($results as $property) {
 
 				$images = [];
@@ -187,94 +137,28 @@ class Rets extends Command
 						$createProperty = $createdProperty->update($property);
 
 						if ($property['PhotoCount'] > 0) {
-							$createdAt = $createdProperty->toArray();
-
-							$createdAt = $createdAt['created_at'];
-
-							if ($createdProperty->Status !== 'Closed') {
-								$images = $this->getPropertyImages($property['Matrix_Unique_ID']);
-
-								foreach ($images as $image) {
-									$createdProperty->propertyImages()->create([
-										'dataUri' => $image
-									]);
-								}
-							}
-
-							switch (true) {
-								case ! isset($images[1]):
-									$images[1] = isset($images[0]) ? $images[0] : [];
-									break;
-
-								default:
-									// dd('contiue on');
-									break;
-							}
+							$images = $this->getImages($createdProperty->id, $property['Matrix_Unique_ID']);
 						}
 
-
+						$createdAt = $this->setCreatedAt($createdProperty->toArray());
 					break;
 
 					default:
 						$createProperty = \App\Property::create($property);
 
-						$createdAt = $createProperty->toArray();
+						$createdAt = $this->setCreatedAt($createProperty->toArray());
 
-						$createdAt = $createdAt['created_at'];
+						$listingAgent = $this->createListingAgent($createProperty, $property);
 
-						$community = $property['CommunityName'];
-
-						$listingAgent = [
-							'name' => $property['ListAgentFullName'],
-							'phone' => $property['ListAgentDirectWorkPhone'],
-							// 'email' => $property['email'],
-						];
-
-						if (! empty($listingAgent)) {
-							$createdListingAgent = \App\ListingAgent::where('listAgentName', '=', $listingAgent['name'])->first();
-
-							if (is_null($createdListingAgent)) {
-								$createProperty->listingAgents()->create([
-									'listAgentName' => $listingAgent['name'],
-									'listAgentPhone' => $listingAgent['phone'],
-									// 'email' => $listingAgent['email'],
-								]);
-							} else {
-								$createProperty->listingAgents()->sync([$createdListingAgent->id]);
-							}
-						}
-
-						if ($community !== 'None') {
-							$createdCommunity = \App\Community::where('community', '=', $community)->first();
-
-							if (is_null($createdCommunity)) {
-								$createProperty->community()->create([
-									'community' => $community
-								]);
-							} else {
-								$createProperty->community()->sync([$createdCommunity->id]);
-							}
-						}
+						$community = $this->createListingCommunity($createProperty, $property);
 
 						if ($property['PhotoCount'] > 0) {
-							$images = $this->getPropertyImages($property['Matrix_Unique_ID']);
-
-							foreach ($images as $image) {
-								$createProperty->propertyImages()->create([
-									'dataUri' => $image
-								]);
-							}
-
-							// $propertyImages = \App\Property::where('MLSNumber', '=', $property['MLSNumber'])->with('propertyImages')->first()->toArray();
-							// $images = $propertyImages['property_images'];
-							// dd($images);
+							$images = $this->getImages($createProperty->id, $property['Matrix_Unique_ID']);
 						}
 						break;
 				}
 
 				$client = \Elasticsearch\ClientBuilder::create()->build();
-
-				$mainImage = null;
 
 				$mainImage = $this->setMainImage($images);
 
@@ -311,23 +195,121 @@ class Rets extends Command
 		}
 	}
 
-	public function setMainImage($images)
+	public function createListingCommunity($createProperty, $property)
 	{
-		switch (true) {
-			case isset($images[1]['dataUri']):
-				$mainImage = $images[1]['dataUri'];
-				break;
+		$community = $property['CommunityName'];
 
-			case ! isset($images[1]):
-				$mainImage = isset($images[0]['dataUri']) ? $images[0]['dataUri'] : [];
-				break;
+		if ($community !== 'None') {
+			$createdCommunity = \App\Community::where('community', '=', $community)->first();
 
-			default:
-				$mainImage = $images[1];
-				break;
+			if (is_null($createdCommunity)) {
+				$createProperty->community()->create([
+					'community' => $community
+				]);
+			} else {
+				$createProperty->community()->sync([$createdCommunity->id]);
+			}
+		}
+	}
+
+	public function createListingAgent($createProperty, $property)
+	{
+		$listingAgent = [
+			'name' => $property['ListAgentFullName'],
+			'phone' => $property['ListAgentDirectWorkPhone'],
+			// 'email' => $property['email'],
+		];
+
+		if (! empty($listingAgent)) {
+			$createdListingAgent = \App\ListingAgent::where('listAgentName', '=', $listingAgent['name'])->first();
+
+			if (is_null($createdListingAgent)) {
+				$createProperty->listingAgents()->create([
+					'listAgentName' => $listingAgent['name'],
+					'listAgentPhone' => $listingAgent['phone'],
+					// 'email' => $listingAgent['email'],
+				]);
+			} else {
+				$createProperty->listingAgents()->sync([$createdListingAgent->id]);
+			}
 		}
 
+		return $listingAgent;
+	}
+
+	public function setCreatedAt($property)
+	{
+		$createdAt = $property['created_at'];
+
+		return $createdAt;
+	}
+
+	public function getImages($propertyId, $mlsNumber)
+	{
+		$images = $this->getPropertyImages($mlsNumber);
+
+		$property = \App\Property::find($propertyId);
+
+		foreach ($images as $image) {
+			$property->propertyImages()->create([
+				'dataUri' => $image
+			]);
+		}
+
+		return $images;
+	}
+
+	public function retsQuery($object, $objectType, $query)
+	{
+		$results = $this->rets->Search($object, $objectType, $query, [
+			'QueryType' => 'DMQL2',
+			'Count' => 1, // count and records
+			'Format' => 'COMPACT-DECODED',
+			'StandardNames' => 0, // give system names
+		]);
+
+		return $results;
+	}
+
+	public function setMainImage($images)
+	{
+		$mainImage = isset($images[0]) ? $images[0] : null;
+
 		return $mainImage;
+	}
+
+	public function removeFromElasticSearch($mlsNumber)
+	{
+		$client = \Elasticsearch\ClientBuilder::create()->build();
+
+		// Find Document
+		$params = [
+			'index' => 'properties',
+			'type' => 'property',
+			'body' => [
+				'query' => [
+					'match' => [
+						'id' => $mlsNumber
+					]
+				]
+			]
+		];
+
+		$response = $client->search($params);
+
+		if (! empty($response['hits']['hits'])) {
+			$params = [
+				'index' => 'properties',
+				'type' => 'property',
+				'id' => $mlsNumber
+			];
+
+			$response = $client->delete($params);
+		} else {
+			$this->info('Not found in Index');
+		}
+
+		return;
 	}
 
 	public function removeClosedImages($closedImages)
@@ -423,7 +405,7 @@ class Rets extends Command
 					break;
 
 				case 'BedsTotal':
-					$propertyParagraph[] = 'This property has a total of ' . $propertyValue . ' BedsTotal';
+					$propertyParagraph[] = 'This property has a total of ' . $propertyValue . ' beds';
 					break;
 
 				case 'BathsTotal':
@@ -458,7 +440,10 @@ class Rets extends Command
 					break;
 
 				case 'Garage':
-					$propertyParagraph[] = 'Comes with a ' . $property['Garage'] . ' car garage, that is ' . $property['GarageDescription'];
+
+					$garageDescription = isset($property['GarageDescription']) ? ', that is ' . $property['GarageDescription'] . '. ' : '. ';
+
+					$propertyParagraph[] = 'Comes with a ' . $property['Garage'] . ' car garage' . $garageDescription;
 					break;
 
 				case 'CurrentPrice':
