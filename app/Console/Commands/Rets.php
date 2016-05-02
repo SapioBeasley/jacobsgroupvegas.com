@@ -137,7 +137,7 @@ class Rets extends Command
 						$createProperty = $createdProperty->update($property);
 
 						if ($property['PhotoCount'] > 0) {
-							$images = $this->getImages($createdProperty->id, $property['Matrix_Unique_ID']);
+							$images = $this->getImages($createdProperty, $property['Matrix_Unique_ID']);
 						}
 
 						$createdAt = $this->setCreatedAt($createdProperty->toArray());
@@ -153,7 +153,7 @@ class Rets extends Command
 						$community = $this->createListingCommunity($createProperty, $property);
 
 						if ($property['PhotoCount'] > 0) {
-							$images = $this->getImages($createProperty->id, $property['Matrix_Unique_ID']);
+							$images = $this->getImages($createProperty, $property['Matrix_Unique_ID']);
 						}
 						break;
 				}
@@ -244,11 +244,9 @@ class Rets extends Command
 		return $createdAt;
 	}
 
-	public function getImages($propertyId, $mlsNumber)
+	public function getImages($property, $mlsNumber)
 	{
 		$images = $this->getPropertyImages($mlsNumber);
-
-		$property = \App\Property::find($propertyId);
 
 		foreach ($images as $image) {
 			$property->propertyImages()->create([
