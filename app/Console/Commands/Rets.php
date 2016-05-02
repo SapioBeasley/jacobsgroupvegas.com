@@ -146,15 +146,16 @@ class Rets extends Command
 					default:
 						$createProperty = \App\Property::create($property);
 
-						$createdAt = $this->setCreatedAt($createProperty->toArray());
-
 						$listingAgent = $this->createListingAgent($createProperty, $property);
 
 						$community = $this->createListingCommunity($createProperty, $property);
 
 						if ($property['PhotoCount'] > 0) {
+
 							$images = $this->getImages($createProperty, $property['Matrix_Unique_ID']);
 						}
+
+						$createdAt = $this->setCreatedAt($createProperty->toArray());
 						break;
 				}
 
@@ -248,11 +249,7 @@ class Rets extends Command
 	{
 		$images = $this->getPropertyImages($mlsNumber);
 
-		foreach ($images as $image) {
-			$property->propertyImages()->create([
-				'dataUri' => $image
-			]);
-		}
+		$property->propertyImages()->sync($images);
 
 		return $images;
 	}
@@ -333,8 +330,12 @@ class Rets extends Command
 		foreach ($photos as $photo) {
 
 			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $photo->getObjectId() . '.jpg', $photo->getContent());
-			$images[] = 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $photo->getObjectId() . '.jpg';
 
+			$createImage = \App\Image::create([
+				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $photo->getObjectId() . '.jpg'
+			]);
+
+			$images[] = $createImage->id;
 		}
 
 		return $images;
