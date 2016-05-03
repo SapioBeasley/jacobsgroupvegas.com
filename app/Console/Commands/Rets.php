@@ -392,7 +392,10 @@ class Rets extends Command
 					break;
 
 				case 'PropertySubType':
-					$propertyParagraph[] = 'This ' . $property['BuildingDescription'] . ' property is a ' . $propertyValue . ' property';
+
+					$buildingDescription = isset($property['BuildingDescription']) ? ' ' . $property['BuildingDescription'] : ' ';
+
+					$propertyParagraph[] = 'This' . $buildingDescription . ' property is a ' . $propertyValue . ' property';
 					break;
 
 				case 'Status':
