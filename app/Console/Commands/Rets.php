@@ -486,6 +486,8 @@ class Rets extends Command
 			\App\Image::find($image->id)->delete();
 		};
 
+		$this->info('Unused images removed from DB');
+
 		return;
 	}
 }
