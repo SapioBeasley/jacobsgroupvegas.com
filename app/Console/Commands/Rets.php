@@ -76,14 +76,15 @@ class Rets extends Command
 
 		$skip = 0;
 
+		$bar = $this->output->createProgressBar(\App\Property::count());
+
 		do {
+
 			$properties = \App\Property::with('propertyImages')->take(20)->skip($skip)->get();
 
 			foreach ($properties as $checkProperty) {
 
 				$results = $this->retsQuery('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
-
-				$bar = $this->output->createProgressBar(count($results));
 
 				foreach ($results as $property) {
 
@@ -107,15 +108,19 @@ class Rets extends Command
 
 					$bar->advance();
 				}
+			}
 
+			$skip += 20;
+
+			if (count($properties) < 20) {
 				$bar->finish();
 			}
 
 		} while (count($properties) != '0');
 
-		$this->removeUnrelatedImages();
-
 		$this->info('Removed Unavailable Properties');
+
+		$this->removeUnrelatedImages();
 	}
 
 	public function pullProperties()
@@ -489,6 +494,12 @@ class Rets extends Command
 	public function removeUnrelatedImages()
 	{
 		$images = \App\Image::whereDoesntHave('property')->with('property')->get();
+
+		if (count($images) == 0) {
+			$this->info('No Unrelated Images available');
+
+			return;
+		}
 
 		$bar = $this->output->createProgressBar(count($images));
 
