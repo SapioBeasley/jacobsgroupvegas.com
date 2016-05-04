@@ -32,9 +32,9 @@ class Rets extends Command
 		$config = new \PHRETS\Configuration;
 
 		$config->setLoginUrl(env('RETS_LOGIN_URL'))
-		->setUsername(env('RETS_USERNAME'))
-		->setPassword(env('RETS_PASSWORD'))
-		->setRetsVersion(env('RETS_VERSION'));
+			->setUsername(env('RETS_USERNAME'))
+			->setPassword(env('RETS_PASSWORD'))
+			->setRetsVersion(env('RETS_VERSION'));
 
 		$this->rets = new \PHRETS\Session($config);
 
@@ -65,10 +65,15 @@ class Rets extends Command
 				$this->error('Your must specify either a pull, clean, or remove function');
 				break;
 		}
+
+		$this->info('Disconnecting');
+		$this->rets->Disconnect();
 	}
 
 	public function removeProperties()
 	{
+		$this->info('Removing old properties');
+
 		$skip = 0;
 
 		do {
@@ -78,7 +83,10 @@ class Rets extends Command
 
 				$results = $this->retsQuery('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
 
+				$bar = $this->output->createProgressBar(count($results));
+
 				foreach ($results as $property) {
+
 					switch (($property['Status']) === 'Active' || (($property['Status'] === 'Active-Exclusive Right') || ($property['Status'] === 'Exclusive Agency'))) {
 						case false:
 
@@ -96,7 +104,11 @@ class Rets extends Command
 							# continue...
 							break;
 					}
+
+					$bar->advance();
 				}
+
+				$bar->finish();
 			}
 
 		} while (count($properties) != '0');
@@ -127,6 +139,8 @@ class Rets extends Command
 			$this->info('Date Range: ' . $startDate . ' to ' . date('Y-m-d', strtotime('-' . $days . 'days')));
 
 			$results = $this->appendDescription($results->toArray());
+
+			$bar = $this->output->createProgressBar(count($results));
 
 			foreach ($results as $property) {
 
@@ -165,36 +179,36 @@ class Rets extends Command
 
 				$mainImage = $this->setMainImage($images);
 
-				$params = [
-					'index' => 'properties',
-					'type' => 'property',
-					'id' => $property['MLSNumber'],
-					'body' => [
-						'address' => $property['StreetNumber'] . ' ' . $property['StreetName'] . ' ' . $property['City'] . ' ' . $property['StateOrProvince'] . ' ' . $property['PostalCode'],
-						'propertyType' => $property['Zoning'],
-						'postalCode' => $property['PostalCode'],
-						'streetName' => $property['StreetName'],
-						'streetNumber' => $property['StreetNumber'],
-						'city' => $property['City'],
-						'state' => $property['StateOrProvince'],
-						'CurrentPrice' => (integer) $property['CurrentPrice'],
-						'Status' => $property['Status'],
-						'MLSNumber' => $property['MLSNumber'],
-						'BathsTotal' => $property['BathsTotal'],
-						'LotSqft' => $property['LotSqft'],
-						'BedsTotal' => $property['BedsTotal'],
-						'CommunityName' => $property['CommunityName'],
-						'description' => $property['customPropertyDescription'],
-						'mainImage' => $mainImage,
-						'entryDate' => $createdAt,
-						'OriginalEntryTimestamp' => $property['OriginalEntryTimestamp']
-					]
+				$params['index'] = 'properties';
+				$params['type'] = 'property';
+				$params['id'] = $property['MLSNumber'];
+				$params['body'] = [
+					'address' => $property['StreetNumber'] . ' ' . $property['StreetName'] . ' ' . $property['City'] . ' ' . $property['StateOrProvince'] . ' ' . $property['PostalCode'],
+					'propertyType' => $property['Zoning'],
+					'postalCode' => $property['PostalCode'],
+					'streetName' => $property['StreetName'],
+					'streetNumber' => $property['StreetNumber'],
+					'city' => $property['City'],
+					'state' => $property['StateOrProvince'],
+					'CurrentPrice' => (integer) $property['CurrentPrice'],
+					'Status' => $property['Status'],
+					'MLSNumber' => $property['MLSNumber'],
+					'BathsTotal' => $property['BathsTotal'],
+					'LotSqft' => $property['LotSqft'],
+					'BedsTotal' => $property['BedsTotal'],
+					'CommunityName' => $property['CommunityName'],
+					'description' => $property['customPropertyDescription'],
+					'mainImage' => $mainImage,
+					'entryDate' => $createdAt,
+					'OriginalEntryTimestamp' => $property['OriginalEntryTimestamp']
 				];
 
 				$response = $client->index($params);
+
+				$bar->advance();
 			}
 
-			$this->info('Set Complete');
+			$bar->finish();
 		}
 	}
 
@@ -283,31 +297,22 @@ class Rets extends Command
 	{
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		// Find Document
-		$params = [
-			'index' => 'properties',
-			'type' => 'property',
-			'body' => [
-				'query' => [
-					'match' => [
-						'MLSNumber' => $mlsNumber
-					]
-				]
-			]
-		];
+		$params['index'] = 'properties';
+		$params['type'] = 'property';
+		$params['body']['query']['match']['MLSNumber'] = $mlsNumber;
 
 		$response = $client->search($params);
 
 		if (! empty($response['hits']['hits'])) {
-			$params = [
-				'index' => 'properties',
-				'type' => 'property',
-				'id' => $response['hits']['hits'][0]['_id']
-			];
+
+			$params['index'] = 'properties';
+			$params['type'] = 'property';
+			$params['id'] = $response['hits']['hits'][0]['_id'];
 
 			$response = $client->delete($params);
 
 			$this->info('Property Removed');
+
 		} else {
 			$this->info('Not found in Index');
 		}
@@ -443,7 +448,7 @@ class Rets extends Command
 
 					$rate = isset($property['AssociationFee1MQYN']) ? $property['AssociationFee1MQYN'] : 'undefined';
 
-					$includes = isset($property['AssociationFeeIncludes']) ? 'Which includes ' . $property['AssociationFeeIncludes'] . '. ' : ', ';
+					$includes = isset($property['AssociationFeeIncludes']) ? 'which includes ' . $property['AssociationFeeIncludes'] : ' ';
 					$fee = isset($property['AssociationFee1']) ?  $property['AssociationFee1'] . '/' . $rate :  'undefined';
 
 					$name =  isset($property['AssociationName']) ? $property['AssociationName'] : 'association';
@@ -457,7 +462,7 @@ class Rets extends Command
 
 				case 'Garage':
 
-					$garageDescription = isset($property['GarageDescription']) ? ', that is ' . $property['GarageDescription'] . '. ' : '. ';
+					$garageDescription = isset($property['GarageDescription']) ? ', that is ' . $property['GarageDescription'] : '. ';
 
 					$propertyParagraph[] = 'Comes with a ' . $property['Garage'] . ' car garage' . $garageDescription;
 					break;
@@ -485,9 +490,15 @@ class Rets extends Command
 	{
 		$images = \App\Image::whereDoesntHave('property')->with('property')->get();
 
+		$bar = $this->output->createProgressBar(count($images));
+
 		foreach ($images as $image) {
 			\App\Image::find($image->id)->delete();
+
+			$bar->advance();
 		};
+
+		$bar->finish();
 
 		$this->info('Unused images removed from DB');
 
