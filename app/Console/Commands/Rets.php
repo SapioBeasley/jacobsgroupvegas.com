@@ -310,13 +310,11 @@ class Rets extends Command
 
 		if (! empty($response['hits']['hits'])) {
 
-			$params['index'] = 'properties';
-			$params['type'] = 'property';
-			$params['id'] = $response['hits']['hits'][0]['_id'];
+			$paramsDelete['index'] = 'properties';
+			$paramsDelete['type'] = 'property';
+			$paramsDelete['id'] = $response['hits']['hits'][0]['_id'];
 
-			$response = $client->delete($params);
-
-			$this->info('Property Removed');
+			$response = $client->delete($paramsDelete);
 
 		} else {
 			$this->info('Not found in Index');
