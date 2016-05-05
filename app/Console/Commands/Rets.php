@@ -290,7 +290,7 @@ class Rets extends Command
 	public function setMainImage($images)
 	{
 		if (! empty($images)) {
-			$image = \App\Image::find($images[0]);
+			$image = \App\Image::find($images[1]);
 		}
 
 		$mainImage = isset($image->dataUri) ? $image->dataUri : null;
@@ -357,7 +357,7 @@ class Rets extends Command
 			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg', $photo->getContent());
 
 			$createImage = \App\Image::create([
-				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $photo->getContentId() . '.jpg'
+				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg'
 			]);
 
 			$images[] = $createImage->id;
