@@ -343,12 +343,14 @@ class Rets extends Command
 	{
 		$photos = $this->rets->GetObject('Property', 'LargePhoto', $MLSNumber);
 
+		$imageDiffer = date('s') * rand(1,893);
+
 		foreach ($photos as $photo) {
 
-			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $photo->getObjectId() . '.jpg', $photo->getContent());
+			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg', $photo->getContent());
 
 			$createImage = \App\Image::create([
-				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $photo->getObjectId() . '.jpg'
+				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $photo->getContentId() . '.jpg'
 			]);
 
 			$images[] = $createImage->id;
@@ -491,21 +493,23 @@ class Rets extends Command
 
 	public function removeUnrelatedImages()
 	{
-		$images = \App\Image::whereDoesntHave('property')->with('property')->get();
+		$skip = 0;
 
-		if (count($images) == 0) {
-			$this->info('No Unrelated Images available');
+		$bar = $this->output->createProgressBar(\App\Image::whereDoesntHave('property')->count());
 
-			return;
-		}
+		do {
 
-		$bar = $this->output->createProgressBar(count($images));
+			$images = \App\Image::whereDoesntHave('property')->take(100)->skip($skip)->get();
 
-		foreach ($images as $image) {
-			\App\Image::find($image->id)->delete();
+			foreach ($images as $image) {
+				\App\Image::find($image->id)->delete();
 
-			$bar->advance();
-		};
+				$bar->advance();
+			};
+
+			$skip += 100;
+
+		} while (count($images) != '0');
 
 		$bar->finish();
 
