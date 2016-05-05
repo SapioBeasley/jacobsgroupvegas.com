@@ -508,12 +508,6 @@ class Rets extends Command
 
 			$images = \App\Image::whereDoesntHave('property')->take(100)->skip($skip)->get();
 
-			if ($images->isEmpty()) {
-				$this->info('No Images to remove...');
-
-				return;
-			}
-
 			foreach ($images as $image) {
 				\App\Image::find($image->id)->delete();
 
@@ -524,7 +518,7 @@ class Rets extends Command
 
 			$skip += 100;
 
-		} while (count($images) != '0');
+		} while ($images->isEmpty() == false);
 
 		$bar->finish();
 
