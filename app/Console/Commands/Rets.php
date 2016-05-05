@@ -331,9 +331,16 @@ class Rets extends Command
 
 			$propertyImage->delete();
 
-			if (file_exists(public_path($image->dataUri))) {
-				unlink(public_path($image->dataUri));
-			}
+			$this->killImageFromDisk($image->dataUri);
+		}
+
+		return;
+	}
+
+	public function killImageFromDisk($image)
+	{
+		if (file_exists(public_path($image))) {
+			unlink(public_path($image));
 		}
 
 		return;
@@ -501,8 +508,16 @@ class Rets extends Command
 
 			$images = \App\Image::whereDoesntHave('property')->take(100)->skip($skip)->get();
 
+			if ($images->isEmpty()) {
+				$this->info('No Images to remove...');
+
+				return;
+			}
+
 			foreach ($images as $image) {
 				\App\Image::find($image->id)->delete();
+
+				$this->killImageFromDisk($image->dataUri);
 
 				$bar->advance();
 			};
