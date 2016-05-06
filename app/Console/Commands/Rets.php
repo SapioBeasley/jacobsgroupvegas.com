@@ -112,11 +112,7 @@ class Rets extends Command
 
 			$skip += 20;
 
-			if (count($properties) < 20) {
-				$bar->finish();
-			}
-
-		} while (count($properties) != '0');
+		} while ($properties->isEmpty() == false);
 
 		$this->info('Removed Unavailable Properties');
 
@@ -290,7 +286,7 @@ class Rets extends Command
 	public function setMainImage($images)
 	{
 		if (! empty($images)) {
-			$image = \App\Image::find($images[1]);
+			$image = \App\Image::find(isset($images[1]) ? $images[1] : $images[0]);
 		}
 
 		$mainImage = isset($image->dataUri) ? $image->dataUri : null;
@@ -520,9 +516,22 @@ class Rets extends Command
 
 		} while ($images->isEmpty() == false);
 
+		$this->checkAgian();
+
 		$bar->finish();
 
 		$this->info('Unused images removed from DB');
+
+		return;
+	}
+
+	public function checkAgian()
+	{
+		$images = \App\Image::whereDoesntHave('property')->get();
+
+		if ($images->isEmpty() == false) {
+			$this->removeUnrelatedImages();
+		}
 
 		return;
 	}
