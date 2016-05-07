@@ -78,10 +78,12 @@ class Rets extends Command
 	{
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
-		$deleteParams['index'] = 'properties';
-		$client->indices()->delete($deleteParams);
+		$indexParams['index'] = 'properties';
 
-		$this->info('Index reset');
+		if ($client->indices()->exists($indexParams) != false) {
+			$client->indices()->delete($deleteParams);
+			$this->info('Index reset');
+		};
 
 		return;
 	}
