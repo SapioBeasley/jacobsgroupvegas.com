@@ -61,6 +61,10 @@ class Rets extends Command
 				$clean = $this->removeUnrelatedImages();
 				break;
 
+			case 'elastic';
+				$elsastic = $this->cleanElastic();
+				break;
+
 			default:
 				$this->error('Your must specify either a pull, clean, or remove function');
 				break;
@@ -68,6 +72,18 @@ class Rets extends Command
 
 		$this->info('Disconnecting');
 		$this->rets->Disconnect();
+	}
+
+	public function cleanElastic()
+	{
+		$client = \Elasticsearch\ClientBuilder::create()->build();
+
+		$deleteParams['index'] = 'properties';
+		$client->indices()->delete($deleteParams);
+
+		$this->info('Index reset');
+
+		return;
 	}
 
 	public function removeProperties()
@@ -121,6 +137,8 @@ class Rets extends Command
 
 	public function pullProperties()
 	{
+		$this->cleanElastic();
+
 		$days = 280;
 
 		$time = date('H:i:s');
