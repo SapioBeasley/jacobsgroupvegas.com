@@ -81,7 +81,7 @@ class Rets extends Command
 		$indexParams['index'] = 'properties';
 
 		if ($client->indices()->exists($indexParams) != false) {
-			$client->indices()->delete($deleteParams);
+			$client->indices()->delete($indexParams);
 			$this->info('Index reset');
 		};
 
