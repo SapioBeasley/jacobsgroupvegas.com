@@ -1,4 +1,4 @@
 - [ ] Community description on community page (removed for now)
 - [ ] Images to s3 bucket, use https://laravel.com/docs/master/filesystem
 - [ ] social auth to login form
-- [ ] Flush unrelated images
+- [ ] properties 100k or more

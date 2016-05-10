@@ -19,7 +19,8 @@
         "laravelcollective/html": "^5.2",
         "guzzlehttp/guzzle": ">=4.0,<6.0",
         "sapioweb/geocode": "^2.0",
-        "elasticsearch/elasticsearch": "^2.1"
+        "elasticsearch/elasticsearch": "^2.1",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
