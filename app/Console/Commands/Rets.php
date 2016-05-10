@@ -355,8 +355,18 @@ class Rets extends Command
 
 	public function killImageFromDisk($image)
 	{
-		if (file_exists(public_path($image))) {
-			unlink(public_path($image));
+		switch (true) {
+			case file_exists(public_path($image)):
+				unlink(public_path($image));
+				break;
+
+			case file_exists($image):
+				unlink($image);
+				break;
+
+			default:
+				# code...
+				break;
 		}
 
 		return;
@@ -378,13 +388,17 @@ class Rets extends Command
 
 			$imageDiffer = str_random(40);
 
-			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg', (string) $photo->getContent());
+			$localDiskImage = public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg';
+
+			file_put_contents($localDiskImage, (string) $photo->getContent());
 
 			$s3File = $this->uploadToS3($MLSNumber, $imageDiffer . '.jpg');
 
 			$createImage = \App\Image::create([
 				'dataUri' => 'https://s3.sapioweb.com' . $s3File
 			]);
+
+			$this->killImageFromDisk($localDiskImage);
 
 			$images[] = $createImage->id;
 		}
