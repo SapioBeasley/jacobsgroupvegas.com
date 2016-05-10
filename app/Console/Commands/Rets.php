@@ -373,7 +373,7 @@ class Rets extends Command
 
 			if ($photos[0]->getContentId() == null) {
 				$this->info('try again');
-				sleep(2);
+				sleep(5);
 			}
 
 		} while ($photos[0]->getContentId() == null);
