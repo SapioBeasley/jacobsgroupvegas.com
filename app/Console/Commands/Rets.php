@@ -307,10 +307,6 @@ class Rets extends Command
 	{
 		if (! empty($images)) {
 			$image = \App\Image::find(isset($images[0]) ? $images[0] : $images[1]);
-
-			if (strlen(file_get_contents(public_path($image->dataUri))) < 1000) {
-				dd(file_get_contents(public_path($image->dataUri)));
-			}
 		}
 
 		$mainImage = isset($image) ? $image->dataUri : null;
@@ -384,14 +380,25 @@ class Rets extends Command
 
 			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg', (string) $photo->getContent());
 
+			$s3File = $this->uploadToS3($MLSNumber, $imageDiffer . '.jpg');
+
 			$createImage = \App\Image::create([
-				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg'
+				'dataUri' => 'https://s3.sapioweb.com' . $s3File
 			]);
 
 			$images[] = $createImage->id;
 		}
 
 		return $images;
+	}
+
+	public function uploadToS3($mls, $filename)
+	{
+		$s3 = \Storage::disk('s3');
+		$filePath = '/jacobsgroupvegas/properties/' . $mls . '/' . $filename;
+		$s3->put($filePath, file_get_contents(public_path('images/uploads/properties/' . 'property-' . $mls . '-image-' . $filename)), 'public');
+
+		return $filePath;
 	}
 
 	public function appendDescription($properties = [])
