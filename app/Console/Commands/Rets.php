@@ -366,7 +366,7 @@ class Rets extends Command
 	{
 		$photos = $this->rets->GetObject('Property', 'LargePhoto', $MLSNumber);
 
-		$imageDiffer = date('s') * rand(1,893);
+		$imageDiffer = str_random(40);
 
 		foreach ($photos as $photo) {
 
