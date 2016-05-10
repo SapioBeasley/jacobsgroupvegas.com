@@ -306,10 +306,14 @@ class Rets extends Command
 	public function setMainImage($images)
 	{
 		if (! empty($images)) {
-			$image = \App\Image::find(isset($images[1]) ? $images[1] : $images[0]);
+			$image = \App\Image::find(isset($images[0]) ? $images[0] : $images[1]);
+
+			if (strlen(file_get_contents(public_path($image->dataUri))) < 1000) {
+				dd(file_get_contents(public_path($image->dataUri)));
+			}
 		}
 
-		$mainImage = isset($image->dataUri) ? $image->dataUri : null;
+		$mainImage = isset($image) ? $image->dataUri : null;
 
 		return $mainImage;
 	}
@@ -364,13 +368,21 @@ class Rets extends Command
 
 	public function getPropertyImages($MLSNumber)
 	{
-		$photos = $this->rets->GetObject('Property', 'LargePhoto', $MLSNumber);
+		do {
+			$photos = $this->rets->GetObject('Property', 'LargePhoto', $MLSNumber);
 
-		$imageDiffer = str_random(40);
+			if ($photos[0]->getContentId() == null) {
+				$this->info('try again');
+				sleep(2);
+			}
+
+		} while ($photos[0]->getContentId() == null);
 
 		foreach ($photos as $photo) {
 
-			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg', $photo->getContent());
+			$imageDiffer = str_random(40);
+
+			file_put_contents(public_path('images/uploads/properties/') . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg', (string) $photo->getContent());
 
 			$createImage = \App\Image::create([
 				'dataUri' => 'images/uploads/properties/' . 'property-' . $MLSNumber . '-image-' . $imageDiffer . '.jpg'
