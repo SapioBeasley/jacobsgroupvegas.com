@@ -557,13 +557,18 @@ class Rets extends Command
 
 			$images = \App\Image::whereDoesntHave('property')->take(100)->skip($skip)->get();
 
-			foreach ($images as $image) {
+			foreach ($images as $imageKey => $image) {
+
 				\App\Image::find($image->id)->delete();
 
 				$this->killImageFromDisk($image->dataUri);
 
+				$removeArray[] = $image->dataUri;
+
 				$bar->advance();
 			};
+
+			\Storage::delete($removeArray);
 
 			$skip += 100;
 
