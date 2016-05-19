@@ -4,7 +4,7 @@
 	</div>
 	<!-- col-md-10 -->
 	<div class="col-md-10 p_l_z">
-		{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
+		{!! Form::text('MLSNumber', null, ['placeholder' => 'Listing ID']) !!}
 		{!! Form::text('city', null, ['placeholder' => 'City']) !!}
 		<!-- {!! Form::select('community', $communitySelect) !!} -->
 		{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}

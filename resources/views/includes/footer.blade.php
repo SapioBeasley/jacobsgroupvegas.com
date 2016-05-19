@@ -22,7 +22,7 @@
 @endif
 <div id="footer-bottom" class="footer-bottom">
 	<div class="container">
-		<p class="col-md-4 col-sm-6 col-xs-12">&copy; {{date('Y')}} JacobsGroupVegas.com | Powered by <a href="https://sapioweb.com/">Sapioweb.com</a></p>
+		<p class="col-md-7 col-sm-7 col-xs-12">&copy; {{date('Y')}} JacobsGroupVegas.com | Powered by <a href="https://sapioweb.com/">Sapioweb.com</a><img style="width: 120px;margin-right: 15px;float: left;margin-top: 10px;" src="{{asset('/images/footer/simply-vegas-white-logo1-300x131.png')}}"></p>
 		<div class="col-md-4 col-sm-6 col-xs-12 pull-right social">
 			<ul class="footer_social m_b_z">
 				<li><a href="#"><i class="fa fa-facebook"></i></a></li>

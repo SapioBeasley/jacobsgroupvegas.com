@@ -51,7 +51,7 @@ class SearchesController extends Controller
 					$fields['filter'][] = $requestKey;
 					break;
 
-				case 'listingId':
+				case 'MLSNumber':
 					$fields['match'][] = $requestKey;
 					break;
 

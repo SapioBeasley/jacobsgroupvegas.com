@@ -173,9 +173,9 @@ class Rets extends Command
 					case ! is_null($createdProperty):
 						$createProperty = $createdProperty->update($property);
 
-						if ($property['PhotoCount'] > 0) {
-							$images = $this->getImages($createdProperty, $property['Matrix_Unique_ID']);
-						}
+						// if ($property['PhotoCount'] > 0) {
+						// 	$images = $this->getImages($createdProperty, $property['Matrix_Unique_ID']);
+						// }
 
 						$createdAt = $this->setCreatedAt($createdProperty->toArray());
 					break;
