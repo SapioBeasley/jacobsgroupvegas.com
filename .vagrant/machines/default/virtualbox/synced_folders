@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/jacobsgroupvegas-com":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/jacobsgroupvegas-com","hostpath":"/Users/andreasbeasley/sites/jacobsgroupvegas.com","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/andreasbeasley/sites/jacobsgroupvegas.com","disabled":false,"__vagrantfile":true}}}
