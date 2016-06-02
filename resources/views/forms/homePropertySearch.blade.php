@@ -8,7 +8,7 @@
 		{!! Form::text('city', null, ['placeholder' => 'City']) !!}
 		<!-- {!! Form::select('community', $communitySelect) !!} -->
 		{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}
-		{!! Form::select('bedrooms', ['Beds', '1','2','3','4','5+']) !!}
+		{!! Form::select('totalBeds', ['Beds', '1','2','3','4','5+']) !!}
 		{!! Form::select('totalBaths', ['Baths', '1','2','3','4','5+']) !!}
 		{!! Form::text('min_price', null, ['placeholder' => 'Min Price']) !!}
 		{!! Form::text('max_price', null, ['placeholder' => 'Max Price']) !!}

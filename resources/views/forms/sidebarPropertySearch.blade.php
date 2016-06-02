@@ -1,10 +1,10 @@
 {!! Form::open(['route' => 'search', 'method' => 'GET']) !!}
-	{!! Form::text('listingId', null, ['placeholder' => 'Listing ID']) !!}
+	{!! Form::text('MLSNumber', null, ['placeholder' => 'Listing ID']) !!}
 	{!! Form::text('city', null, ['placeholder' => 'City']) !!}
 	<!-- {!! Form::select('community', $communitySelect) !!} -->
 	{!! Form::text('postalCode', null, ['placeholder' => 'Zip']) !!}
 	<div class="col-md-6 col-sm-6 p_l_z">
-		{!! Form::select('bedrooms', ['Beds', '1','2','3','4','5+']) !!}
+		{!! Form::select('totalBeds', ['Beds', '1','2','3','4','5+']) !!}
 	</div>
 	<div class="col-md-6 col-sm-6 p_r_z">
 		{!! Form::select('totalBaths', ['Baths', '1','2','3','4','5+']) !!}

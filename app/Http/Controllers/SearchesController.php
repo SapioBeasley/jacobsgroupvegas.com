@@ -59,15 +59,15 @@ class SearchesController extends Controller
 					$fields['match'][] = $requestKey;
 					break;
 
-				case 'city':
+				case 'City':
 					$fields['match'][] = $requestKey;
 					break;
 
-				case 'postalCode':
+				case 'PostalCode':
 					$fields['match'][] = $requestKey;
 					break;
 
-				case 'bedrooms':
+				case 'totalBeds':
 					if ($requestValue > 4) {
 						$fields['filter'][] = $requestKey;
 					} else {
@@ -100,26 +100,26 @@ class SearchesController extends Controller
 			}
 		}
 
-		$defaultFilter = ['bool' => ['must_not' => ['term' => ['listingStatus' => 'closed']]]];
+		$defaultFilter = ['bool' => ['must_not' => ['term' => ['Status' => 'closed']]]];
 
 		if (isset($fields['filter'])) {
 			for ($matchCount=0; $matchCount < count($fields['filter']); $matchCount++) {
 
 				switch ($fields['filter'][$matchCount]) {
 					case 'min_price':
-						$originalName = 'listPrice';
+						$originalName = 'ListPrice';
 						break;
 
 					case 'max_price':
-						$originalName = 'listPrice';
+						$originalName = 'ListPrice';
 						break;
 
 					case 'max_sqft':
-						$originalName = 'lotSqft';
+						$originalName = 'Area';
 						break;
 
 					case 'min_sqft':
-						$originalName = 'lotSqft';
+						$originalName = 'Area';
 						break;
 
 					default:
@@ -127,7 +127,7 @@ class SearchesController extends Controller
 						break;
 				}
 
-				if ((strpos($fields['filter'][$matchCount], 'min') !== false) || ($fields['filter'][$matchCount] === 'bedrooms') || ($fields['filter'][$matchCount] === 'totalBaths')) {
+				if ((strpos($fields['filter'][$matchCount], 'min') !== false) || ($fields['filter'][$matchCount] === 'totalBeds') || ($fields['filter'][$matchCount] === 'totalBaths')) {
 					$query['filter']['bool']['must'][$matchCount]['range'][$originalName]['gte'] = $request->{$fields['filter'][$matchCount]};
 				} else {
 					$query['filter']['bool']['must'][$matchCount]['range'][$originalName]['lte'] = $request->{$fields['filter'][$matchCount]};
