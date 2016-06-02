@@ -29,15 +29,15 @@ class Kernel extends ConsoleKernel
 		$removeFilePath = storage_path('app/removeResult.txt');
 
 		if (env('APP_ENV') != 'local') {
-			$schedule->command('rets:properties --function=remove')
-				->twiceDaily(1, 13)
-				->sendOutputTo($removeFilePath)
-				->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
-
 			$schedule->command('rets:properties --function=pull')
-				->twiceDaily(2, 14)
+				->twiceDaily(1, 13)
 				->withoutOverlapping()
 				->sendOutputTo($pullFilePath)
+				->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
+
+			$schedule->command('rets:properties --function=remove')
+				->twiceDaily(2, 14)
+				->sendOutputTo($removeFilePath)
 				->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
 		}
 	}
