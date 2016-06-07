@@ -139,12 +139,10 @@ class Rets extends Command
 
 	public function pullProperties()
 	{
-		$this->cleanElastic();
-
-		$days = 280;
+		$days = 100;
 
 		$time = date('H:i:s');
-		$startDate = date('Y-m-d', strtotime('-300 days'));
+		$startDate = date('Y-m-d', strtotime('-40 days'));
 		$date = date('Y-m-d', strtotime('-0days'));
 
 		while ($startDate <= $date) {
