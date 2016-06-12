@@ -30,13 +30,13 @@ class Kernel extends ConsoleKernel
 
 		if (env('APP_ENV') != 'local') {
 			$schedule->command('rets:properties --function=pull')
-				->dailyAt('13:00');
+				->dailyAt('13:00')
 				->withoutOverlapping()
 				->sendOutputTo($pullFilePath)
 				->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
 
 			$schedule->command('rets:properties --function=remove')
-				->dailyAt('14:00');
+				->dailyAt('14:00')
 				->sendOutputTo($removeFilePath)
 				->emailOutputTo(env('SCHEDULE_OUTPUT_EMAIL'));
 		}
