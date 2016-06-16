@@ -109,6 +109,8 @@ class Rets extends Command
 					switch (($property['Status']) === 'Active' || (($property['Status'] === 'Active-Exclusive Right') || ($property['Status'] === 'Exclusive Agency'))) {
 						case false:
 
+							$this->info(json_encode($property) . ' property to remove');
+
 							if (! empty(($checkProperty->propertyImages->toArray()))) {
 								$this->removeClosedImages($checkProperty->propertyImages);
 							}
@@ -128,7 +130,7 @@ class Rets extends Command
 				}
 			}
 
-			$skip += 20;
+			$skip += 10;
 
 		} while ($properties->isEmpty() == false);
 
@@ -335,7 +337,7 @@ class Rets extends Command
 			$response = $client->delete($paramsDelete);
 
 		} else {
-			$this->info('Not found in Index');
+			$this->info($mlsNumber . ' missing mlsNumber');
 		}
 
 		return;
@@ -386,7 +388,7 @@ class Rets extends Command
 
 		} while ($photos[0]->getContentId() == null);
 
-		foreach ($photos as $photo) {
+		foreach (array_slice($photos->toArray(), 0, 10) as $photo) {
 
 			$imageDiffer = str_random(40);
 
