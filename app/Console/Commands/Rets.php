@@ -106,7 +106,7 @@ class Rets extends Command
 
 				foreach ($results as $property) {
 
-					switch (($property['Status']) === 'Active' || (($property['Status'] === 'Active-Exclusive Right') || ($property['Status'] === 'Exclusive Agency'))) {
+					switch ($property['Status'] === 'Active') {
 						case false:
 
 							$this->info(json_encode($property) . ' property to remove');
@@ -149,7 +149,7 @@ class Rets extends Command
 
 		while ($startDate <= $date) {
 
-			$results = $this->retsQuery('Property', 'Listing', '(Area=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (ListPrice=100000+) AND (PropertyType=RES) AND NOT (PropertySubType=CON) AND (Status=A,EA) AND (OriginalEntryTimestamp=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')');
+			$results = $this->retsQuery('Property', 'Listing', '(Area=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (ListPrice=100000+) AND (PropertyType=RES) AND NOT (PropertySubType=CON) AND (Status=A) AND (OriginalEntryTimestamp=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')');
 
 			$days = $days - 20;
 
