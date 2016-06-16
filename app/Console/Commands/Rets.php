@@ -102,24 +102,17 @@ class Rets extends Command
 
 			foreach ($results as $property) {
 
-				switch ($property['Status'] === 'Active') {
-					case false:
+				if ($property['Status'] !== 'Active') {
+					$this->info(json_encode($property) . ' property to remove');
 
-						$this->info(json_encode($property) . ' property to remove');
+					if (! empty(($checkProperty->propertyImages->toArray()))) {
+						$this->removeClosedImages($checkProperty->propertyImages);
+					}
 
-						if (! empty(($checkProperty->propertyImages->toArray()))) {
-							$this->removeClosedImages($checkProperty->propertyImages);
-						}
+					$this->removeFromElasticSearch($property['MLSNumber']);
 
-						$this->removeFromElasticSearch($property['MLSNumber']);
-
-						$property = \App\Property::find($checkProperty['id']);
-						$property->delete();
-						break;
-
-					default:
-						# continue...
-						break;
+					$property = \App\Property::find($checkProperty['id']);
+					$property->delete();
 				}
 
 				$bar->advance();
