@@ -92,47 +92,39 @@ class Rets extends Command
 	{
 		$this->info('Removing old properties');
 
-		$skip = 0;
-
 		$bar = $this->output->createProgressBar(\App\Property::count());
 
-		// do {
+		$properties = \App\Property::with('propertyImages')->get();
 
-			$properties = \App\Property::with('propertyImages')->get();
+		foreach ($properties as $checkProperty) {
 
-			foreach ($properties as $checkProperty) {
+			$results = $this->retsQuery('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
 
-				$results = $this->retsQuery('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
+			foreach ($results as $property) {
 
-				foreach ($results as $property) {
+				switch ($property['Status'] === 'Active') {
+					case false:
 
-					switch ($property['Status'] === 'Active') {
-						case false:
+						$this->info(json_encode($property) . ' property to remove');
 
-							$this->info(json_encode($property) . ' property to remove');
+						if (! empty(($checkProperty->propertyImages->toArray()))) {
+							$this->removeClosedImages($checkProperty->propertyImages);
+						}
 
-							if (! empty(($checkProperty->propertyImages->toArray()))) {
-								$this->removeClosedImages($checkProperty->propertyImages);
-							}
+						$this->removeFromElasticSearch($property['MLSNumber']);
 
-							$this->removeFromElasticSearch($property['MLSNumber']);
+						$property = \App\Property::find($checkProperty['id']);
+						$property->delete();
+						break;
 
-							$property = \App\Property::find($checkProperty['id']);
-							$property->delete();
-							break;
-
-						default:
-							# continue...
-							break;
-					}
-
-					$bar->advance();
+					default:
+						# continue...
+						break;
 				}
+
+				$bar->advance();
 			}
-
-			$skip += 20;
-
-		// } while ($properties->isEmpty() == false);
+		}
 
 		$this->info('Removed Unavailable Properties');
 
