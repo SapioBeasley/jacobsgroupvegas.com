@@ -96,9 +96,9 @@ class Rets extends Command
 
 		$bar = $this->output->createProgressBar(\App\Property::count());
 
-		do {
+		// do {
 
-			$properties = \App\Property::with('propertyImages')->take(20)->skip($skip)->get();
+			$properties = \App\Property::with('propertyImages')->get();
 
 			foreach ($properties as $checkProperty) {
 
@@ -132,7 +132,7 @@ class Rets extends Command
 
 			$skip += 20;
 
-		} while ($properties->isEmpty() == false);
+		// } while ($properties->isEmpty() == false);
 
 		$this->info('Removed Unavailable Properties');
 
