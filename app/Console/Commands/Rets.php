@@ -130,7 +130,7 @@ class Rets extends Command
 				}
 			}
 
-			$skip += 10;
+			$skip += 20;
 
 		} while ($properties->isEmpty() == false);
 
@@ -336,8 +336,6 @@ class Rets extends Command
 
 			$response = $client->delete($paramsDelete);
 
-		} else {
-			$this->info($mlsNumber . ' missing mlsNumber');
 		}
 
 		return;
