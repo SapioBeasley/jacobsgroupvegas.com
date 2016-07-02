@@ -226,17 +226,6 @@ class PagesController extends Controller
 		$property = \App\Property::where('MLSNumber', '=', $listingId)->with('propertyImages')->first();
 
 		if (is_null($property)) {
-
-			$client = \Elasticsearch\ClientBuilder::create()->build();
-
-			$params = [
-				'index' => 'properties',
-				'type' => 'property',
-				'id' => $listingId
-			];
-
-			$response = $client->delete($params);
-
 			return redirect()->route('properties')->with('error_message', 'Property is no longer available');
 		}
 
