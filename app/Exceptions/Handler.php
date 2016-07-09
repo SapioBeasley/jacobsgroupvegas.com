@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+// use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {

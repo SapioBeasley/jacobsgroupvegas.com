@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5e16b590e065bbcdf3bcbedecab90d84",
-    "content-hash": "3eab28c83e9cbcf491f064682324ec22",
+    "hash": "e0429f0850f7f17c474930f7c88c6da6",
+    "content-hash": "d78835fab63d96d62cd2369c8724b8c1",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -86,6 +86,109 @@
                 "sdk"
             ],
             "time": "2016-05-05 19:57:48"
+        },
+        {
+            "name": "bugsnag/bugsnag",
+            "version": "v2.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bugsnag/bugsnag-php.git",
+                "reference": "c5b1ccf493a9451bf6e2bde4f1d41346e6d89322"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/c5b1ccf493a9451bf6e2bde4f1d41346e6d89322",
+                "reference": "c5b1ccf493a9451bf6e2bde4f1d41346e6d89322",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Bugsnag_": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Smith",
+                    "email": "notifiers@bugsnag.com",
+                    "homepage": "https://bugsnag.com"
+                }
+            ],
+            "description": "Official Bugsnag notifier for PHP applications.",
+            "homepage": "https://github.com/bugsnag/bugsnag-php",
+            "keywords": [
+                "bugsnag",
+                "errors",
+                "exceptions",
+                "logging",
+                "tracking"
+            ],
+            "time": "2016-07-07 01:17:22"
+        },
+        {
+            "name": "bugsnag/bugsnag-laravel",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bugsnag/bugsnag-laravel.git",
+                "reference": "54758847fd546355fdec9f87555a0b6dc76da9ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-laravel/zipball/54758847fd546355fdec9f87555a0b6dc76da9ea",
+                "reference": "54758847fd546355fdec9f87555a0b6dc76da9ea",
+                "shasum": ""
+            },
+            "require": {
+                "bugsnag/bugsnag": "^2.5",
+                "illuminate/support": "^4.0|^5.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Bugsnag\\BugsnagLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Smith",
+                    "email": "notifiers@bugsnag.com"
+                }
+            ],
+            "description": "Official Bugsnag notifier for Laravel applications.",
+            "homepage": "https://github.com/bugsnag/bugsnag-laravel",
+            "keywords": [
+                "bugsnag",
+                "errors",
+                "exceptions",
+                "laravel",
+                "logging",
+                "tracking"
+            ],
+            "time": "2016-07-07 01:35:07"
         },
         {
             "name": "classpreloader/classpreloader",
