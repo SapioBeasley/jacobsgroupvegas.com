@@ -159,6 +159,7 @@ return [
         Spatie\Tail\TailServiceProvider::class,
         Sapioweb\CrudHelper\CrudHelperServiceProvider::class,
         Sapioweb\Geocode\GeocodeServiceProvider::class,
+        Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
 
     ],
 
@@ -207,6 +208,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Bugsnag' => Bugsnag\BugsnagLaravel\BugsnagFacade::class,
 
     ],
 
