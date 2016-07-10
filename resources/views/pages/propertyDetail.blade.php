@@ -72,23 +72,25 @@
 						@include('pages.includes.amentities')
 						</div>
 					</div>
-					<div class="property-direction pull-left">
-						<h3>Get Direction</h3>
-						<div class="property-map">
-							<div id="map" class="mapping"></div>
+					@if(isset($geoLocation['lat']) && isset($geoLocation['lng']))
+						<div class="property-direction pull-left">
+							<h3>Get Direction</h3>
+							<div class="property-map">
+								<div id="map" class="mapping"></div>
+							</div>
+							<div class="property-map">
+								<h3>Share This Property :</h3>
+								<ul>
+									<li><a href="#" title="twitter"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#" title="facebook"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="#" title="google-plus"><i class="fa fa-google-plus"></i></a></li>
+									<li><a href="#" title="linkedin-square"><i class="fa fa-linkedin-square"></i></a></li>
+									<li><a href="#" title="pinterest"><i class="fa fa-pinterest"></i></a></li>
+									<li><a href="#" title="instagram"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
 						</div>
-						<div class="property-map">
-							<h3>Share This Property :</h3>
-							<ul>
-								<li><a href="#" title="twitter"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#" title="facebook"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#" title="google-plus"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#" title="linkedin-square"><i class="fa fa-linkedin-square"></i></a></li>
-								<li><a href="#" title="pinterest"><i class="fa fa-pinterest"></i></a></li>
-								<li><a href="#" title="instagram"><i class="fa fa-instagram"></i></a></li>
-							</ul>
-						</div>
-					</div>
+					@endif
 				</div><!-- col-md-9 /- -->
 				<div class="col-md-3 col-sm-6 p_z property-sidebar single-property-sidebar">
 					<aside class="widget widget-search">
@@ -125,26 +127,28 @@
 @endsection
 
 @section('mapCoords')
-<script>
-	var map = new GMaps({
-		el: '#map',
-		lat: {{$geoLocation['lat']}},
-		lng: {{$geoLocation['lng']}},
-		zoom: 13,
-		zoomControl : true,
-		zoomControlOpt: {
-			style : 'SMALL',
-			position: 'TOP_LEFT'
-		},
-		panControl : false,
-	});
-	map.addMarker({
-		lat: {{$geoLocation['lat']}},
-		lng: {{$geoLocation['lng']}},
-		title: 'London Eye',
-		infoWindow: {
-			content: 'The London Eye is a giant Ferris wheel situated on the banks of the River Thames in London, England. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).'
-		},
-	});
-</script>
+	@if(isset($geoLocation['lat']) && isset($geoLocation['lng']))
+		<script>
+			var map = new GMaps({
+				el: '#map',
+				lat: {{$geoLocation['lat']}},
+				lng: {{$geoLocation['lng']}},
+				zoom: 13,
+				zoomControl : true,
+				zoomControlOpt: {
+					style : 'SMALL',
+					position: 'TOP_LEFT'
+				},
+				panControl : false,
+			});
+			map.addMarker({
+				lat: {{$geoLocation['lat']}},
+				lng: {{$geoLocation['lng']}},
+				title: 'London Eye',
+				infoWindow: {
+					content: 'The London Eye is a giant Ferris wheel situated on the banks of the River Thames in London, England. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).'
+				},
+			});
+		</script>
+	@endif
 @endsection
