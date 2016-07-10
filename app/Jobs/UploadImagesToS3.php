@@ -44,7 +44,7 @@ class UploadImagesToS3 extends Job implements ShouldQueue
 
 		$s3->put($filePath, file_get_contents(public_path('images/uploads/properties/' . 'property-' . $this->mls . '-image-' . $this->filename)), 'public');
 
-        dispatch(new KillImageFromDisk($this->localDiskImage);
+        dispatch(new KillImageFromDisk($this->localDiskImage));
 
 		return $filePath;
     }

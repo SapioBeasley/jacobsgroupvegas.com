@@ -253,7 +253,7 @@ class PagesController extends Controller
 							'property' => $property,
 							'communities' => $this->communities,
 							'amentities' => $amentities,
-							'geoLocation' => $geoLocation['geometry']['location']
+							'geoLocation' => isset($geoLocation['geometry']) ? $geoLocation['geometry']['location' : []]
 						]));
 					}
 
@@ -264,7 +264,7 @@ class PagesController extends Controller
 						'property' => $property,
 						'communities' => $this->communities,
 						'amentities' => $amentities,
-						'geoLocation' => $geoLocation['geometry']['location'],
+						'geoLocation' => isset($geoLocation['geometry']) ? $geoLocation['geometry']['location'] : [],
 						'recent' => $this->recent
 					]));
 
@@ -277,7 +277,7 @@ class PagesController extends Controller
 					'property' => $property,
 					'communities' => $this->communities,
 					'amentities' => $amentities,
-					'geoLocation' => $geoLocation['geometry']['location'],
+					'geoLocation' => isset($geoLocation['geometry']) ? $geoLocation['geometry']['location'] : [],
 					'recent' => $this->recent
 				]));
 

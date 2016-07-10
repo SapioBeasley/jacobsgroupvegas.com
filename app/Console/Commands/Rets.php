@@ -43,25 +43,27 @@ class Rets extends Command
 		switch ($this->option('function')) {
 			case 'pull':
 				$this->dispatch(new \App\Jobs\PullProperties());
+				$this->info('Pulling new Properties');
 				break;
 
 			case 'remove':
 				$this->dispatch(new \App\Jobs\RemoveProperties());
+				$this->info('Removing Sold Properties');
 				break;
 
 			case 'clean':
 				$this->dispatch(new \App\Jobs\RemoveUnrelatedImages());
+				$this->info('Removing Unrelated Images');
 				break;
 
 			case 'elastic';
 				$this->dispatch(new \App\Jobs\CleanElastic());
+				$this->info('Elastic Search Cleaned');
 				break;
 
 			default:
 				$this->error('Your must specify either a pull, clean, or remove function');
 				break;
 		}
-
-		$this->info('Command Sent to Queue');
 	}
 }
