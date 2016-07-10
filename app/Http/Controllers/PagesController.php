@@ -253,7 +253,7 @@ class PagesController extends Controller
 							'property' => $property,
 							'communities' => $this->communities,
 							'amentities' => $amentities,
-							'geoLocation' => isset($geoLocation['geometry']) ? $geoLocation['geometry']['location' : []]
+							'geoLocation' => isset($geoLocation['geometry']) ? $geoLocation['geometry']['location'] : [],
 						]));
 					}
 
