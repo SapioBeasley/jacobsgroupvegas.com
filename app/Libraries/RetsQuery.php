@@ -17,13 +17,19 @@ class RetsQuery
 
 		$connect = $rets->Login();
 
-        $results = $rets->Search($object, $objectType, $query, [
-            'QueryType' => 'DMQL2',
-            'Count' => 1, // count and records
-            'Format' => 'COMPACT-DECODED',
-            'Limit' => env('RETS_PULL'),
-            'StandardNames' => 0, // give system names
-        ]);
+        try {
+            $results = $rets->Search($object, $objectType, $query, [
+                'QueryType' => 'DMQL2',
+                'Count' => 1, // count and records
+                'Format' => 'COMPACT-DECODED',
+                'Limit' => env('RETS_PULL'),
+                'StandardNames' => 0, // give system names
+            ]);
+        } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+        } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
+            Bugsnag::notifyException($e);
+        }
 
         $rets->Disconnect();
 
@@ -43,7 +49,13 @@ class RetsQuery
 
 		$connect = $rets->Login();
 
-        $photos = $rets->GetObject($objectType, $objectSelect, $MLSNumber);
+        try {
+            $photos = $rets->GetObject($objectType, $objectSelect, $MLSNumber);
+        } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+        } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
+            Bugsnag::notifyException($e);
+        }
 
         $rets->Disconnect();
 

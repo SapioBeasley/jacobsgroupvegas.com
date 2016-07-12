@@ -37,16 +37,6 @@ class MakeProperty extends Job implements ShouldQueue
         switch (true) {
             case ! is_null($createdProperty):
                 $createProperty = $createdProperty->update($this->property);
-
-                if ($this->property['PhotoCount'] > 0) {
-                    $propertyImages = $createdProperty['propertyImages']->toArray();
-
-                    foreach ($propertyImages as $image) {
-                        $images[] = $image['id'];
-                    }
-                }
-
-                $createdAt = $this->setCreatedAt($createdProperty->toArray());
             break;
 
             default:
@@ -61,10 +51,10 @@ class MakeProperty extends Job implements ShouldQueue
                 }
 
                 $createdAt = $this->setCreatedAt($createProperty->toArray());
+
+                dispatch(new IndexProperty($this->property, $createdAt));
                 break;
         }
-
-        dispatch(new IndexProperty($this->property, $createdAt));
     }
 
     public function setCreatedAt($property)
