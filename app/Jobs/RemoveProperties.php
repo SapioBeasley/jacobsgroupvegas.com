@@ -32,7 +32,13 @@ class RemoveProperties extends Job implements ShouldQueue
 
 		foreach ($properties as $checkProperty) {
 
-			$results = \App\Libraries\RetsQuery::properties('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
+            try {
+			    $results = \App\Libraries\RetsQuery::properties('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
+            } catch (Exception $e) {
+                Bugsnag::notifyException($e);
+            } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
+                Bugsnag::notifyException($e);
+            }
 
 			foreach ($results as $property) {
 

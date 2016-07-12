@@ -2,5 +2,4 @@
 - [ ] social auth to login form
 - [ ] Elasticsearch check, google results are returning 404
 - [ ] If rets login does not work catch the exception and try again
-- [ ] In index property check for offset 0
 - [ ] Remove properties check property available before delete

@@ -67,9 +67,13 @@ class IndexProperty extends Job implements ShouldQueue
 
     public function setMainImage($mls)
 	{
+        $mainImage = null;
+
 		$property = \App\Property::with('propertyImages')->where('Matrix_Unique_ID', '=', $mls)->first();
 
-		$mainImage = isset($property->propertyImages[0]->dataUri) ? $property->propertyImages[0]->dataUri : null;
+        if ($property !== null) {
+            $mainImage = isset($property->propertyImages[0]->dataUri) ? $property->propertyImages[0]->dataUri : null;
+        }
 
 		return $mainImage;
 	}
