@@ -51,7 +51,10 @@ class RemoveProperties extends Job implements ShouldQueue
 					$this->removeFromElasticSearch($property['MLSNumber']);
 
 					$property = \App\Property::find($checkProperty['id']);
-					$property->delete();
+
+          if ($property) {
+            $property->delete();
+          }
 				}
 			}
 		}
@@ -88,7 +91,9 @@ class RemoveProperties extends Job implements ShouldQueue
 
 			$propertyImage = \App\Image::find($image->id);
 
-			$propertyImage->delete();
+      if ($property) {
+			  $propertyImage->delete();
+      }
 
 			dispatch(new KillImageFromDisk($image->dataUri));
 		}
