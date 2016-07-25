@@ -21,13 +21,13 @@ class PullProperties extends Job implements ShouldQueue
         //
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
-    {
+  /**
+   * Execute the job.
+   *
+   * @return void
+   */
+  public function handle()
+  {
 		$days = 100;
 
 		$time = date('H:i:s');
@@ -36,13 +36,13 @@ class PullProperties extends Job implements ShouldQueue
 
 		while ($startDate <= $date) {
 
-            try {
-                $results = \App\Libraries\RetsQuery::properties('Property', 'Listing', '(Area=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (ListPrice=100000+) AND (PropertyType=RES) AND NOT (PropertySubType=CON) AND (Status=A) AND (OriginalEntryTimestamp=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')');
-            } catch (Exception $e) {
-                Bugsnag::notifyException($e);
-            } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
-                Bugsnag::notifyException($e);
-            }
+      try {
+        $results = \App\Libraries\RetsQuery::properties('Property', 'Listing', '(Area=101,102,103,201,202,203,204,301,302,303,401,402,403,404,405,501,502,503,504,505,601,602,603,604,605,606) AND (ListPrice=100000+) AND (PropertyType=RES) AND NOT (PropertySubType=CON) AND (Status=A) AND (OriginalEntryTimestamp=' . $startDate . 'T' . $time . '-' . date('Y-m-d', strtotime('-' . $days . 'days')) . ')');
+      } catch (Exception $e) {
+        Bugsnag::notifyException($e);
+      } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
+        Bugsnag::notifyException($e);
+      }
 
 			$days = $days - 20;
 
@@ -51,10 +51,10 @@ class PullProperties extends Job implements ShouldQueue
 			$results = $this->appendDescription($results->toArray());
 
 			foreach ($results as $property) {
-                dispatch(new MakeProperty($property));
+        dispatch(new MakeProperty($property));
 			}
 		}
-    }
+  }
 
     public function appendDescription($properties = [])
 	{
