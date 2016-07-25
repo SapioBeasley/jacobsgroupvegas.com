@@ -9,36 +9,36 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RemoveProperties extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
+  use InteractsWithQueue, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+  /**
+   * Create a new job instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+      //
+  }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
-    {
+  /**
+   * Execute the job.
+   *
+   * @return void
+   */
+  public function handle()
+  {
 		$properties = \App\Property::with('propertyImages')->get();
 
 		foreach ($properties as $checkProperty) {
 
-            try {
-			    $results = \App\Libraries\RetsQuery::properties('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
-            } catch (Exception $e) {
-                Bugsnag::notifyException($e);
-            } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
-                Bugsnag::notifyException($e);
-            }
+      try {
+		    $results = \App\Libraries\RetsQuery::properties('Property', 'Listing', '(Matrix_Unique_ID = ' .  $checkProperty['Matrix_Unique_ID'] . ')');
+          } catch (Exception $e) {
+            Bugsnag::notifyException($e);
+          } catch (PHRETS\Exceptions\CapabilityUnavailable $e) {
+            Bugsnag::notifyException($e);
+          }
 
 			foreach ($results as $property) {
 
@@ -59,10 +59,10 @@ class RemoveProperties extends Job implements ShouldQueue
 			}
 		}
 
-        dispatch(new \App\Jobs\RemoveUnrelatedImages());
-    }
+    dispatch(new \App\Jobs\RemoveUnrelatedImages());
+  }
 
-    public function removeFromElasticSearch($mlsNumber)
+  public function removeFromElasticSearch($mlsNumber)
 	{
 		$client = \Elasticsearch\ClientBuilder::create()->build();
 
@@ -70,34 +70,32 @@ class RemoveProperties extends Job implements ShouldQueue
 		$params['type'] = 'property';
 		$params['body']['query']['match']['MLSNumber'] = $mlsNumber;
 
-		$response = $client->search($params);
+    try {
+      $response = $client->search($params);
+    } catch (Elasticsearch\Common\Exceptions\Missing404Exception $e) {
+      Bugsnag::notifyException($e);
+    }
 
 		if (! empty($response['hits']['hits'])) {
-
 			$paramsDelete['index'] = 'properties';
 			$paramsDelete['type'] = 'property';
 			$paramsDelete['id'] = $response['hits']['hits'][0]['_id'];
 
 			$response = $client->delete($paramsDelete);
-
 		}
-
-		return;
 	}
 
-    public function removeClosedImages($closedImages)
+  public function removeClosedImages($closedImages)
 	{
 		foreach ($closedImages as $image) {
 
 			$propertyImage = \App\Image::find($image->id);
 
-      if ($property) {
+      if ($propertyImage) {
 			  $propertyImage->delete();
       }
 
-			dispatch(new KillImageFromDisk($image->dataUri));
+      dispatch(new KillImageFromDisk($image->dataUri));
 		}
-
-		return;
 	}
 }
