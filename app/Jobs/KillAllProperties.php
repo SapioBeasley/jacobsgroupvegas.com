@@ -7,20 +7,18 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class KillImageFromDisk extends Job implements ShouldQueue
+class KillAllProperties extends Job implements ShouldQueue
 {
   use InteractsWithQueue, SerializesModels;
-
-  protected $image;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct($image)
+  public function __construct()
   {
-    $this->image = $image;
+    //
   }
 
   /**
@@ -30,18 +28,12 @@ class KillImageFromDisk extends Job implements ShouldQueue
    */
   public function handle()
   {
-    switch (true) {
-	    case file_exists(public_path($this->image)):
-			  unlink(public_path($this->image));
-			  break;
+    $properties = \App\Property::all();
 
-  		case file_exists($this->image):
-  			unlink($this->image);
-  			break;
+    foreach ($properties as $property) {
+      $property->delete();
+    }
 
-			default:
-				# code...
-				break;
-		}
+    dispatch(new RemoveUnrelatedImages());
   }
 }

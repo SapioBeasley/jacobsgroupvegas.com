@@ -9,17 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class PullProperties extends Job implements ShouldQueue
 {
-    use InteractsWithQueue, SerializesModels;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+  use InteractsWithQueue, SerializesModels;
 
   /**
    * Execute the job.
@@ -56,7 +46,7 @@ class PullProperties extends Job implements ShouldQueue
 		}
   }
 
-    public function appendDescription($properties = [])
+  public function appendDescription($properties = [])
 	{
 		foreach ($properties as $propertyKey => $property) {
 			$properties[$propertyKey]['customPropertyDescription'] = $this->buildPropertyDescription($properties[$propertyKey]);
@@ -65,7 +55,7 @@ class PullProperties extends Job implements ShouldQueue
 		return $properties;
 	}
 
-    public function buildPropertyDescription($propertyArray)
+  public function buildPropertyDescription($propertyArray)
 	{
 		$properties = array_filter($propertyArray);
 		$paragraphArray = $this->makeSentences($properties);
@@ -73,7 +63,7 @@ class PullProperties extends Job implements ShouldQueue
 		return $paragraphArray;
 	}
 
-    public function makeSentences($property)
+  public function makeSentences($property)
 	{
 		foreach ($property as $key => $propertyValue) {
 
