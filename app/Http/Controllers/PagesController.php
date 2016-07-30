@@ -127,7 +127,8 @@ class PagesController extends Controller
 		$params['type'] = 'property';
 		$params['body']['sort'] = [
 			'OriginalEntryTimestamp' => [
-				'order' => 'DESC'
+				'order' => 'DESC',
+				'ignore_unmapped' => true
 			]
 		];
 		$params['body']['size'] = '100';
@@ -321,7 +322,8 @@ class PagesController extends Controller
 		$params['body']['size'] = $size;
 		$params['body']['sort'] = [
 			'OriginalEntryTimestamp' => [
-				'order' => 'desc'
+				'order' => 'desc',
+				'ignore_unmapped' => true
 			]
 		];
 		$params['body']['query']['filtered']['query'] = [
