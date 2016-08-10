@@ -41,7 +41,7 @@ class PullProperties extends Job implements ShouldQueue
 			$results = $this->appendDescription($results->toArray());
 
 			foreach ($results as $property) {
-        dispatch(new MakeProperty($property));
+                dispatch((new MakeProperty($property))->onQueue('createProperty'));
 			}
 		}
   }

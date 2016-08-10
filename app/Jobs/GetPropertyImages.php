@@ -57,7 +57,7 @@ class GetPropertyImages extends Job implements ShouldQueue
 
 			file_put_contents($localDiskImage, (string) $photo->getContent());
 
-			$s3File = dispatch(new UploadImagesToS3($MLSNumber, $imageDiffer . '.jpg', $localDiskImage));
+			$s3File = dispatch((new UploadImagesToS3($MLSNumber, $imageDiffer . '.jpg', $localDiskImage))->onQueue('s3Upload'));
 
 			$createImage = \App\Image::create([
 				'dataUri' => 'https://s3.sapioweb.com/jacobsgroupvegas/properties/'  . env('APP_ENV') . '/' . $MLSNumber . '/' . $imageDiffer . '.jpg'

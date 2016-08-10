@@ -34,6 +34,6 @@ class KillAllProperties extends Job implements ShouldQueue
       $property->delete();
     }
 
-    dispatch(new RemoveUnrelatedImages());
+    dispatch((new RemoveUnrelatedImages())->onQueue('killImage'));
   }
 }

@@ -3,3 +3,4 @@
 - [ ] Elasticsearch check, google results are returning 404
 - [ ] If rets login does not work catch the exception and try again
 - [ ] Remove properties check property available before delete
+- [ ] Check properties for images. If doesnt have images then get them 
