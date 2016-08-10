@@ -46,17 +46,17 @@ class MakeProperty extends Job implements ShouldQueue
       default:
         $createProperty = \App\Property::create($this->property);
 
-        $listingAgent = dispatch(new CreateListingAgent($createProperty, $this->property));
+        $listingAgent = dispatch((new CreateListingAgent($createProperty, $this->property))->onQueue('additionalInformation'));
 
-        $community = dispatch(new CreateListingCommunity($createProperty, $this->property));
+        $community = dispatch((new CreateListingCommunity($createProperty, $this->property))->onQueue('additionalInformation'));
 
         if ($this->property['PhotoCount'] > 0) {
-          $images = dispatch(new GetPropertyImages($createProperty, $this->property['Matrix_Unique_ID']));
+          $images = dispatch((new GetPropertyImages($createProperty, $this->property['Matrix_Unique_ID']))->onQueue('images'));
         }
 
         $createdAt = $this->setCreatedAt($createProperty->toArray());
 
-        dispatch(new IndexProperty($this->property, $createdAt));
+        dispatch((new IndexProperty($this->property, $createdAt))->onQueue('indexProperty'));
         break;
     }
   }

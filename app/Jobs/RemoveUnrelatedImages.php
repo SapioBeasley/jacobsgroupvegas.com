@@ -49,7 +49,7 @@ class RemoveUnrelatedImages extends Job implements ShouldQueue
 
 				\App\Image::find($image->id)->delete();
 
-				dispatch(new KillImageFromDisk($image->dataUri));
+				dispatch((new KillImageFromDisk($image->dataUri))->onQueue('killImage'));
 
 				$removeArray[] = $image->dataUri;
 			};

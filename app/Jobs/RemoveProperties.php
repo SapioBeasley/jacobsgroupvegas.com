@@ -59,7 +59,7 @@ class RemoveProperties extends Job implements ShouldQueue
 			}
 		}
 
-    dispatch(new \App\Jobs\RemoveUnrelatedImages());
+    dispatch((new \App\Jobs\RemoveUnrelatedImages())->onQueue('images'));
   }
 
   public function removeFromElasticSearch($mlsNumber)
@@ -95,7 +95,7 @@ class RemoveProperties extends Job implements ShouldQueue
 			  $propertyImage->delete();
       }
 
-      dispatch(new KillImageFromDisk($image->dataUri));
+      dispatch((new KillImageFromDisk($image->dataUri))->onQueue('killImage'));
 		}
 	}
 }
